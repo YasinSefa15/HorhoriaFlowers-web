@@ -20,16 +20,16 @@ export default function ProductsPage() {
                     result.push(res.data.data[key])
                 }
                 setProducts(result)
-                console.log("fetched")
+                console.log("fetched products with slug")
             })
             .catch(error => {
                 console.log(error);
             })
-    }, [])
+    }, [slug])
 
 
     return (
-        <div>
+        <div style={{display: "flex"}}>
 
 
             <h1>Products Page</h1>

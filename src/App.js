@@ -1,41 +1,34 @@
 import {Routes, Route, Link, NavLink} from 'react-router-dom'
-import HomePage from "./pages/HomePage";
+import Index from "./pages/home";
 import React from 'react';
 import ProductsPage from "./pages/ProductsPage";
-import axios from "axios";
-import {api_helper} from "./helpers/api_helper";
-import CategoriesListComponent from "./components/CategoriesListComponent";
+import HomePageLayout from "./pages/home";
+import HomePage from "./pages/home/HomePage";
+import Page404 from "./pages/error/Page404";
+import ProfileLayout from "./pages/profile";
+import PrivateRoute from "./components/PrivateRoute";
+import LoginPage from "./pages/auth/LoginPage";
+import AuthLayout from "./pages/auth/AuthLayout";
 
 function App() {
-    const [categories, setCategories] = React.useState([])
-
-    React.useEffect(() => {
-        axios.get(api_helper.api_url + api_helper.category.read)
-            .then(res => {
-                let result = [];
-                for (const key of Object.keys(res.data.data)) {
-                    //TODO SERVER ERROR FALAN OLURSA PROMP
-                    //console.log(key, res.data.data[key]);
-                    result.push(res.data.data[key])
-                }
-                setCategories(result)
-                console.log("fetched")
-                console.log("result ", result)
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }, [])
-
     return (
         <>
-            <CategoriesListComponent categories={categories}></CategoriesListComponent>
             <Routes>
-                <Route path="/" element={<HomePage/>}/>
-                <Route path="/categories/:slug" element={<ProductsPage/>}></Route>
+                <Route path="/" element={<HomePageLayout/>}>
+                    <Route index={true} element={<HomePage/>}></Route>
+                    <Route path="/categories/:slug" element={<ProductsPage/>}></Route>
+                    <Route path="/products/:slug" element={<Index/>}></Route>
+                    <Route path="/profile" element={<PrivateRoute><ProfileLayout/></PrivateRoute>}> </Route>
+                </Route>
+
+                <Route path="/auth" element={<AuthLayout/>}>
+                    <Route path="login" element={<LoginPage/>}></Route>
+                </Route>
+                <Route path="*" element={<Page404/>}></Route>
             </Routes>
         </>
-    );
+    )
+        ;
 }
 
 export default App;
