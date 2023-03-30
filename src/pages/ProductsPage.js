@@ -3,6 +3,7 @@ import React from 'react';
 import axios from "axios";
 import {api_helper} from "../helpers/api_helper";
 import {useParams} from "react-router-dom";
+import "../styles/pages/Products.css"
 
 
 export default function ProductsPage() {
@@ -29,10 +30,7 @@ export default function ProductsPage() {
 
 
     return (
-        <div style={{display: "flex"}}>
-
-
-            <h1>Products Page</h1>
+        <div className="productsContainer">
             {products.map(product => (
                 //TODO ARKA PLAN EKLENECEK
                 <ProductCart product={{

@@ -9,6 +9,7 @@ export default function PrivateRoute({children}) {
     if (!user) {
         return <Navigate
             to="/auth/login"
+            replace={true} //when user clicks back button, they will not be redirected to login page
             state={{
                 return_url: location.pathname + location.search //return to page requested after login
             }}

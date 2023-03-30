@@ -6,6 +6,9 @@ const api_helper = {
         'create': "categories",
         'update': "categories/:id",
         'delete': "categories/:id"
+    },
+    'product': {
+        'view': "products/", // + slug
     }
 }
 

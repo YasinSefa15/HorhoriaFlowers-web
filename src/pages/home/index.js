@@ -32,9 +32,7 @@ export default function HomePageLayout() {
         <>
             <NavigationBar></NavigationBar>
             <div style={{display: "flex"}}>
-
                 <CategoriesListComponent categories={categories}></CategoriesListComponent>
-                <h1>Home Page</h1>
                 <Outlet></Outlet>
             </div>
             <NavigationBar></NavigationBar>
