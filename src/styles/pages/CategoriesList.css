@@ -1,0 +1,9 @@
+.parent-list{
+    background: #61dafb;
+    font-size: 42px;
+    margin-left: 50px;
+}
+
+.child-ul{
+    background: #f5f5f5;
+}

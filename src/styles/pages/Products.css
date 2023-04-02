@@ -1,13 +1,15 @@
 .productsContainer {
+    /*max-width: 1170px;*/
     display: grid;
-    grid-gap: 100px;
-    grid-template-columns: repeat(auto-fit, minmax(80px, min-content));
+    grid-column-gap: 10px;
+    grid-row-gap: 30px;
+    grid-template-columns: repeat(auto-fit, 250px);
+    grid-template-rows: repeat(auto-fit, minmax(100px, min-content));
     width: 100%;
-    padding-left: 10px;
-    margin-left: 20px;
-    padding-right: 10px;
-    margin-right: 200px;
-    margin-top: 50px;
+
+    margin-left: 60px;
+    margin-right: 10px;
+    margin-top: 100px;
 }
 
 .productCard {
@@ -15,37 +17,44 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 180px;
-    height: 300px;
+    width: 250px;
+    height: 320px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 10px;
     overflow-wrap: break-word;
     text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
 }
 
 
 .productImage {
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
     /*
         object-fit: cover;*
      */
-    border-radius: 5px;
+    border-radius: 3px;
+    margin-bottom: 10px;
 }
 
 .cardTitle{
     font-size: 1rem;
     font-weight: 600;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .cardPrice {
     font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 10px;
+}
+
+.orderButton{
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.productCard:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }

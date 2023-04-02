@@ -16,8 +16,10 @@ export default function HomePageLayout() {
                 for (const key of Object.keys(res.data.data)) {
                     //TODO SERVER ERROR FALAN OLURSA PROMP
                     //console.log(key, res.data.data[key]);
-                    result.push(res.data.data[key])
+                    //result.push(res.data.data[key])
+                    result[key] = res.data.data[key]
                 }
+                console.log("...... ", result)
                 setCategories(result)
                 console.log("fetched")
                 console.log("result ", result)
