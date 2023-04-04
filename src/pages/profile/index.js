@@ -1,5 +1,6 @@
 import {Link, Outlet, useLocation} from "react-router-dom";
 import {useAuth} from "../../context/AuthContext";
+import TopNavigationBar from "../../components/TopNavigationBar";
 
 export default function ProfileLayout() {
 
@@ -12,6 +13,7 @@ export default function ProfileLayout() {
 
     return (
         <>
+            <TopNavigationBar/>
             <div style={{display: "flex"}}>
                 <h1>Profile Page</h1>
             </div>

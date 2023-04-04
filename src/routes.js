@@ -8,6 +8,13 @@ import LoginPage from "./pages/auth/LoginPage";
 import Index from "./pages/home";
 import Page404 from "./pages/error/Page404";
 import ProductDetail from "./pages/ProductDetail";
+import AdminLayout from "./pages/admin/AdminLayout";
+import ProductAdmin from "./pages/admin/product/ProductAdmin";
+import AdminPage from "./pages/admin/AdminPage";
+import AdminRoute from "./components/AdminRoute";
+import ProductSearch from "./pages/product/ProductSearch";
+import CartPage from "./pages/cart/CartPage";
+import ProductEdit from "./pages/admin/product/ProductEdit";
 
 const routes = [
     {
@@ -27,11 +34,19 @@ const routes = [
                 element: <ProductDetail></ProductDetail>
             },
             {
-                path: '/profile',
-                auth: true,
-                element: <ProfileLayout/>
+                path: '/products',
+                element: <ProductSearch></ProductSearch>
+            },
+            {
+                path: 'cart',
+                element: <CartPage></CartPage>
             }
         ]
+    },
+    {
+        path: '/profile',
+        auth: true,
+        element: <ProfileLayout/>
     },
     {
         path: '/auth',
@@ -44,20 +59,48 @@ const routes = [
         ]
     },
     {
+        path: '/admin',
+        admin: true,
+        element: <AdminLayout></AdminLayout>,
+        children: [
+            {
+                index: true,
+                admin: true,
+                element: <AdminPage></AdminPage>
+            },
+            {
+                path: 'products',
+                admin: true,
+                element: <ProductAdmin></ProductAdmin>,
+            },
+            {
+                path: 'products/:slug',
+                admin: true,
+                element: <ProductEdit></ProductEdit>
+            },
+            {
+                path: 'categories',
+                admin: true,
+                element: <ProductAdmin></ProductAdmin>
+            }
+        ]
+    },
+    {
         path: '*',
         element: <Page404></Page404>
     }
 ]
 
 
-
-//todo for admin admin:true in routes, and create admin route like private route
 const authMap = routes => routes.map(route => {
     if (route?.children) {
         route.children = authMap(route.children)
     }
     if (route?.auth) {
         route.element = <PrivateRoute>{route.element}</PrivateRoute>
+    }
+    if (route?.admin) {
+        route.element = <AdminRoute>{route.element}</AdminRoute>
     }
     return route
 })

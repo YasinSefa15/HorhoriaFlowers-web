@@ -1,0 +1,105 @@
+.productsContainer {
+    /*max-width: 1170px;*/
+    display: grid;
+    grid-column-gap: 10px;
+    grid-row-gap: 30px;
+    grid-template-columns: repeat(auto-fit, 250px);
+    grid-template-rows: repeat(auto-fit, minmax(100px, min-content));
+    width: 100%;
+
+    margin-left: 60px;
+    margin-right: 10px;
+    margin-top: 100px;
+}
+
+.productCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 320px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-wrap: break-word;
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+
+.productImage {
+    width: 170px;
+    height: 170px;
+    /*
+        object-fit: cover;*
+     */
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+
+.cardTitle {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.cardPrice {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.edit-button {
+    margin-right: 5px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.delete-button {
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.productCard:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.multiple-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.formContainer {
+    padding-left: 30px;
+    margin-right: 30px;
+}
+
+.lineBreak {
+    border: 2px solid #0d6efd;
+}
+
+.inputContainer {
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #f5f5f5;
+    height: max-content;
+    margin-bottom: 20px;
+}
+
+.singleButtonArea{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    height: max-content;
+    margin-bottom: 20px;
+}

@@ -1,4 +1,4 @@
-import NavigationBar from "../NavigationBar";
+import TopNavigationBar from "../../components/TopNavigationBar";
 import React from "react";
 import {Outlet} from "react-router-dom";
 import CategoriesListComponent from "../../components/CategoriesListComponent";
@@ -32,12 +32,12 @@ export default function HomePageLayout() {
 
     return (
         <>
-            <NavigationBar></NavigationBar>
+            <TopNavigationBar></TopNavigationBar>
             <div style={{display: "flex"}}>
                 <CategoriesListComponent categories={categories}></CategoriesListComponent>
                 <Outlet></Outlet>
             </div>
-            <NavigationBar></NavigationBar>
+            <TopNavigationBar></TopNavigationBar>
 
         </>
     )
