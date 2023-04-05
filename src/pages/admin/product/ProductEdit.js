@@ -146,7 +146,6 @@ export default function ProductEdit() {
 
             </div>
 
-            <h1>Product Edit</h1>
         </div>
     )
 }

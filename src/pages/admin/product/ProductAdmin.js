@@ -7,14 +7,38 @@ import {NavLink, useNavigate, useParams} from "react-router-dom";
 import NotificationHelper from "../../../helpers/NotificationHelper";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import PageItem from "../../../components/pagination/PageItems";
+import HomePage from "../../home/HomePage";
+import PageItems from "../../../components/pagination/PageItems";
 
 export default function ProductAdmin() {
+    const [totalPage, setTotalPage] = React.useState(1)
+    const [currentPage, setCurrentPage] = React.useState(1)
+    const [requestedPage, setRequestedPage] = React.useState(1)
     const [products, setProducts] = React.useState([])
     const [search, setSearch] = React.useState("")
     const [title, setTitle] = React.useState("")
     const navigate = useNavigate()
-    console.log(useParams())
-    console.log("deneme")
+
+
+
+    const changeCurrentPage = (changeInPage) => {
+        if (changeInPage > 0) {
+            if (currentPage + changeInPage <= totalPage) {
+                setCurrentPage(currentPage + changeInPage)
+                setRequestedPage(currentPage + changeInPage)
+            }
+
+        } else if (changeInPage < 0) {
+            if (currentPage + changeInPage > 0) {
+                setCurrentPage(currentPage + changeInPage)
+                setRequestedPage(currentPage + changeInPage)
+            }
+        }
+
+    }
+
+    //console.log("totalPage", totalPage, "currentPage", currentPage, "requestedPage", requestedPage)
 
     const deleteProduct = (id) => {
 
@@ -42,16 +66,25 @@ export default function ProductAdmin() {
     }
 
     React.useEffect(() => {
-        //todo param yolla
+        let params = {
+            "limit": 10,
+            "offset": requestedPage,
+        }
+        if (title !== "") {
+            params.searched = title
+        }
+        //todo sadece title değişince page = 1
+        //page değişince sonsuz loop dsfdsfdsf
         axios.get(api_helper.api_url + api_helper.product.read, {
-            params: {
-                "products.title": title,
-            }
+            params: params
         })
             .then(res => {
                 console.log("send title = ", title)
                 console.log("request send")
-                console.log(res.data.data)
+                console.log(res.data)
+                setTotalPage(res.data.meta_data.total_page)
+                setCurrentPage(res.data.meta_data.current_page)
+
                 let result = [];
                 for (const key of Object.keys(res.data.data)) {
                     result.push(res.data.data[key])
@@ -60,8 +93,13 @@ export default function ProductAdmin() {
             })
             .catch(error => {
                 console.log(error);
+                //NotificationHelper({
+                //  httpStatus: error.response.status,
+                //  title: error.response.statusText,
+                //  message: error.response.data.message,
+                //})
             })
-    }, [title])
+    }, [title, requestedPage])
 
     return (
         <>
@@ -71,10 +109,12 @@ export default function ProductAdmin() {
                 placeholder="Aradığınız Ürünü Yazınız"
                 aria-label="Search"
                 style={{width: 400}}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => {
+                    setSearch(e.target.value)
+                    setCurrentPage(1)
+                }}
                 onKeyPress={(e) => e.key === 'Enter' &&
-
-                    navigate("/admin/products?title=" + search)
+                    setTitle(search) && setRequestedPage(1)
                 }
             />
 
@@ -87,17 +127,6 @@ export default function ProductAdmin() {
             >Arat</NavLink>
 
 
-            <Popup trigger={<button>Trigger</button>} position="top left">
-                {close => (
-                    <div>
-                        Content here
-                        <a className="close" onClick={close}>
-                            &times;
-                        </a>
-                    </div>
-                )}
-            </Popup>
-
             <h1>Product Admin</h1>
 
             <div className="productsContainer">
@@ -109,6 +138,36 @@ export default function ProductAdmin() {
                     />
                 ))}
             </div>
+
+            <nav className="pagination-container">
+                <div className=" row justify-content-md-center">
+                    <ul className="pagination col-md-auto">
+                        <li
+                            className={"page-item " + (currentPage === 1 ? "disabled" : "")}
+                            onClick={() => {
+                                changeCurrentPage(-1)
+                            }}
+                        >
+                            <span className="page-link">Previous</span>
+                        </li>
+
+                        <PageItems pageCount={totalPage}
+                                   currentPage={requestedPage}
+                                   changeCurrentPage={changeCurrentPage}
+                        />
+
+                        <li
+                            className={"page-item " + (currentPage === totalPage ? "disabled" : "")}
+                            onClick={() => {
+                                changeCurrentPage(1)
+                            }}
+                        >
+                            <a className="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </nav>
         </>
     )
 }

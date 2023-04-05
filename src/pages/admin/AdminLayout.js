@@ -1,19 +1,10 @@
 import {NavLink, Outlet} from "react-router-dom";
+import AdminTopNavBar from "../../components/admin/AdminTopNavBar";
 
 export default function AdminLayout() {
     return (
         <>
-            <NavLink
-                to={"/admin/products"}
-            >
-                Products
-            </NavLink>
-
-            <NavLink
-                to={"/admin/categories"}
-            >
-                Categories
-            </NavLink>
+            <AdminTopNavBar/>
             <Outlet/>
         </>
     )
