@@ -14,13 +14,14 @@ export default function ProductsPage() {
         axios.get(api_helper.api_url + api_helper.category.view + "/" + slug)
             .then(res => {
                 let result = [];
-                console.log(res.data.data)
+                console.log("response data ", res.data.data)
                 for (const key of Object.keys(res.data.data)) {
                     //TODO SERVER ERROR FALAN OLURSA PROMP
                     //console.log(key, res.data.data[key]);
                     result.push(res.data.data[key])
                 }
                 setProducts(result)
+                console.log("result ", products)
                 console.log("fetched products with slug")
             })
             .catch(error => {
@@ -32,6 +33,7 @@ export default function ProductsPage() {
     return (
         <div className="productsContainer">
             {products.map(product => (
+
                 //TODO ARKA PLAN EKLENECEK
                 <ProductCart product={{
                     title: product.title,
@@ -39,15 +41,7 @@ export default function ProductsPage() {
                     category_id: product.category_id,
                     description: product.description,
                     price: product.price,
-                    images: [
-                        {
-                            file_path: "https://picsum.photos/200/300",
-                            order_of: 0,
-                            type: 0,
-                            product_id: 1,
-                            product_title: "Product 1"
-                        }
-                    ]
+                    images: product.images
                 }}/>
             ))}
 

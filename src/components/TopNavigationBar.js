@@ -1,8 +1,10 @@
-import {NavLink, useLocation} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 
 export default function TopNavigationBar() {
     const [search, setSearch] = useState("");
+    const navigate = useNavigate();
+
     return (
         <>
             <nav className="navbar bg-secondary-emphasis"
@@ -27,6 +29,16 @@ export default function TopNavigationBar() {
 
                     <NavLink className="navbar-brand" to="/"> Ana Sayfa </NavLink>
 
+                    <li className="nav-item dropdown">
+                        <a className="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Hover me </a>
+                        <ul className="dropdown-menu">
+
+                            <li><a className="dropdown-item" href="#"> Submenu item 1</a></li>
+                            <li><a className="dropdown-item" href="#"> Submenu item 2 </a></li>
+                            <li><a className="dropdown-item" href="#"> Submenu item 3 </a></li>
+                        </ul>
+                    </li>
+
                     <form className="d-flex" role="search">
                         <input
                             className="form-control me-2"
@@ -35,10 +47,12 @@ export default function TopNavigationBar() {
                             aria-label="Search"
                             style={{width: 400}}
                             onChange={(e) => setSearch(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && navigate("/products?title=" + search)}
                         />
                         <NavLink to={"/products?title=" + search} className="btn btn-outline-primary"
-                               >Sepetim</NavLink>
+                        >Sepetim</NavLink>
                     </form>
+
 
                     <NavLink className="navbar-brand" to="/profile"> Profil</NavLink>
                     <NavLink className="navbar-brand" to="/cart"> Sepetim</NavLink>

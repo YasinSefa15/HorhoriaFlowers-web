@@ -3,49 +3,69 @@ import {api_helper} from "../helpers/api_helper";
 import React from "react";
 import ChildCategory from "./ChildCategory";
 import "../styles/pages/CategoriesList.css"
+import minusLogo from '../minus.svg'
 
-export default function CategoriesListComponent({categories}) {
+export default function CategoriesListComponent({category}) {
+    const [childVisible, setChildVisible] = React.useState(false)
 
-    //todo need recursive function
+    //todo open and clı
 
     return (
-        <div>
-            <h1>Categories</h1>
 
-            <ul className="list-group">
-                {categories.map((category) => {
-                    if (category.parent_id !== null) {
-                        return;
-                    }
+        <>
+            {(() => {
+                if (category.parent_id !== null) {
+                    return;
+                }
 
 
-                    const list_item = <li
-                        className="list-group"
-                        key={category.id}
-                        style={{marginLeft: 20, marginBottom: 10, width: 200, fontSize: 16, fontWeight: "bold"}}
-                    >
-                        < NavLink to={"categories/" + category.slug}>
+                const list_item = <li
+
+                    key={category.id + "." + category.slug}
+                    //style={{marginLeft: 20, marginBottom: 10, width: 200, fontSize: 16, fontWeight: "bold"}}
+                >
+                    <div className="parent-category-container">
+                        < NavLink to={"categories/" + category.slug}
+                                  onClick={() => {
+                                      setChildVisible(!childVisible)
+                                  }}
+                        >
                             {category.title}
                         </NavLink>
-                        {
-                            Object.keys(category.children).length > 0 ?
-                                Object.entries(category.children).map((child) => {
-                                    //console.log("category yyyy", category)
-                                    //console.log("child xx", child[1])
+                        <img src={minusLogo} alt="show"></img>
+                    </div>
 
-                                    return <ul>
-                                        <ChildCategory key={child[1].id} category={child[1]} fontSize={14}/>
-                                    </ul>
-                                })
-                                : ""
-                        }
+                    {
+                        Object.keys(category.children).length > 0 ?
+                            Object.entries(category.children).map((child) => {
+                                //console.log("category yyyy", category)
+                                //console.log("child xx", child[1])
 
-                    </li>
+                                return <ul className="sub-category-tabs"
+                                           style={childVisible ? {visibility: "visible"} : {
+                                               visibility: "hidden",
+                                               height: 0
+                                           }}
+                                >
+                                    < ChildCategory
+                                        key={child[1].id}
+                                        category={child[1]}
+                                        fontSize={14}
+                                        parentVisible={childVisible}
+                                    />
+                                </ul>
+                            })
+                            :
+                            ""
+                    }
+                    <hr/>
 
-                    return list_item
-                })}
+                </li>
 
-            </ul>
-        </div>
+                return list_item
+
+            })()}
+        </>
+
     )
 }

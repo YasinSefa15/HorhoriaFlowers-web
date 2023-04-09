@@ -7,8 +7,6 @@ import {NavLink, useNavigate, useParams} from "react-router-dom";
 import NotificationHelper from "../../../helpers/NotificationHelper";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import PageItem from "../../../components/pagination/PageItems";
-import HomePage from "../../home/HomePage";
 import PageItems from "../../../components/pagination/PageItems";
 
 export default function ProductAdmin() {
@@ -19,7 +17,6 @@ export default function ProductAdmin() {
     const [search, setSearch] = React.useState("")
     const [title, setTitle] = React.useState("")
     const navigate = useNavigate()
-
 
 
     const changeCurrentPage = (changeInPage) => {
@@ -103,31 +100,49 @@ export default function ProductAdmin() {
 
     return (
         <>
-            <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Aradığınız Ürünü Yazınız"
-                aria-label="Search"
-                style={{width: 400}}
-                onChange={(e) => {
-                    setSearch(e.target.value)
-                    setCurrentPage(1)
-                }}
-                onKeyPress={(e) => e.key === 'Enter' &&
-                    setTitle(search) && setRequestedPage(1)
-                }
-            />
 
 
-            <NavLink to={"/admin/products?title=" + search} className="btn btn-outline-primary"
-                     onClick={(e) => {
-                         setTitle(search)
-                         alert(title)
-                     }}
-            >Arat</NavLink>
+            <div className="navbar">
+                <div className="container-fluid ">
 
 
-            <h1>Product Admin</h1>
+                    <button>asds</button>
+
+                    <div
+                        className="col-4"
+                    >
+                        <input
+                            className="form-control  "
+                            type="search"
+                            placeholder="Aradığınız Ürünü Yazınız"
+                            aria-label="Search"
+                            style={{width: 400}}
+                            onChange={(e) => {
+                                setSearch(e.target.value)
+                                setCurrentPage(1)
+                            }}
+                            onKeyPress={(e) => e.key === 'Enter' &&
+                                setTitle(search) && setRequestedPage(1)
+                            }
+                        />
+
+                    </div>
+
+
+                    <NavLink
+                        to={"/admin/products?title=" + search}
+                        className="btn btn-outline-primary col-1"
+                        onClick={(e) => {
+                            setTitle(search)
+                        }}
+                    >
+                        Arat
+                    </NavLink>
+                </div>
+
+
+            </div>
+
 
             <div className="productsContainer">
 

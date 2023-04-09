@@ -34,7 +34,19 @@ export default function HomePageLayout() {
         <>
             <TopNavigationBar></TopNavigationBar>
             <div style={{display: "flex"}}>
-                <CategoriesListComponent categories={categories}></CategoriesListComponent>
+
+                <div className="side-nav-categories">
+                    <h1>Categories</h1>
+
+                    <ul id="category-tabs">
+                        {categories.map((category) => (
+                            <CategoriesListComponent category={category}></CategoriesListComponent>
+                            //<CategoriesListComponent categories={categories}></CategoriesListComponent>
+
+                        ))}
+                    </ul>
+                </div>
+
                 <Outlet></Outlet>
             </div>
             <TopNavigationBar></TopNavigationBar>
