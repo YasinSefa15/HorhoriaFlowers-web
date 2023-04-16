@@ -1,8 +1,13 @@
-export default function ImageComponent({images, className}) {
-    return images.map(image => (
-        <div>
-            <img src={image.file_path} alt="product name" className={className}/>
-        </div>
+export default function ImageComponent({images, visibleOrder}) {
+    return images.map((image, index) => (
+        <>
+            <img
+                src={image.file_path}
+                alt="product name"
+                className=""
+                style={{display: visibleOrder === image.order_of ? "block" : "none"}}
+            />
+        </>
     ))
 
 

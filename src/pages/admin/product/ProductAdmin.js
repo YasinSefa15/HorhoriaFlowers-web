@@ -163,7 +163,7 @@ export default function ProductAdmin() {
                                 changeCurrentPage(-1)
                             }}
                         >
-                            <span className="page-link">Previous</span>
+                            <a className="page-link" href="#">Previous</a>
                         </li>
 
                         <PageItems pageCount={totalPage}

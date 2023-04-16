@@ -33,7 +33,7 @@ export default function HomePageLayout() {
     return (
         <>
             <TopNavigationBar></TopNavigationBar>
-            <div style={{display: "flex"}}>
+            <div style={{display: "flex", marginBottom:"100px"}} >
 
                 <div className="side-nav-categories">
                     <h1>Categories</h1>

@@ -10,6 +10,7 @@
     margin-left: 60px;
     margin-right: 10px;
     margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 .productCard {
@@ -29,17 +30,7 @@
 }
 
 
-.productImage {
-    width: 170px;
-    height: 170px;
-    /*
-        object-fit: cover;*
-     */
-    border-radius: 3px;
-    margin-bottom: 10px;
-}
-
-.cardTitle{
+.cardTitle {
     font-size: 1rem;
     font-weight: 600;
 }
@@ -49,7 +40,7 @@
     font-weight: 600;
 }
 
-.orderButton{
+.orderButton {
     width: 100%;
     font-size: 1rem;
     font-weight: 600;
@@ -57,4 +48,62 @@
 
 .productCard:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+
+.image-container{
+    display: flex;
+    padding: 0 0;
+    margin: 0 0 20px 0;
+}
+
+
+.productCard img {
+    width: 170px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 3px;
+    position: absolute;
+}
+
+
+.image-indicator-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 170px;
+    height: 170px;
+    justify-items: end;
+    z-index: 1;
+    padding-left: 11px;
+    padding-right: 11px;
+}
+
+.image-indicator {
+    width: 35px;
+    height: 171px;
+    border-radius: 5px;
+    flex-direction: column;
+    display: flex;
+    opacity: 0;
+}
+
+.chose-pic{
+    margin-top: auto;
+    height: 7px;
+    width: 35px;
+    background-color: #ece5ed;
+    border-radius: 5px;
+    opacity: 0.2;
+}
+
+.image-indicator-container:hover > .image-indicator{
+    opacity: 0.5;
+    border-radius: 5px;
+}
+
+.image-indicator:hover > .chose-pic{
+
+    opacity: 0.8;
+    border-radius: 5px;
 }
