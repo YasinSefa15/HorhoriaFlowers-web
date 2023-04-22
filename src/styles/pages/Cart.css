@@ -1,0 +1,20 @@
+.cart-container{
+    margin-top: 35px;
+    padding: 50px;
+}
+
+
+.cart-product {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 25px;
+}
+
+.cart-product__image img{
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}

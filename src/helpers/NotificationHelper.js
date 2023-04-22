@@ -34,6 +34,7 @@ export default function NotificationHelper(params) {
             })
             break;
         case 400:
+        case 401:
             Store.addNotification({
                 title: params.title,
                 message: params.message,

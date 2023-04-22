@@ -36,7 +36,26 @@ export default function HomePageLayout() {
             <div style={{display: "flex", marginBottom:"100px"}} >
 
                 <div className="side-nav-categories">
-                    <h1>Categories</h1>
+                    <h1
+                        style={{
+                            textAlign: "center",
+                            fontSize: "32px",
+                            fontWeight: "bold",
+                            marginBottom: "20px"
+
+                            }}
+                    >
+                        Categories
+                    </h1>
+                    <hr
+                        style={{
+                            marginLeft: "20px",
+                            width: "230",
+                            height: "1px",
+                            backgroundColor: "black",
+                            marginBottom: "20px"
+                        }}
+                    />
 
                     <ul id="category-tabs">
                         {categories.map((category) => (

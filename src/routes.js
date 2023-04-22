@@ -36,12 +36,13 @@ const routes = [
             {
                 path: '/products',
                 element: <ProductSearch></ProductSearch>
-            },
-            {
-                path: 'cart',
-                element: <CartPage></CartPage>
             }
         ]
+    },
+    {
+        path: '/cart',
+        element: <CartPage></CartPage>
+
     },
     {
         path: '/profile',

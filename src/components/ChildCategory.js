@@ -1,6 +1,7 @@
 import {NavLink} from "react-router-dom";
 import React from "react";
 import minusLogo from '../minus.svg'
+import plusLogo from "../plus.svg";
 
 export default function ChildCategory({category, parentVisible}) {
     const [childVisible, setChildVisible] = React.useState(false)
@@ -30,7 +31,15 @@ export default function ChildCategory({category, parentVisible}) {
                 </NavLink>
 
 
-                {Object.entries(category.children).length > 0 ? <img src={minusLogo} alt="show"></img> : ""}
+                {
+                    Object.keys(category.children).length > 0
+                        ? <img
+                            src={childVisible ? minusLogo : plusLogo}
+                            alt="show
+                                    ">
+                        </img> : ""
+                }
+
 
             </div>
             {

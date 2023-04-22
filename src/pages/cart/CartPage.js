@@ -1,44 +1,60 @@
 import React from 'react';
-import axios from "axios";
-import {NavLink, useParams} from "react-router-dom";
 import "../../styles/pages/Products.css"
-import {api_helper} from "../../helpers/api_helper";
-import ProductCart from "../../components/ProductCart";
+import CartProduct from "./CartProduct";
+import "../../styles/pages/Cart.css"
+import 'reactjs-popup/dist/index.css';
+import ItemCount from "../../components/cart/ItemCount";
+import {readLoggedInUserCart, updateLoggedInUserCart} from "../../api.requests/cart/CartRequests";
 
 
 export default function CartPage() {
     const [products, setProducts] = React.useState([])
-    const {title} = useParams();
-    console.log(title)
-    console.log(useParams())
+    const [updated, setUpdated] = React.useState(false)
 
     React.useEffect(() => {
-        axios.get(api_helper.api_url + api_helper.product.read, {
-            params: {
-                "products.title": title
+        readLoggedInUserCart({setProducts})
+    }, [])
+
+
+    const updateProductQuantity = (id, quantity) => {
+        products.map((product, index) => {
+            if (product.id === id) {
+                updateLoggedInUserCart({input: {id: id, quantity: quantity}})
+                setUpdated(!updated)
+                return product.quantity = quantity;
             }
+            return product
         })
-            .then(res => {
-                let result = [];
-                console.log(res.data.data)
-                for (const key of Object.keys(res.data.data)) {
-                    //TODO SERVER ERROR FALAN OLURSA PROMP
-                    //console.log(key, res.data.data[key]);
-                    result.push(res.data.data[key])
-                }
-                setProducts(result)
-                console.log("fetched products with slug")
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }, [title])
+    }
 
 
     return (
 
         <>
-            CARTT
+            <div className="cart-container">
+
+                {(() => (
+                    products.map((product, index) => {
+                        console.log(product.file_path)
+                        return (
+                            <div className="row">
+                                <CartProduct
+                                    product={product}
+                                    key={index}
+                                />
+
+
+                                <ItemCount
+                                    count={product.quantity}
+                                    id={product.id}
+                                    updateProductQuantity={updateProductQuantity}
+                                ></ItemCount>
+                            </div>
+                        )
+                    })
+                ))()}
+            </div>
+
         </>
     )
 

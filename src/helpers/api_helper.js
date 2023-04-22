@@ -14,6 +14,12 @@ const api_helper = {
         'create': "products",
         'update': "products",
         'delete': "products/"
+    },
+    'cart' : {
+        'view': "cart",
+        'create': "cart",
+        'update': "cart",
+        'delete': "cart"
     }
 }
 

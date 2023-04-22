@@ -4,6 +4,7 @@ import React from "react";
 import ChildCategory from "./ChildCategory";
 import "../styles/pages/CategoriesList.css"
 import minusLogo from '../minus.svg'
+import plusLogo from '../plus.svg'
 
 export default function CategoriesListComponent({category}) {
     const [childVisible, setChildVisible] = React.useState(false)
@@ -32,7 +33,16 @@ export default function CategoriesListComponent({category}) {
                         >
                             {category.title}
                         </NavLink>
-                        <img src={minusLogo} alt="show"></img>
+
+                        {
+                            Object.keys(category.children).length > 0
+                                ? <img
+                                    src={childVisible ? minusLogo : plusLogo}
+                                    alt="show
+                                    ">
+                                </img> : ""
+                        }
+
                     </div>
 
                     {
