@@ -1,14 +1,14 @@
-import PageItems from "../pagination/PageItems";
+import TrashIcon from "../../assests/trash.svg";
 
-export default function ItemCount({count,id,updateProductQuantity}) {
+export default function ItemCount({count, id, updateProductQuantity, deleteProduct}) {
     return (
         <nav className="item-count-container">
-            <div className=" row justify-content-md-center">
-                <ul className="pagination col-md-auto">
+            <div className=" row ">
+                <ul className="pagination  ">
                     <li
                         className={"page-item " + (count === 1 ? "disabled" : "")}
                         onClick={() => {
-                            updateProductQuantity(id,count - 1)
+                            updateProductQuantity(id, count - 1)
                         }}
                     >
                         <a className="page-link" href="#">-</a>
@@ -21,10 +21,20 @@ export default function ItemCount({count,id,updateProductQuantity}) {
                     <li
                         className={"page-item "}
                         onClick={() => {
-                            updateProductQuantity(id,count + 1)
+                            updateProductQuantity(id, count + 1)
                         }}
                     >
                         <a className="page-link" href="#">+</a>
+                    </li>
+
+
+                    <li style={{padding: "auto"}}>
+                        <img
+                            src={TrashIcon}
+                            onClick={() => {
+                                deleteProduct(id)
+                            }}
+                        ></img>
                     </li>
                 </ul>
             </div>

@@ -1,5 +1,5 @@
 const api_helper = {
-    'api_url': 'http://127.0.0.1:8080/api/',
+    'api_url': 'http://127.0.0.1:8000/api/',
     'category': {
         'read': "categories",
         'list': "categories/list",

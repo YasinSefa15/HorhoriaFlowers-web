@@ -5,8 +5,8 @@ import React from "react";
 export default function CartProduct({product}) {
     //console.log("product", product.file_path)
     return (
-        <div className="cart-product">
-            <div className="cart-product__image">
+        <div className="row">
+            <div className="cart-product__image col-6">
                 <ImageComponent
                     className="cart-product__image"
                     images={[{
@@ -16,7 +16,8 @@ export default function CartProduct({product}) {
                                 visibleOrder={1}
                 />
             </div>
-            <div className="cart-product__info">
+
+            <div className="cart-product__info col-6">
                 <div className="cart-product__name">
                     {product.name}
 

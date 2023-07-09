@@ -4,7 +4,12 @@ import CartProduct from "./CartProduct";
 import "../../styles/pages/Cart.css"
 import 'reactjs-popup/dist/index.css';
 import ItemCount from "../../components/cart/ItemCount";
-import {readLoggedInUserCart, updateLoggedInUserCart} from "../../api.requests/cart/CartRequests";
+import {
+    deleteLoggedInUserProduct,
+    readLoggedInUserCart,
+    updateLoggedInUserCart
+} from "../../api.requests/cart/CartRequests";
+import TopNavigationBar from "../../components/TopNavigationBar";
 
 
 export default function CartPage() {
@@ -17,6 +22,9 @@ export default function CartPage() {
 
 
     const updateProductQuantity = (id, quantity) => {
+        if (quantity < 1) {
+            return
+        }
         products.map((product, index) => {
             if (product.id === id) {
                 updateLoggedInUserCart({input: {id: id, quantity: quantity}})
@@ -27,28 +35,44 @@ export default function CartPage() {
         })
     }
 
+    const deleteProduct = (id) => {
+        setProducts(products.filter( (product, index) => {
+            if (product.id === id) {
+                deleteLoggedInUserProduct({input: {product_id: id}})
+                //setUpdated(!updated)
+                return false;
+            }
+            return true
+        }))
+    }
 
     return (
-
         <>
-            <div className="cart-container">
+            <TopNavigationBar/>
+
+
+            <div className="container cart-container">
 
                 {(() => (
                     products.map((product, index) => {
                         console.log(product.file_path)
                         return (
-                            <div className="row">
-                                <CartProduct
-                                    product={product}
-                                    key={index}
-                                />
+                            <div className="row cart-product">
+                                <div className="col-4">
+                                    <CartProduct
+                                        product={product}
+                                        key={index}
+                                    />
+                                </div>
 
-
-                                <ItemCount
-                                    count={product.quantity}
-                                    id={product.id}
-                                    updateProductQuantity={updateProductQuantity}
-                                ></ItemCount>
+                                <div className="col-2">
+                                    <ItemCount
+                                        count={product.quantity}
+                                        id={product.id}
+                                        updateProductQuantity={updateProductQuantity}
+                                        deleteProduct={deleteProduct}
+                                    ></ItemCount>
+                                </div>
                             </div>
                         )
                     })

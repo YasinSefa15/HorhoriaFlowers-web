@@ -54,8 +54,38 @@ const updateLoggedInUserCart = ({input}) => {
         })
 }
 
+const deleteLoggedInUserProduct = ({input}) => {
+    axios.delete(api_helper.api_url + api_helper.cart.delete, {
+            data: {
+                product_id: input.product_id,
+            },
+            headers: {
+                'Authorization': `Bearer: ${localStorage.getItem("secret")}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            }
+        }
+    )
+        .then(res => {
+            NotificationHelper({
+                httpStatus: res.status,
+                title: "Ürün sepetten silindi",
+            })
+
+        })
+        .catch(error => {
+            console.log(error);
+            NotificationHelper({
+                httpStatus: error.response.status,
+                title: error.response.statusText,
+                message: error.response.data.message,
+            })
+        })
+}
+
 
 export {
     updateLoggedInUserCart,
-    readLoggedInUserCart
+    readLoggedInUserCart,
+    deleteLoggedInUserProduct
 }
