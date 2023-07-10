@@ -1,4 +1,4 @@
-import TopNavigationBar from "../../components/TopNavigationBar";
+import TopNavigationBar from "../../components/Home/TopNavigationBar";
 import React from "react";
 import {Outlet} from "react-router-dom";
 import Footer from "../../components/Home/footer/Footer";

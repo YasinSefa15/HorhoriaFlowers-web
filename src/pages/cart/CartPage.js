@@ -9,7 +9,7 @@ import {
     readLoggedInUserCart,
     updateLoggedInUserCart
 } from "../../api.requests/cart/CartRequests";
-import TopNavigationBar from "../../components/TopNavigationBar";
+import TopNavigationBar from "../../components/Home/TopNavigationBar";
 
 
 export default function CartPage() {

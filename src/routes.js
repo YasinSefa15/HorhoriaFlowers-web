@@ -15,6 +15,7 @@ import AdminRoute from "./components/AdminRoute";
 import ProductSearch from "./pages/product/ProductSearch";
 import CartPage from "./pages/cart/CartPage";
 import ProductEdit from "./pages/admin/product/ProductEdit";
+import RegisterPage from "./pages/auth/RegisterPage";
 
 const routes = [
     {
@@ -56,6 +57,10 @@ const routes = [
             {
                 path: 'login',
                 element: <LoginPage></LoginPage>
+            },
+            {
+                path: 'register',
+                element: <RegisterPage></RegisterPage>
             }
         ]
     },

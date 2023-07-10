@@ -3,6 +3,7 @@ import {Store} from "react-notifications-component";
 export default function NotificationHelper(params) {
     switch (params.httpStatus) {
         case 200:
+        case 201:
             Store.addNotification({
                 title: params.title,
                 message: params.message,

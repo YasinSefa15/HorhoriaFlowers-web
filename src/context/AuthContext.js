@@ -4,15 +4,19 @@ const Context = createContext();
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || false);
+    const [secret, setSecret] = useState(JSON.parse(localStorage.getItem('secret')) || "");
 
     const data = {
         user,
-        setUser
+        setUser,
+        secret,
+        setSecret
     }
 
     useEffect(() => {
         localStorage.setItem("user", JSON.stringify(user))
-    }, [user])
+        localStorage.setItem("token", JSON.stringify(secret))
+    }, [user,secret])
 
 
     return (
