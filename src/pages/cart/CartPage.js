@@ -1,8 +1,5 @@
 import React from 'react';
-import "../../styles/pages/Products.css"
-import CartProduct from "./CartProduct";
 import "../../styles/pages/Cart.css"
-import 'reactjs-popup/dist/index.css';
 import ItemCount from "../../components/cart/ItemCount";
 import {
     deleteLoggedInUserProduct,
@@ -10,24 +7,42 @@ import {
     updateLoggedInUserCart
 } from "../../api.requests/cart/CartRequests";
 import TopNavigationBar from "../../components/Home/TopNavigationBar";
+import {useAuth} from "../../context/AuthContext";
 
 
 export default function CartPage() {
     const [products, setProducts] = React.useState([])
     const [updated, setUpdated] = React.useState(false)
+    const [subTotal, setSubTotal] = React.useState(parseInt(0))
+    const [total, setTotal] = React.useState(parseInt(0))
+    const {secret} = useAuth()
+
 
     React.useEffect(() => {
-        readLoggedInUserCart({setProducts})
+        readLoggedInUserCart({setProducts, secret})
     }, [])
 
+    React.useEffect(() => {
+        let total = 0;
+        products.map((product, index) => {
+            total += product.new_price * product.quantity
+        })
+        setSubTotal(total)
+        setTotal(total + 20 + 20)
+    }, [subTotal, products])
 
-    const updateProductQuantity = (id, quantity) => {
+    const updateTotal = (price, quantity) => {
+        setSubTotal(subTotal + (price * quantity))
+        setTotal(subTotal + 20 + 20) //todo vergi + kargo
+    }
+
+    const updateProductQuantity = (product_id, quantity) => {
         if (quantity < 1) {
             return
         }
         products.map((product, index) => {
-            if (product.id === id) {
-                updateLoggedInUserCart({input: {id: id, quantity: quantity}})
+            if (product.product_id === product_id) {
+                updateLoggedInUserCart({product_id: product_id, quantity: quantity, secret})
                 setUpdated(!updated)
                 return product.quantity = quantity;
             }
@@ -35,10 +50,11 @@ export default function CartPage() {
         })
     }
 
-    const deleteProduct = (id) => {
-        setProducts(products.filter( (product, index) => {
-            if (product.id === id) {
-                deleteLoggedInUserProduct({input: {product_id: id}})
+    const deleteProduct = (product_id) => {
+        setProducts(products.filter((product, index) => {
+            if (product.product_id === product_id) {
+                console.log("asdasd")
+                deleteLoggedInUserProduct({product_id: product_id, secret})
                 //setUpdated(!updated)
                 return false;
             }
@@ -50,33 +66,82 @@ export default function CartPage() {
         <>
             <TopNavigationBar/>
 
+            <div className="small-container cart-page">
+                <table>
+                    <tr>
+                        <th>Ürün Detayı</th>
+                        <th>Miktar</th>
+                        <th>Ara Tutar</th>
+                    </tr>
+                    {products.map((product, index) => (
+                        <>
+                            <tr>
+                                <td>
+                                    <div className="cart-info">
+                                        <img
+                                            src={product.image.file_path}
+                                        ></img>
+                                        <div>
+                                            <p>{product.title}</p>
+                                            <small>Fiyat: {product.new_price}₺</small>
+                                            <br/>
+                                            <a href={"#"}
+                                               onClick={(e) => deleteProduct(product.product_id)}
+                                            >
+                                                Sepetten Çıkar
+                                            </a>
+                                        </div>
+                                    </div>
 
-            <div className="container cart-container">
-
-                {(() => (
-                    products.map((product, index) => {
-                        console.log(product.file_path)
-                        return (
-                            <div className="row cart-product">
-                                <div className="col-4">
-                                    <CartProduct
-                                        product={product}
-                                        key={index}
-                                    />
-                                </div>
-
-                                <div className="col-2">
+                                </td>
+                                <td>
                                     <ItemCount
                                         count={product.quantity}
-                                        id={product.id}
+                                        id={product.product_id}
+                                        price={product.new_price}
                                         updateProductQuantity={updateProductQuantity}
-                                        deleteProduct={deleteProduct}
+                                        updateTotal={updateTotal}
                                     ></ItemCount>
-                                </div>
-                            </div>
-                        )
-                    })
-                ))()}
+                                </td>
+                                <td>{product.quantity * product.new_price} ₺</td>
+                            </tr>
+                        </>
+                    ))}
+
+                </table>
+
+                <div className={"total-price"}>
+
+                    {((() => {
+                        if (products.length === 0) {
+                            return <h2>Cart is empty</h2>
+                        }
+                        return <>
+                            <table>
+                                <tr>
+                                    <td>Ara Toplam</td>
+                                    <td>{subTotal}₺</td>
+                                </tr>
+                                <tr>
+                                    <td>Vergi</td>
+                                    <td>20₺</td>
+                                </tr>
+                                <tr>
+                                    <td>Kargo Ücreti</td>
+                                    <td>20₺</td>
+                                </tr>
+                                <hr></hr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>{total}₺</td>
+                                </tr>
+                            </table>
+                        </>
+                    }))()}
+
+
+                </div>
+
             </div>
 
         </>

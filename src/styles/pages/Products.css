@@ -1,82 +1,56 @@
-.productsContainer {
+
+
+.product-search-container .productsContainer {
     /*max-width: 1170px;*/
-    display: grid;
-    grid-column-gap: 10px;
-    grid-row-gap: 30px;
-    grid-template-columns: repeat(auto-fit, 250px);
-    grid-template-rows: repeat(auto-fit, minmax(100px, min-content));
-    width: 100%;
-
-    margin-left: 60px;
-    margin-right: 10px;
-    margin-top: 100px;
-    margin-bottom: 100px;
-}
-
-.productCard {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 250px;
-    height: 320px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-wrap: break-word;
-    text-align: center;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 15px;
+    flex-wrap: wrap;
+    margin-left: 30px;
+    margin-top: 100px;
 }
 
-
-.cardTitle {
+.product-search-container .productsContainer .productCard .cardTitle {
     font-size: 1rem;
     font-weight: 600;
 }
 
-.cardPrice {
-    font-size: 1.2rem;
+.product-search-container .productsContainer .productCard .cardPrice {
+    font-size: 1.1rem;
     font-weight: 600;
 }
 
-.orderButton {
+.product-search-container .productsContainer .productCard .orderButton {
     width: 100%;
     font-size: 1rem;
     font-weight: 600;
 }
 
-.productCard:hover {
+.product-search-container .productsContainer .productCard .productCard:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 
-.image-container{
-    display: flex;
+.product-search-container .productsContainer .productCard .image-container{
     padding: 0 0;
     margin: 0 0 20px 0;
 }
 
 
-.productCard img {
-    width: 170px;
+.product-search-container .productsContainer .productCard img {
+    width: 160px;
     height: 180px;
     object-fit: cover;
     border-radius: 3px;
     position: absolute;
 }
 
-
 .image-indicator-container{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 170px;
+    width: 130px;
     height: 170px;
     justify-items: end;
     z-index: 1;
-    padding-left: 11px;
-    padding-right: 11px;
 }
 
 .image-indicator {
@@ -103,7 +77,6 @@
 }
 
 .image-indicator:hover > .chose-pic{
-
     opacity: 0.8;
     border-radius: 5px;
 }

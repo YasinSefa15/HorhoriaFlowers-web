@@ -5,7 +5,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import ProfileLayout from "./pages/profile";
 import AuthLayout from "./pages/auth/AuthLayout";
 import LoginPage from "./pages/auth/LoginPage";
-import Index from "./pages/home";
 import Page404 from "./pages/error/Page404";
 import ProductDetail from "./pages/ProductDetail";
 import AdminLayout from "./pages/admin/AdminLayout";

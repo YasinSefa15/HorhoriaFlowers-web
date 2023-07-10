@@ -15,7 +15,6 @@ export default function LoginPage() {
 
         const form = e.target;
         const formData = new FormData(form);
-        console.log("formData", formData)
 
         try {
             const response = await axios.post(api_helper.api_url + api_helper.auth.login, formData);

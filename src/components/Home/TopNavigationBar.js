@@ -5,10 +5,10 @@ import {useAuth} from "../../context/AuthContext";
 export default function TopNavigationBar() {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    const {setUser,user} = useAuth();
+    const {setUser, user,setSecret} = useAuth();
 
     const logOut = () => {
-        setUser(false);
+        setUser(false); //secret is deleted in AuthProvider
     }
 
     return (
@@ -39,7 +39,12 @@ export default function TopNavigationBar() {
                             aria-label="Search"
                             style={{width: 400}}
                             onChange={(e) => setSearch(e.target.value)}
-                            onKeyPress={(e) => e.key === 'Enter' && navigate("/products?title=" + search)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault()
+                                    navigate("/products?title=" + search)
+                                }
+                            }}
                         />
                         <NavLink to={"/products?title=" + search} className="btn btn-outline-primary"><i
                             className="fa-solid fa-magnifying-glass"></i>
@@ -58,7 +63,7 @@ export default function TopNavigationBar() {
                                                  logOut();
                                              }
                                              }>
-                                        <i className="fa-solid fa-right-from-bracket" ></i>
+                                        <i className="fa-solid fa-right-from-bracket"></i>
                                     </NavLink>
 
 

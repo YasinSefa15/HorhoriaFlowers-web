@@ -1,6 +1,4 @@
-import TrashIcon from "../../assests/trash.svg";
-
-export default function ItemCount({count, id, updateProductQuantity, deleteProduct}) {
+export default function ItemCount({count, id, updateProductQuantity, updateTotal, price}) {
     return (
         <nav className="item-count-container">
             <div className=" row ">
@@ -9,6 +7,7 @@ export default function ItemCount({count, id, updateProductQuantity, deleteProdu
                         className={"page-item " + (count === 1 ? "disabled" : "")}
                         onClick={() => {
                             updateProductQuantity(id, count - 1)
+                            updateTotal(price, -1)
                         }}
                     >
                         <a className="page-link" href="#">-</a>
@@ -22,20 +21,12 @@ export default function ItemCount({count, id, updateProductQuantity, deleteProdu
                         className={"page-item "}
                         onClick={() => {
                             updateProductQuantity(id, count + 1)
+                            updateTotal(price, 1)
                         }}
                     >
                         <a className="page-link" href="#">+</a>
                     </li>
 
-
-                    <li style={{padding: "auto"}}>
-                        <img
-                            src={TrashIcon}
-                            onClick={() => {
-                                deleteProduct(id)
-                            }}
-                        ></img>
-                    </li>
                 </ul>
             </div>
         </nav>
