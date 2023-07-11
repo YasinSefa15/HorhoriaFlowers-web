@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import {useLocation} from "react-router-dom";
-import "../../styles/pages/Products.css"
+import "../../styles/pages/ProductSearch.css"
 import {api_helper} from "../../helpers/api_helper";
 import ProductCart from "../../components/ProductCart";
 import PageItems from "../../components/pagination/PageItems";
@@ -75,12 +75,13 @@ export default function ProductSearch() {
                 <div className="productsContainer">
                     {products.map(product => (
                         <ProductCart product={{
+                            id: product.id,
                             title: product.title,
                             slug: product.slug,
-                            category_id: product.category_id,
                             description: product.description,
-                            price: product.price,
-                            images: product.images
+                            old_price: product.old_price,
+                            new_price: product.new_price,
+                            images: product.images,
                         }}/>
                     ))}
 

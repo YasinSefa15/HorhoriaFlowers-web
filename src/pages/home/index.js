@@ -8,11 +8,10 @@ export default function HomePageLayout() {
     return (
         <>
             <TopNavigationBar></TopNavigationBar>
-            <div style={{display: "flex", marginBottom: "100px"}}>
+            <div style={{marginBottom: "20px"}}>
                 <Outlet></Outlet>
             </div>
             <Footer></Footer>
-
         </>
     )
 }

@@ -42,13 +42,25 @@ td img {
 
 .total-price {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.total-price table {
+.total-price table:first-child {
     border-top: 3px solid #ff523b;
-    width: 100%;
+    width: 30%;
     max-width: 650px;
+}
+
+
+.total-price table:last-child {
+    border-top: 3px solid #ff523b;
+    width: 60%;
+    max-width: 650px;
+}
+
+.total-price table:first-child td{
+    text-align: left;
 }
 
 td:last-child {
@@ -57,4 +69,8 @@ td:last-child {
 
 th:last-child {
     text-align: right;
+}
+
+.payment-coupon{
+
 }

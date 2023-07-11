@@ -117,25 +117,52 @@ export default function CartPage() {
                             return <h2>Cart is empty</h2>
                         }
                         return <>
-                            <table>
-                                <tr>
-                                    <td>Ara Toplam</td>
-                                    <td>{subTotal}₺</td>
-                                </tr>
-                                <tr>
-                                    <td>Vergi</td>
-                                    <td>20₺</td>
-                                </tr>
-                                <tr>
-                                    <td>Kargo Ücreti</td>
-                                    <td>20₺</td>
-                                </tr>
-                                <hr></hr>
-                                <tr>
-                                    <td>Total</td>
-                                    <td>{total}₺</td>
-                                </tr>
-                            </table>
+
+                                <table>
+                                    <th>
+                                        <td>Kupon</td>
+                                    </th>
+                                    <tr>
+                                        <td>
+                                            <div className="payment-coupon">
+                                                <label>Kupon Giriniz:</label>
+                                                <input type="text"></input>
+                                                <button>Ekle</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            <div>
+
+                            </div>
+
+                                <table>
+                                    <th>
+                                        Toplam
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <tr>
+                                        <td>Ara Toplam</td>
+                                        <td>{subTotal}₺</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vergi</td>
+                                        <td>20₺</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kargo Ücreti</td>
+                                        <td>20₺</td>
+                                    </tr>
+                                    <hr></hr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td>{total}₺</td>
+                                    </tr>
+                                </table>
+
                         </>
                     }))()}
 

@@ -1,13 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ImageComponent from "./ImageComponent";
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function ProductCart({product}) {
     const [visibleOrder, setVisibleOrder] = React.useState(0)
 
     return (
-
         <div className="productCard"
         >
             {(() => {
@@ -37,7 +36,6 @@ export default function ProductCart({product}) {
                                 )}
                             </div>
                         </div>
-
                     )
                 }
             })()}
@@ -45,7 +43,13 @@ export default function ProductCart({product}) {
 
             <h5 className="cardTitle">{product.title}</h5>
             <p className="cardPrice">{product.new_price}₺</p>
-            <NavLink to={"/products/" + product.slug} className="btn btn-outline-primary orderButton">İncele</NavLink>
+            <Link
+                to={"/products/" + product.slug}
+                state={{product: product}}
+                className="btn btn-outline-primary orderButton"
+            >
+                İncele
+            </Link>
 
         </div>
     )
