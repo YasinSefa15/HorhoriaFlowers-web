@@ -77,9 +77,40 @@ const deleteLoggedInUserProduct = ({product_id, secret}) => {
         })
 }
 
+const createLoggedInUserProduct = ({product_title,product_id, secret}) => {
+    const data = {
+        product_id: product_id,
+        quantity: 1
+    }
+    axios.post((api_helper.api_url + api_helper.carts.create), data, {
+            headers: {
+                'Authorization': `Bearer ${secret}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        }
+    )
+        .then(res => {
+            NotificationHelper({
+                httpStatus: res.status,
+                title: "Sepete eklendi",
+                message: product_title + " sepete eklendi"
+            })
+
+        })
+        .catch(error => {
+            //console.log(error);
+            NotificationHelper({
+                httpStatus: error.response.status,
+                title: error.response.data.message
+            })
+        })
+}
+
 
 export {
     updateLoggedInUserCart,
     readLoggedInUserCart,
-    deleteLoggedInUserProduct
+    deleteLoggedInUserProduct,
+    createLoggedInUserProduct
 }

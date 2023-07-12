@@ -2,12 +2,9 @@ import React from 'react';
 import axios from "axios";
 import {api_helper} from "../../../helpers/api_helper";
 import "../../../styles/pages/AdminProduct.css"
-import AdminProductsPage from "../../../components/admin/AdminProductsPage";
 import {NavLink, useNavigate, useParams} from "react-router-dom";
 import NotificationHelper from "../../../helpers/NotificationHelper";
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import PageItems from "../../../components/pagination/PageItems";
 
 export default function ProductAdmin() {
     const [totalPage, setTotalPage] = React.useState(1)
@@ -101,88 +98,6 @@ export default function ProductAdmin() {
     return (
         <>
 
-
-            <div className="navbar">
-                <div className="container-fluid ">
-
-
-                    <button>asds</button>
-
-                    <div
-                        className="col-4"
-                    >
-                        <input
-                            className="form-control  "
-                            type="search"
-                            placeholder="Aradığınız Ürünü Yazınız"
-                            aria-label="Search"
-                            style={{width: 400}}
-                            onChange={(e) => {
-                                setSearch(e.target.value)
-                                setCurrentPage(1)
-                            }}
-                            onKeyPress={(e) => e.key === 'Enter' &&
-                                setTitle(search) && setRequestedPage(1)
-                            }
-                        />
-
-                    </div>
-
-
-                    <NavLink
-                        to={"/admin/products?title=" + search}
-                        className="btn btn-outline-primary col-1"
-                        onClick={(e) => {
-                            setTitle(search)
-                        }}
-                    >
-                        Arat
-                    </NavLink>
-                </div>
-
-
-            </div>
-
-
-            <div className="productsContainer">
-
-                {products.map(product => (
-                    <AdminProductsPage
-                        product={product}
-                        deleteFunc={deleteProduct}
-                    />
-                ))}
-            </div>
-
-            <nav className="pagination-container">
-                <div className=" row justify-content-md-center">
-                    <ul className="pagination col-md-auto">
-                        <li
-                            className={"page-item " + (currentPage === 1 ? "disabled" : "")}
-                            onClick={() => {
-                                changeCurrentPage(-1)
-                            }}
-                        >
-                            <a className="page-link" href="#">Previous</a>
-                        </li>
-
-                        <PageItems pageCount={totalPage}
-                                   currentPage={requestedPage}
-                                   changeCurrentPage={changeCurrentPage}
-                        />
-
-                        <li
-                            className={"page-item " + (currentPage === totalPage ? "disabled" : "")}
-                            onClick={() => {
-                                changeCurrentPage(1)
-                            }}
-                        >
-                            <a className="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </div>
-
-            </nav>
         </>
     )
 }

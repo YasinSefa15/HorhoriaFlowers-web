@@ -10,7 +10,7 @@ export default function AdminProductsPage({product,deleteFunc}) {
     return (
 
         <div className="productCard">
-            {//<ImageComponent image={product.images[0] ?? {file_path: "x"}} className={"productImage"}/>
+            {//<ImageComponent image={search.images[0] ?? {file_path: "x"}} className={"productImage"}/>
                 //
             }
             <div className="title-area">

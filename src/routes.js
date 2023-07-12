@@ -1,20 +1,19 @@
 import HomePage from "./pages/home/HomePage";
 import HomePageLayout from "./pages/home";
-import ProductsPage from "./pages/ProductsPage";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfileLayout from "./pages/profile";
 import AuthLayout from "./pages/auth/AuthLayout";
 import LoginPage from "./pages/auth/LoginPage";
 import Page404 from "./pages/error/Page404";
-import ProductDetail from "./pages/ProductDetail";
+import ProductDetail from "./pages/product_detail/ProductDetail";
 import AdminLayout from "./pages/admin/AdminLayout";
 import ProductAdmin from "./pages/admin/product/ProductAdmin";
 import AdminPage from "./pages/admin/AdminPage";
 import AdminRoute from "./components/AdminRoute";
-import ProductSearch from "./pages/product/ProductSearch";
 import CartPage from "./pages/cart/CartPage";
 import ProductEdit from "./pages/admin/product/ProductEdit";
 import RegisterPage from "./pages/auth/RegisterPage";
+import Products from "./components/product_cart/Products";
 
 const routes = [
     {
@@ -27,7 +26,7 @@ const routes = [
             },
             {
                 path: '/categories/:slug',
-                element: <ProductsPage></ProductsPage>
+                element: <Products></Products>
             },
             {
                 path: '/products/:slug',
@@ -35,7 +34,7 @@ const routes = [
             },
             {
                 path: '/products',
-                element: <ProductSearch></ProductSearch>
+                element: <Products></Products>
             }
         ]
     },

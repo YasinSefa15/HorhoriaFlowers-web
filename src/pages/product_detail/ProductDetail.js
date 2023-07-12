@@ -1,13 +1,14 @@
 import React from "react";
 import {useLocation} from "react-router-dom";
 //import ProductDetail css
-import "../styles/pages/ProductDetail.css";
+import "../../styles/pages/ProductDetail.css";
 import {useState} from "react";
 
 export default function ProductDetail() {
-    const [mainImage, setMainImage] = useState(0)
     const location = useLocation()
     const product = location.state.product
+    const [mainImage, setMainImage] = useState(product.images[0].file_path)
+    console.log(location.state)
 
     const changeImage = (id) => {
         setMainImage(product.images[id].file_path)
@@ -36,16 +37,6 @@ export default function ProductDetail() {
                                 />
                             </div>
 
-                            <div className="small-img-col">
-                                <img
-                                    src={product.images[1].file_path}
-                                    alt={product.title}
-                                    width="100%"
-                                    onClick={() => {
-                                        changeImage(1)
-                                    }}
-                                />
-                            </div>
                         </div>
                     </div>
 

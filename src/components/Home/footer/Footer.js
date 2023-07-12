@@ -1,6 +1,4 @@
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
-
-//imprt footer.css
+import {NavLink} from "react-router-dom";
 import "./footer.css";
 
 export default function Footer() {

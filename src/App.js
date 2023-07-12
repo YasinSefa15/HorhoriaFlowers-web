@@ -1,7 +1,7 @@
 import {useRoutes} from 'react-router-dom'
 import routes from "./routes";
 import {ReactNotifications} from "react-notifications-component";
-
+import './App.css'
 function App() {
     return (
         <>
