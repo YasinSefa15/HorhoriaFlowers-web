@@ -1,7 +1,7 @@
 import React from "react";
 import {useLocation} from "react-router-dom";
 //import ProductDetail css
-import "../../styles/pages/ProductDetail.css";
+import "../../../styles/pages/user/ProductDetail.css";
 import {useState} from "react";
 
 export default function ProductDetail() {

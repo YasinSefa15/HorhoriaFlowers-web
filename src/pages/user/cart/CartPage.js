@@ -1,13 +1,13 @@
 import React from 'react';
-import "../../styles/pages/Cart.css"
-import ItemCount from "../../components/cart/ItemCount";
+import "../../../styles/pages/user/Cart.css"
+import ItemCount from "../../../components/user/cart/ItemCount";
 import {
     deleteLoggedInUserProduct,
     readLoggedInUserCart,
     updateLoggedInUserCart
-} from "../../api.requests/cart/CartRequests";
-import TopNavigationBar from "../../components/Home/TopNavigationBar";
-import {useAuth} from "../../context/AuthContext";
+} from "../../../api.requests/cart/CartRequests";
+import TopNavigationBar from "../../../components/user/Home/TopNavigationBar";
+import {useAuth} from "../../../context/AuthContext";
 
 
 export default function CartPage() {

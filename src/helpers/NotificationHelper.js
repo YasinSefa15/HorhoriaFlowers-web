@@ -79,5 +79,7 @@ export default function NotificationHelper(params) {
                     onScreen: true
                 }
             })
+            break;
+        default:
     }
 }

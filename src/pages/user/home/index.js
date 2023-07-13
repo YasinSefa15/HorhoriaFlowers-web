@@ -1,7 +1,7 @@
-import TopNavigationBar from "../../components/Home/TopNavigationBar";
+import TopNavigationBar from "../../../components/user/Home/TopNavigationBar";
 import React from "react";
 import {Outlet} from "react-router-dom";
-import Footer from "../../components/Home/footer/Footer";
+import Footer from "../../../components/user/Home/footer/Footer";
 
 
 export default function HomePageLayout() {

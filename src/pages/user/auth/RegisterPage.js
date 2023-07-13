@@ -1,11 +1,20 @@
-import {useAuth} from "../../context/AuthContext";
+import {useAuth} from "../../../context/AuthContext";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
-import {api_helper} from "../../helpers/api_helper";
-import NotificationHelper from "../../helpers/NotificationHelper";
+import {api_helper} from "../../../helpers/api_helper";
+import NotificationHelper from "../../../helpers/NotificationHelper";
+import React from "react";
 
 export default function RegisterPage() {
     const navigate = useNavigate()
+    const {user} = useAuth()
+
+
+    React.useEffect(() => {
+        if (user) {
+            navigate("/products?title=&page=1")
+        }
+    })
 
     const handleSubmit = async (e) => {
         e.preventDefault();

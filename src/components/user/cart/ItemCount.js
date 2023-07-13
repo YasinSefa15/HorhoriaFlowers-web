@@ -10,11 +10,11 @@ export default function ItemCount({count, id, updateProductQuantity, updateTotal
                             updateTotal(price, -1)
                         }}
                     >
-                        <a className="page-link" href="#">-</a>
+                        <span className="page-link">-</span>
                     </li>
 
                     <li>
-                        <a className="page-link disabled">{count}</a>
+                        <span className="page-link">{count}</span>
                     </li>
 
                     <li
@@ -24,9 +24,8 @@ export default function ItemCount({count, id, updateProductQuantity, updateTotal
                             updateTotal(price, 1)
                         }}
                     >
-                        <a className="page-link" href="#">+</a>
+                        <span className="page-link">+</span>
                     </li>
-
                 </ul>
             </div>
         </nav>

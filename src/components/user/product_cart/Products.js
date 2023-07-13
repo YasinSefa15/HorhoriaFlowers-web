@@ -1,16 +1,16 @@
 import React from 'react';
 import axios from "axios";
-import {useLocation, useNavigate} from "react-router-dom";
-import {api_helper} from "../../helpers/api_helper";
-import ProductCart from "../../components/product_cart/ProductCart";
-import {createLoggedInUserProduct} from "../../api.requests/cart/CartRequests";
-import {useAuth} from "../../context/AuthContext";
-import CustomPagination from "../../components/pagination/CustomPagination";
+import {useNavigate} from "react-router-dom";
+import {api_helper} from "../../../helpers/api_helper";
+import ProductCart from "./ProductCart";
+import {createLoggedInUserProduct} from "../../../api.requests/cart/CartRequests";
+import {useAuth} from "../../../context/AuthContext";
+import CustomPagination from "../pagination/CustomPagination";
 
 export default function Products() {
     const [totalPage, setTotalPage] = React.useState(1)
     const [currentPage, setCurrentPage] = React.useState(1)
-    const [requestedPage, setRequestedPage] = React.useState(1)
+    const [requestedPage, setRequestedPage] = React.useState((new URLSearchParams(window.location.search)).get("page") || 1)
     const [products, setProducts] = React.useState([])
     const {secret} = useAuth();
     const navigate = useNavigate();
@@ -29,6 +29,7 @@ export default function Products() {
     };
 
     const urlParams = new URLSearchParams(window.location.search);
+    //setRequestedPage(urlParams.get("page") || 1)
     const title = urlParams.get("title")
 
     let params = {
@@ -56,7 +57,7 @@ export default function Products() {
                     result.push(product)
                 })
                 setProducts(result)
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({top: 0, behavior: 'smooth'});
             })
             .catch(error => {
                 console.log("error");
@@ -80,7 +81,6 @@ export default function Products() {
 
 
     return (
-
         <>
             <div className="container mt-4">
                 <div
@@ -118,7 +118,6 @@ export default function Products() {
                     changeCurrentPage={changeCurrentPage}
                 ></CustomPagination>
             </div>
-
         </>
     )
 

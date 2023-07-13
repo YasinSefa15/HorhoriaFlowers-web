@@ -1,10 +1,10 @@
 import {NavLink} from "react-router-dom";
-import {api_helper} from "../helpers/api_helper";
+import {api_helper} from "../../helpers/api_helper";
 import React from "react";
 import ChildCategory from "./ChildCategory";
 import "../styles/pages/CategoriesList.css"
-import minusLogo from '../minus.svg'
-import plusLogo from '../plus.svg'
+import minusLogo from '../../minus.svg'
+import plusLogo from '../../plus.svg'
 
 export default function CategoriesListComponent({category}) {
     const [childVisible, setChildVisible] = React.useState(false)

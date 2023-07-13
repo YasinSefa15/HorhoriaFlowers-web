@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {NavLink} from "react-router-dom";
-import ImageComponent from "../ImageComponent";
+import ImageComponent from "../user/ImageComponent";
 
 
 export default function AdminProductsPage({product,deleteFunc}) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from "axios";
 import {api_helper} from "../../../helpers/api_helper";
-import "../../../styles/pages/AdminProduct.css"
+import "../../../styles/pages/admin/AdminProduct.css"
 import {NavLink, useNavigate, useParams} from "react-router-dom";
 import NotificationHelper from "../../../helpers/NotificationHelper";
 import 'reactjs-popup/dist/index.css';

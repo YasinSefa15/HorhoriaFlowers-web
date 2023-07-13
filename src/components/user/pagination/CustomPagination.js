@@ -1,6 +1,6 @@
 import PageItems from "./PageItems";
 import React from "react";
-import uuidGenerator from "../../helpers/uuidGenerator";
+import uuidGenerator from "../../../helpers/uuidGenerator";
 
 export default function CustomPagination({currentPage, pageCount, changeCurrentPage}) {
     return (

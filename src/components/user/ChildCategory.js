@@ -1,7 +1,7 @@
 import {NavLink} from "react-router-dom";
 import React from "react";
-import minusLogo from '../minus.svg'
-import plusLogo from "../plus.svg";
+import minusLogo from '../../minus.svg'
+import plusLogo from "../../plus.svg";
 
 export default function ChildCategory({category, parentVisible}) {
     const [childVisible, setChildVisible] = React.useState(false)

@@ -1,19 +1,23 @@
-import HomePage from "./pages/home/HomePage";
-import HomePageLayout from "./pages/home";
-import PrivateRoute from "./components/PrivateRoute";
-import ProfileLayout from "./pages/profile";
-import AuthLayout from "./pages/auth/AuthLayout";
-import LoginPage from "./pages/auth/LoginPage";
-import Page404 from "./pages/error/Page404";
-import ProductDetail from "./pages/product_detail/ProductDetail";
+import HomePage from "./pages/user/home/HomePage";
+import HomePageLayout from "./pages/user/home";
+import PrivateRoute from "./components/user/PrivateRoute";
+import ProfileLayout from "./pages/user/profile";
+import AuthLayout from "./pages/user/auth/AuthLayout";
+import LoginPage from "./pages/user/auth/LoginPage";
+import Page404 from "./pages/user/error/Page404";
+import ProductDetail from "./pages/user/product_detail/ProductDetail";
 import AdminLayout from "./pages/admin/AdminLayout";
 import ProductAdmin from "./pages/admin/product/ProductAdmin";
 import AdminPage from "./pages/admin/AdminPage";
-import AdminRoute from "./components/AdminRoute";
-import CartPage from "./pages/cart/CartPage";
+import AdminRoute from "./components/user/AdminRoute";
+import CartPage from "./pages/user/cart/CartPage";
 import ProductEdit from "./pages/admin/product/ProductEdit";
-import RegisterPage from "./pages/auth/RegisterPage";
-import Products from "./components/product_cart/Products";
+import RegisterPage from "./pages/user/auth/RegisterPage";
+import Products from "./components/user/product_cart/Products";
+import ProfileOrders from "./components/user/profile/ProfileOrders";
+import ProfileAddresses from "./components/user/profile/ProfileAddresses";
+import ProfileShippingStatus from "./components/user/profile/ProfileShippingStatus";
+import ProfileUserInformation from "./components/user/profile/ProfileUserInformation";
 
 const routes = [
     {
@@ -46,7 +50,25 @@ const routes = [
     {
         path: '/profile',
         auth: true,
-        element: <ProfileLayout/>
+        element: <ProfileLayout></ProfileLayout>,
+        children: [
+            {
+                index: true,
+                element: <ProfileUserInformation></ProfileUserInformation>
+            },
+            {
+                path: 'orders',
+                element: <ProfileOrders></ProfileOrders>
+            },
+            {
+                path: 'addresses',
+                element: <ProfileAddresses></ProfileAddresses>
+            },
+            {
+                path: 'shipping-status',
+                element: <ProfileShippingStatus></ProfileShippingStatus>
+            }
+        ]
     },
     {
         path: '/auth',

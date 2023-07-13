@@ -1,14 +1,27 @@
-import {useAuth} from "../../context/AuthContext";
+import {useAuth} from "../../../context/AuthContext";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import "./LoginPage.css"
 import axios from "axios";
-import {api_helper} from "../../helpers/api_helper";
-import NotificationHelper from "../../helpers/NotificationHelper";
+import {api_helper} from "../../../helpers/api_helper";
+import NotificationHelper from "../../../helpers/NotificationHelper";
+import React from "react";
 
 export default function LoginPage() {
-    const {setUser,setSecret} = useAuth()
+    const {user, setUser, setSecret} = useAuth()
     const navigate = useNavigate()
-    const location = useLocation() //
+
+
+    React.useEffect(() => {
+        if (user) {
+            navigate("/products?title=&page=1")
+        }
+    })
+
+    if (user) {
+        navigate("/products?title=&page=1")
+        console.log("user", user)
+    }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,8 +39,11 @@ export default function LoginPage() {
                     first_name: data.first_name,
                     last_name: data.last_name,
                 })
+
                 setSecret(response.data.token)
-                navigate(location?.state?.return_url || "/")
+
+                navigate("/products?title=&page=1")
+
                 NotificationHelper({
                     httpStatus: response.status,
                     title: response.data.message
