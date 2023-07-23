@@ -34,7 +34,6 @@ const updateLoggedInUserCart = ({product_id, quantity, secret}) => {
         {
             headers: {
                 'Authorization': `Bearer ${secret}`,
-                'Content-Type': 'application/json',
                 'Accept': 'application/json',
             }
         })
@@ -77,7 +76,7 @@ const deleteLoggedInUserProduct = ({product_id, secret}) => {
         })
 }
 
-const createLoggedInUserProduct = ({product_title,product_id, secret}) => {
+const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
     const data = {
         product_id: product_id,
         quantity: 1

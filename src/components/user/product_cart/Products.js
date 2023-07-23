@@ -61,6 +61,7 @@ export default function Products() {
             })
             .catch(error => {
                 console.log("error");
+                console.log(error)
             })
     }, [title, requestedPage])
 
