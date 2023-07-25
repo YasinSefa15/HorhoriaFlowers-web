@@ -1,6 +1,7 @@
 import {NavLink, useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import {useAuth} from "../../../../context/AuthContext";
+import CategoriesDropdown from "./CategoriesDropdown";
 
 
 export default function TopNavigationBar() {
@@ -25,38 +26,44 @@ export default function TopNavigationBar() {
                     backgroundColor: "#f8f7f7",
                 }}>
 
-                <div className="container-fluid row  ">
+                <div className="container-fluid row">
 
                     <NavLink
                         to="/"
-                        className="navbar-brand col-4 col-md-2"
+                        className="navbar-brand col-2 col-sm-2 col-md-2 fw-bold"
                     >
                         Horhoria
                     </NavLink>
 
 
+                    <div className={"col-4 col-sm-4 col-md-5 container"}>
+
                     <form
-                        className="d-flex col-md-6 justify-content-center align-items-center"
+                        className="d-flex justify-content-center align-items-center "
                         role="search"
                     >
-                        <input
-                            className="form-control me-2"
-                            type="search"
-                            placeholder="Aradığınız Ürünü Yazınız"
-                            aria-label="Search"
-                            style={{width: 400}}
-                            onChange={(e) => setSearch(e.target.value)}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    e.preventDefault()
-                                    navigate("/products?title=" + search)
-                                }
-                            }}
-                        />
-                        <NavLink to={"/products?title=" + search} className="btn btn-outline-primary ">
-                            <i className="fa-solid fa-magnifying-glass"></i>
-                        </NavLink>
+                        <div className="col-11 col-sm-10">
+                            <input
+                                className="form-control me-2 "
+                                type="search"
+                                placeholder="Aradığınız Ürünü Yazınız"
+                                aria-label="Search"
+                                onChange={(e) => setSearch(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        e.preventDefault()
+                                        navigate("/products?title=" + search)
+                                    }
+                                }}
+                            />
+                        </div>
+                        <div className={"col-1 col-sm-2"}>
+                            <NavLink to={"/products?title=" + search} className="btn btn-outline-primary ">
+                                <i className="fa-solid fa-magnifying-glass"></i>
+                            </NavLink>
+                        </div>
                     </form>
+                    </div>
 
 
                     {user ? (
@@ -71,51 +78,33 @@ export default function TopNavigationBar() {
                         </>
                     ) : (
                         <>
-                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span className="navbar-toggler-icon"></span>
-                            </button>
+                            <div className="col-3 col-sm-3 col-md-2">
+                                <CategoriesDropdown></CategoriesDropdown>
+                            </div>
 
                             <div
-                                className="collapse navbar-collapse col-md-4 row " id="navbarSupportedContent"
-                            >
-                                <ul
-                                    className="navbar-nav me-auto mb-2 mb-lg-0 "
-                                >
-                                    <li className="nav-item col-md-4 ">
-                                        <div className="dropdown " onMouseEnter={() => setIsDropdownOpen(true)}
-                                             onMouseLeave={() => setIsDropdownOpen(false)}
-                                             style={{position: "relative"}}>
-                                            <a className="navbar-brand" role="button" data-bs-toggle="dropdown"
-                                               aria-expanded={isDropdownOpen}>
-                                                Kategoriler
-                                            </a>
-                                            <ul className={`dropdown-menu${isDropdownOpen ? " show" : ""}`}>
-                                                <li><NavLink className="dropdown-item"
-                                                             to="/categories/deneme">Deneme</NavLink></li>
-                                                <li><NavLink className="dropdown-item" to="/categories/category2">Kategori
-                                                    2</NavLink></li>
-                                                <li><NavLink className="dropdown-item" to="/categories/category3">Kategori
-                                                    3</NavLink></li>
-                                            </ul>
-                                        </div>
+                                className={"col-1 col-sm-1 navbar-item cursor-pointer"}
+                                onClick={() => {
+                                    navigate("/auth/login");
+                                }}>
+                                <div className={"d-flex align-items-center justify-content-between"}>
+                                    <div className={"d-none d-md-block"}>Kargo Takip</div>
+                                    <i className="fa-solid fa-truck"></i>
+                                </div>
+                            </div>
 
-
-                                    </li>
-
-                                    <li className="nav-item col-md-4 ">
-                                        <NavLink className="navbar-link" to="/profile"
-                                                 id="navbarSupportedContent"> Giriş Yap</NavLink>
-                                    </li>
-                                    <li className="nav-item col-md-4">
-
-                                        <NavLink className="navbar-link" to="/auth/register"
-                                                 id="navbarSupportedContent"> Kayıt Ol</NavLink>
-                                    </li>
-                                </ul>
+                            <div
+                                className={"col-1 col-sm-1 navbar-item cursor-pointer "}
+                                onClick={() => {
+                                    navigate("/auth/login");
+                                }}>
+                                <div className={"d-flex align-items-center justify-content-between"}>
+                                    <div className={"d-none d-md-block"}>Giriş Yap</div>
+                                    <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                                </div>
                             </div>
                         </>
+
                     )}
                 </div>
             </nav>
