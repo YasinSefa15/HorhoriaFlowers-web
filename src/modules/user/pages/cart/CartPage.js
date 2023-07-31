@@ -15,21 +15,57 @@ export default function CartPage() {
     const [updated, setUpdated] = React.useState(false)
     const [subTotal, setSubTotal] = React.useState(parseInt(0))
     const [total, setTotal] = React.useState(parseInt(0))
-    const {secret} = useAuth()
+    const {secret, setCartProducts} = useAuth();
 
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     React.useEffect(() => {
-        readLoggedInUserCart({setProducts, secret})
+        const loadCartProducts = async () => {
+            await readLoggedInUserCart({setProducts: setProducts, secret: secret});
+            console.log("cart products loaded");
+            setCartProducts(products)
+        };
+        const localCartProducts = localStorage.getItem("cartProducts");
+        if (localCartProducts) {
+            try {
+                // Parse the JSON data from local storage
+                const parsedCartProducts = JSON.parse(localCartProducts);
+                if (Array.isArray(parsedCartProducts)) {
+                    setProducts(parsedCartProducts);
+
+                } else {
+                    loadCartProducts().then(r => {
+                        setCartProducts(products)
+                    });
+                }
+                console.log("cart products loaded yyy");
+            } catch (error) {
+                console.error("Error parsing cartProducts from local storage:", error);
+                loadCartProducts().then(r => {
+                    setCartProducts(products)
+                });
+            }
+        } else {
+            // If not available in local storage, fetch from server
+
+            loadCartProducts().then(r => {
+                //setCartProducts(products)
+            });
+        }
     }, [])
 
     React.useEffect(() => {
         let total = 0;
+        console.log("products", products)
+
         products.map((product, index) => {
             total += product.new_price * product.quantity
         })
         setSubTotal(total)
         setTotal(total + 20 + 20)
-    }, [subTotal, products])
+
+    }, [products])
+
 
     const updateTotal = (price, quantity) => {
         setSubTotal(subTotal + (price * quantity))
@@ -40,21 +76,28 @@ export default function CartPage() {
         if (quantity < 1) {
             return
         }
-        products.map((product, index) => {
+
+        const a = products.map((product, index) => {
             if (product.product_id === product_id) {
-                updateLoggedInUserCart({product_id: product_id, quantity: quantity, secret})
-                setUpdated(!updated)
-                return product.quantity = quantity;
+                updateLoggedInUserCart({product_id: product_id, quantity: quantity, secret});
+                return {...product, quantity: quantity}
             }
-            return product
-        })
+            return product;
+        });
+
+        setProducts(a)
+        setCartProducts(a)
+
+        // Update the cartProducts in the context with the new quantity
+
     }
 
     const deleteProduct = (product_id) => {
         setProducts(products.filter((product, index) => {
             if (product.product_id === product_id) {
-                console.log("asdasd")
                 deleteLoggedInUserProduct({product_id: product_id, secret})
+                //localden
+                setCartProducts(products.filter((product, index) => product.product_id !== product_id))
                 //setUpdated(!updated)
                 return false;
             }
@@ -73,7 +116,7 @@ export default function CartPage() {
                         <th>Miktar</th>
                         <th>Ara Tutar</th>
                     </tr>
-                    {products.map((product, index) => (
+                    {products.map((product) => (
                         <>
                             <tr>
                                 <td>
@@ -118,50 +161,50 @@ export default function CartPage() {
                         }
                         return <>
 
-                                <table>
-                                    <th>
-                                        <td>Kupon</td>
-                                    </th>
-                                    <tr>
-                                        <td>
-                                            <div className="payment-coupon">
-                                                <label>Kupon Giriniz:</label>
-                                                <input type="text"></input>
-                                                <button>Ekle</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                            <table>
+                                <th>
+                                    <td>Kupon</td>
+                                </th>
+                                <tr>
+                                    <td>
+                                        <div className="payment-coupon">
+                                            <label>Kupon Giriniz:</label>
+                                            <input type="text"></input>
+                                            <button>Ekle</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
 
                             <div>
 
                             </div>
 
-                                <table>
-                                    <th>
-                                        Toplam
-                                    </th>
-                                    <th>
+                            <table>
+                                <th>
+                                    Toplam
+                                </th>
+                                <th>
 
-                                    </th>
-                                    <tr>
-                                        <td>Ara Toplam</td>
-                                        <td>{subTotal}₺</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vergi</td>
-                                        <td>20₺</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Kargo Ücreti</td>
-                                        <td>20₺</td>
-                                    </tr>
-                                    <hr></hr>
-                                    <tr>
-                                        <td>Total</td>
-                                        <td>{total}₺</td>
-                                    </tr>
-                                </table>
+                                </th>
+                                <tr>
+                                    <td>Ara Toplam</td>
+                                    <td>{subTotal}₺</td>
+                                </tr>
+                                <tr>
+                                    <td>Vergi</td>
+                                    <td>20₺</td>
+                                </tr>
+                                <tr>
+                                    <td>Kargo Ücreti</td>
+                                    <td>20₺</td>
+                                </tr>
+                                <hr></hr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>{total}₺</td>
+                                </tr>
+                            </table>
 
                         </>
                     }))()}

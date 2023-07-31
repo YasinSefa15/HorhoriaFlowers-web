@@ -8,6 +8,10 @@
     cursor: pointer;
 }
 
+.sproduct{
+    margin-left: 1500px;
+}
+
 .sproduct select{
     display: block;
     padding: 5px 10px;

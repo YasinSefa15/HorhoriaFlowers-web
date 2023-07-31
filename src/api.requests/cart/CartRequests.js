@@ -2,7 +2,6 @@ import axios from "axios";
 import {api_helper} from "../../helpers/api_helper";
 import NotificationHelper from "../../helpers/NotificationHelper";
 
-
 const readLoggedInUserCart = ({setProducts, secret}) => {
     axios.get(api_helper.api_url + api_helper.carts.view, {
         //add authorization header
@@ -13,6 +12,7 @@ const readLoggedInUserCart = ({setProducts, secret}) => {
         }
     })
         .then(res => {
+            console.log("db: read cart")
             let result = [];
             res.data.data.map((product, index) => {
                 result.push(product)
@@ -20,6 +20,7 @@ const readLoggedInUserCart = ({setProducts, secret}) => {
             setProducts(result)
         })
         .catch(error => {
+            console.log("2")
             NotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message,
@@ -41,7 +42,7 @@ const updateLoggedInUserCart = ({product_id, quantity, secret}) => {
 
         })
         .catch(error => {
-            //console.log(error);
+            console.log(error);
             NotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.statusText,
@@ -95,10 +96,40 @@ const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
                 title: "Sepete eklendi",
                 message: product_title + " sepete eklendi"
             })
+        })
+        .catch(error => {
+            console.log(error);
+            NotificationHelper({
+                httpStatus: error.response.status,
+                title: error.response.data.message
+            })
+        })
+}
+
+export default function addCartInDetail(title, id, quantity, secret) {
+    const data = {
+        product_id: id,
+        quantity: quantity
+    }
+
+    axios.post((api_helper.api_url + api_helper.carts.create), data, {
+            headers: {
+                'Authorization': `Bearer ${secret}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        }
+    )
+        .then(res => {
+            NotificationHelper({
+                httpStatus: res.status,
+                title: "Sepete eklendi",
+                message: title + " sepete eklendi"
+            })
 
         })
         .catch(error => {
-            //console.log(error);
+            console.log(error);
             NotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message

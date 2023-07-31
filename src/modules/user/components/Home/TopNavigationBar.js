@@ -75,12 +75,26 @@ export default function TopNavigationBar() {
                             }}>
                                 <i className="fa-solid fa-right-from-bracket"></i>
                             </NavLink>
+                            <div
+                                className={"col-1 col-sm-1 navbar-item cursor-pointer "}
+                                onClick={() => {
+                                    navigate("/auth/login");
+                                }}>
+                                <div className={"d-flex align-items-center justify-content-between"}>
+                                    <div className={"d-none d-md-block"}>Profile</div>
+                                    <i className="fa-solid fa-user"></i>
+                                </div>
+                            </div>
                         </>
                     ) : (
                         <>
                             <div className="col-3 col-sm-3 col-md-2">
                                 <CategoriesDropdown></CategoriesDropdown>
                             </div>
+
+                            <div
+                                className="icons-area-nav"
+                            ></div>
 
                             <div
                                 className={"col-1 col-sm-1 navbar-item cursor-pointer"}
@@ -93,15 +107,26 @@ export default function TopNavigationBar() {
                                 </div>
                             </div>
 
+
+
+
                             <div
-                                className={"col-1 col-sm-1 navbar-item cursor-pointer "}
+                                className={"col-1 col-sm-1 navbar-item cursor-pointer"}
                                 onClick={() => {
                                     navigate("/auth/login");
                                 }}>
                                 <div className={"d-flex align-items-center justify-content-between"}>
-                                    <div className={"d-none d-md-block"}>Giriş Yap</div>
-                                    <i className="fa-solid fa-arrow-right-to-bracket"></i>
+                                    <div className={"d-none d-md-block cursor-pointer"}>Giriş Yap</div>
+                                    <i className="fa-solid fa-right-to-bracket"></i>
                                 </div>
+                            </div>
+
+                            <div
+                                className={"col-1 navbar-item cursor-pointer"}
+                                onClick={() => {
+                                    navigate("/auth/login");
+                                }}>
+                                <i className="fa-solid fa-cart-shopping"></i>
                             </div>
                         </>
 

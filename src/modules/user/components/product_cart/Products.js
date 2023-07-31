@@ -3,7 +3,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {api_helper} from "../../../../helpers/api_helper";
 import ProductCart from "./ProductCart";
-import {createLoggedInUserProduct} from "../../../../api.requests/cart/CartRequests";
+import {createLoggedInUserProduct, readLoggedInUserCart} from "../../../../api.requests/cart/CartRequests";
 import {useAuth} from "../../../../context/AuthContext";
 import CustomPagination from "../pagination/CustomPagination";
 
@@ -12,7 +12,7 @@ export default function Products() {
     const [currentPage, setCurrentPage] = React.useState(1)
     const [requestedPage, setRequestedPage] = React.useState((new URLSearchParams(window.location.search)).get("page") || 1)
     const [products, setProducts] = React.useState([])
-    const {secret} = useAuth();
+    const {secret, setCartProducts} = useAuth();
     const navigate = useNavigate();
 
     const addToCart = (event, id, title) => {
@@ -22,6 +22,14 @@ export default function Products() {
             secret: secret,
             product_title: title,
         })
+
+        const loadCartProducts = async () => {
+            await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
+            console.log("cart products loaded");
+        };
+        loadCartProducts().then(r => {
+        });
+
     }
 
     const handleDivClick = (product) => {
