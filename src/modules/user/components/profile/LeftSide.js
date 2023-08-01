@@ -16,8 +16,16 @@ export default function LeftSide() {
                 <hr></hr>
 
                 <div className="">
-                    <NavLink to={"/profile"}>
+                    <NavLink to={"/profile/change-password"}>
                         <h5>Şifre Değiştir</h5>
+                    </NavLink>
+                </div>
+
+                <hr></hr>
+
+                <div className="">
+                    <NavLink to={"/profile/email-operations"}>
+                        <h5>Email Adresi Değiştir/Onayla</h5>
                     </NavLink>
                 </div>
 

@@ -6,13 +6,6 @@ import "../../configs/ProfilePage.css"
 import LeftSide from "../../components/profile/LeftSide";
 
 export default function ProfileLayout() {
-    const [user, setUser] = React.useState(null)
-
-    React.useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user"))
-        setUser(user)
-    },[])
-
 
     return (
         <>

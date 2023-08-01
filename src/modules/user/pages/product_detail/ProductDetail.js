@@ -4,10 +4,7 @@ import {useLocation} from "react-router-dom";
 import "../../configs/ProductDetail.css";
 import {useState} from "react";
 import CustomButton from "../../components/CustomButton";
-import addCartInDetail, {
-    createLoggedInUserProduct,
-    readLoggedInUserCart
-} from "../../../../api.requests/cart/CartRequests";
+import addCartInDetail from "../../../../api.requests/cart/CartRequests";
 import {useAuth} from "../../../../context/AuthContext";
 
 export default function ProductDetail() {
@@ -16,7 +13,7 @@ export default function ProductDetail() {
     const product = location.state.product
     const [mainImage, setMainImage] = useState(product.images[0].file_path)
     const [quantity, setQuantity] = useState(1)
-    const {secret, cartProducts,setCartProducts} = useAuth();
+    const {secret, cartProducts, setCartProducts} = useAuth();
     //console.log(location.state)
 
     useEffect(() => {

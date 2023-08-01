@@ -29,6 +29,10 @@ const api_helper = {
     "user": {
         "view": "user/profile",
         "update": "user/profile",
+        "email" : {
+            "get_email" : "user/profile/get-email",
+            "update_email" : "user/profile/update-email",
+        },
         "addresses": {
             "view": "user/addresses",
             "create": "user/addresses",

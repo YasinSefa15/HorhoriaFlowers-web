@@ -18,6 +18,9 @@ export default function CustomButton(props) {
         border: colorSchema.button.border,
         transitionDuration: "0.4s",
         fontWeight: "bold",
+        width: "20%",
+        height: "40px",
+        minWidth: "min-content",
     };
 
     // Merge the default style with the style from props

@@ -18,6 +18,8 @@ import ProfileOrders from "./modules/user/components/profile/ProfileOrders";
 import ProfileAddresses from "./modules/user/components/profile/ProfileAddresses";
 import ProfileShippingStatus from "./modules/user/components/profile/ProfileShippingStatus";
 import ProfileUserInformation from "./modules/user/components/profile/ProfileUserInformation";
+import ChangePassword from "./modules/user/components/profile/ChangePassword";
+import EmailChangeOrVerify from "./modules/user/components/profile/EmailChangeOrVerify";
 
 const routes = [
     {
@@ -67,6 +69,14 @@ const routes = [
             {
                 path: 'shipping-status',
                 element: <ProfileShippingStatus></ProfileShippingStatus>
+            },
+            {
+                path: 'change-password',
+                element: <ChangePassword></ChangePassword>
+            },
+            {
+                path: 'email-operations',
+                element: <EmailChangeOrVerify></EmailChangeOrVerify>
             }
         ]
     },
