@@ -1,5 +1,6 @@
 const api_helper = {
     'api_url': 'http://127.0.0.1:8000/api/',
+    "home": "home",
     'auth': {
         'login': "auth/login",
         'register': "auth/register",

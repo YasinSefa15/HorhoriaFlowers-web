@@ -12,7 +12,6 @@ import {useAuth} from "../../../../context/AuthContext";
 
 export default function CartPage() {
     const [products, setProducts] = React.useState([])
-    const [updated, setUpdated] = React.useState(false)
     const [subTotal, setSubTotal] = React.useState(parseInt(0))
     const [total, setTotal] = React.useState(parseInt(0))
     const {secret, setCartProducts} = useAuth();
