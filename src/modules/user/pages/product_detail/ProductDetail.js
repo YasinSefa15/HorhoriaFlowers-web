@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useLocation} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 //import ProductDetail css
 import "../../configs/ProductDetail.css";
 import {useState} from "react";
@@ -14,6 +14,7 @@ export default function ProductDetail() {
     const [mainImage, setMainImage] = useState(product.images[0].file_path)
     const [quantity, setQuantity] = useState(1)
     const {secret, cartProducts, setCartProducts} = useAuth();
+    const navigate = useNavigate();
     //console.log(location.state)
 
     useEffect(() => {
@@ -35,8 +36,42 @@ export default function ProductDetail() {
 
     return (
         <>
+            {console.log(product.categories)}
             <div className="container mt-5">
-                <h5>T-shirt</h5>
+                <div>
+                    {((() => {
+                        const titles = product.categories.titles.split("/")
+                        console.log("titles ", titles)
+                        const slugs = product.categories.slugs.split("/")
+                        return (
+                            <>
+                                <div className={"d-flex"}>
+                                    {titles.map((title, index) => {
+                                        return (
+                                            <>
+                                                <h5
+                                                    className="text-decoration-none mb-4 cursor-pointer"
+                                                    style={index !== 0 ? {
+                                                        marginLeft: "0.5rem",
+                                                        marginRight: "0.5rem",
+                                                    } : {
+                                                        marginRight: "0.5rem",
+                                                    }}
+                                                    onClick={() => {
+                                                        navigate(`/categories/${slugs[index]}?page=1`)
+                                                    }}
+                                                >{title}</h5>
+                                                {index !== titles.length - 1 && <span> / </span>}
+                                            </>
+                                        );
+                                    })}
+                                </div>
+
+                            </>
+                        );
+                    }))()}
+                </div>
+
 
                 <div className="row justify-content-center">
 
