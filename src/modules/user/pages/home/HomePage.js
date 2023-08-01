@@ -2,11 +2,14 @@ import React, {useEffect, useState} from "react";
 import './HomePage.css';
 
 import {Carousel, Container, Row, Col, Button} from 'react-bootstrap';
-import axios from "axios";
 import getDiscountedProducts from "../../../../api.requests/HomePageRequests";
 import ProductCart from "../../components/product_cart/ProductCart";
+import {useNavigate} from "react-router-dom";
+import {createLoggedInUserProduct, readLoggedInUserCart} from "../../../../api.requests/cart/CartRequests";
+import {useAuth} from "../../../../context/AuthContext";
 
 export default function HomePage() {
+    const navigate = useNavigate();
     const [discountedProducts, setDiscountedProducts] = useState([])
     const [newProducts, setNewProducts] = useState([])
     const [currentPageDiscount, setCurrentPageDiscount] = useState(1);
@@ -61,7 +64,24 @@ export default function HomePage() {
     const startIndexNew = (currentPageNew - 1) * itemsPerPage;
     const visibleItemsDiscount = discountedProducts.slice(startIndexDiscount, startIndexDiscount + itemsPerPage);
     const visibleItemsNew = newProducts.slice(startIndexNew, startIndexNew + itemsPerPage);
+    const {secret, setCartProducts} = useAuth();
 
+    const addToCart = (event, id, title, secret) => {
+        event.stopPropagation();
+        createLoggedInUserProduct({
+            product_id: id,
+            secret: secret,
+            product_title: title,
+        })
+
+        const loadCartProducts = async () => {
+            await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
+            console.log("cart products loaded");
+        };
+        loadCartProducts().then(r => {
+        });
+
+    }
 
     return (
         <>
@@ -120,14 +140,13 @@ export default function HomePage() {
                         <Row>
                             {visibleItemsDiscount.map(item => (
                                 <>
-                                    {console.log("discount item rendered")}
                                     <ProductCart
                                         product={item}
                                         handleDivClick={() => {
-
+                                            navigate("/products/" + item.slug, {state: {product: item}})
                                         }}
-                                        addToCart={() => {
-
+                                        addToCart={(event) => {
+                                            addToCart(event, item.id, item.title, secret)
                                         }}
 
                                     ></ProductCart>
@@ -166,14 +185,13 @@ export default function HomePage() {
                         <Row>
                             {visibleItemsNew.map(item => (
                                 <>
-                                    {console.log("new item rendered")}
                                     <ProductCart
                                         product={item}
                                         handleDivClick={() => {
-
+                                            navigate("/products/" + item.slug, {state: {product: item}})
                                         }}
-                                        addToCart={() => {
-
+                                        addToCart={(event) => {
+                                            addToCart(event, item.id, item.title, secret)
                                         }}
 
                                     ></ProductCart>

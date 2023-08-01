@@ -51,7 +51,7 @@ function updateProfileInfo({userForm, setLoaded, secret}) {
     }
 }
 
-function getProfileEmail({setEmail,setLoaded, secret}) {
+function getProfileEmail({setEmailForm, setLoaded, secret}) {
     try {
         //console.log(api_helper.api_url + api_helper.user.email.get_email)
         axios.get(api_helper.api_url + api_helper.user.email.get_email,
@@ -63,9 +63,13 @@ function getProfileEmail({setEmail,setLoaded, secret}) {
                 }
             })
             .then(async (response) => {
+                //console.log(response.data.data.email)
+                await setEmailForm({
+                    old_email: response.data.data.email,
+                    email: response.data.data.email,
+                    email_verified_at: response.data.data.email_verified_at
+                })
                 await setLoaded(true);
-                await setEmail({...response.data.data, old_email: response.data.data.email})
-                //console.log(response.data.data)
             })
             .catch((error) => {
                 console.log(error.response)
@@ -79,7 +83,7 @@ function getProfileEmail({setEmail,setLoaded, secret}) {
     }
 }
 
-async function updateProfileEmail({emailForm, setLoaded, secret}) {
+async function updateProfileEmail({emailForm, setEmailForm, setLoaded, secret}) {
     try {
         console.log("form ", emailForm)
         axios.put(api_helper.api_url + api_helper.user.email.update_email,
@@ -96,6 +100,11 @@ async function updateProfileEmail({emailForm, setLoaded, secret}) {
             })
             .then(async (response) => {
                 await setLoaded(true);
+                await setEmailForm({
+                    ...emailForm,
+                    old_email: emailForm.email,
+                    verified_at: null
+                })
                 NotificationHelper({
                     httpStatus: response.status,
                     title: response.data.message,
