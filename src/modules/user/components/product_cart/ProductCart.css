@@ -21,3 +21,21 @@
     color: #2d2d2d;
     font-size: 28px;
 }
+
+
+
+.select-box {
+    position: relative;
+    display: inline-block;
+    background-color: transparent;
+    border-radius: 4px; /* Köşeleri biraz sertleştirin */
+    border: 2px solid #444; /* Siyahımsı border rengi ve genişliği */
+    padding: 8px 16px; /* Yukarıdan aşağıya ve soldan sağa padding ekleyin */
+    color: #444; /* Yazı rengi */
+    cursor: pointer; /* Cursor'ı el şeklinde yapın */
+}
+
+.select-box:focus {
+    outline: none; /* Seçenek kutusu odaklandığında dış çizgiyi kaldırın */
+}
+

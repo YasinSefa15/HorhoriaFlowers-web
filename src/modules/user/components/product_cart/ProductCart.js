@@ -1,4 +1,3 @@
-import "./ProductCart.css"
 import React from 'react';
 
 export default function ProductCart({product, handleDivClick, addToCart}) {

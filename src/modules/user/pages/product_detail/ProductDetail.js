@@ -36,7 +36,6 @@ export default function ProductDetail() {
 
     return (
         <>
-            {console.log(product.categories)}
             <div className="container mt-5">
                 <div>
                     {((() => {
