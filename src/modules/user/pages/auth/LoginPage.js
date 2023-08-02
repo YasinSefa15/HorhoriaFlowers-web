@@ -3,24 +3,21 @@ import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import "./LoginPage.css"
 import axios from "axios";
 import {api_helper} from "../../../../helpers/api_helper";
-import NotificationHelper from "../../../../helpers/NotificationHelper";
+import HTTPNotificationHelper from "../../../../helpers/HTTPNotificationHelper";
 import React from "react";
 
 export default function LoginPage() {
-    const {user, setUser, setSecret} = useAuth()
+    const {user, secret, setUser, setSecret} = useAuth()
     const navigate = useNavigate()
 
 
     React.useEffect(() => {
-        if (user) {
+        console.log("----login page.js")
+        console.log(user)
+        if (user !== false && secret !== null) {
             navigate("/products?title=&page=1")
         }
-    })
-
-    if (user) {
-        navigate("/products?title=&page=1")
-        console.log("user", user)
-    }
+    }, [])
 
 
     const handleSubmit = async (e) => {
@@ -44,7 +41,7 @@ export default function LoginPage() {
 
                 navigate("/products?title=&page=1")
 
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: response.status,
                     title: response.data.message
                 })
@@ -52,7 +49,7 @@ export default function LoginPage() {
                 console.log("e")
             }
         } catch (error) {
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message,
                 message: "E-posta ve/veya şifreniz hatalı",
@@ -84,6 +81,9 @@ export default function LoginPage() {
                     <div className="signup_link">
                         Hesabınız yok mu?
                         <NavLink to="/auth/register">Kayıt Ol</NavLink>
+                    </div>
+                    <div className="signup_link">
+                        <NavLink to="/">Ana sayfaya dönmek için tıklayınız</NavLink>
                     </div>
                 </form>
             </div>

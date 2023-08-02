@@ -21,6 +21,7 @@ export default function CustomButton(props) {
         width: "20%",
         height: "40px",
         minWidth: "min-content",
+        outline: "none"
     };
 
     // Merge the default style with the style from props

@@ -1,9 +1,9 @@
 import axios from "axios";
 import {api_helper} from "../../helpers/api_helper";
-import NotificationHelper from "../../helpers/NotificationHelper";
+import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 
-const readLoggedInUserCart = ({setProducts, secret}) => {
-    axios.get(api_helper.api_url + api_helper.carts.view, {
+const readLoggedInUserCart = async ({setProducts, secret}) => {
+    await axios.get(api_helper.api_url + api_helper.carts.view, {
         //add authorization header
         headers: {
             'Authorization': `Bearer ` + secret,
@@ -21,7 +21,7 @@ const readLoggedInUserCart = ({setProducts, secret}) => {
         })
         .catch(error => {
             console.log("2")
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message,
             })
@@ -43,7 +43,7 @@ const updateLoggedInUserCart = ({product_id, quantity, secret}) => {
         })
         .catch(error => {
             console.log(error);
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.statusText,
                 message: error.response.data.message,
@@ -61,7 +61,7 @@ const deleteLoggedInUserProduct = ({product_id, secret}) => {
         }
     )
         .then(res => {
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: res.status,
                 title: "Ürün sepetten silindi",
             })
@@ -69,7 +69,7 @@ const deleteLoggedInUserProduct = ({product_id, secret}) => {
         })
         .catch(error => {
             //console.log(error);
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.statusText,
                 message: error.response.data.message,
@@ -91,7 +91,7 @@ const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
         }
     )
         .then(res => {
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: res.status,
                 title: "Sepete eklendi",
                 message: product_title + " sepete eklendi"
@@ -99,7 +99,7 @@ const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
         })
         .catch(error => {
             console.log(error);
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message
             })
@@ -121,7 +121,7 @@ export default function addCartInDetail(title, id, quantity, secret) {
         }
     )
         .then(res => {
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: res.status,
                 title: "Sepete eklendi",
                 message: title + " sepete eklendi"
@@ -130,7 +130,7 @@ export default function addCartInDetail(title, id, quantity, secret) {
         })
         .catch(error => {
             console.log(error);
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message
             })

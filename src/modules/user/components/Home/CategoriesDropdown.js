@@ -1,14 +1,33 @@
 import {NavLink, useNavigate} from "react-router-dom";
 import React, {useState} from "react";
+import {getCategoriesList} from "../../../../api.requests/Home";
+import {useData} from "../../../../context/DataProvider";
 
 
-export default function CategoriesDropdown() {
+export default function CategoriesDropdown({categories}) {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const navigate = useNavigate();
+    const {categoriesList} = useData();
+
+
+    const renderCategories = (category) => {
+        return (
+            <li key={category.id}>
+                <NavLink className="dropdown-item" to={"/categories/" + category.slug}>
+                    {category.title}
+                </NavLink>
+                {category.children && category.children.length > 0 && (
+                    <ul>{category.children.map((childCategory) => renderCategories(childCategory))}</ul>
+                )}
+            </li>
+        );
+    };
+
 
     return (
         <>
-            <div className="dropdown " onMouseEnter={() => setIsDropdownOpen(true)}
+            {//console.log("a", categoriesList)
+            }
+            <div className="dropdown" onMouseEnter={() => setIsDropdownOpen(true)}
                  onMouseLeave={() => setIsDropdownOpen(false)}
                  style={{position: "relative"}}>
                 <a className="navbar-brand" role="button" data-bs-toggle="dropdown"
@@ -16,16 +35,9 @@ export default function CategoriesDropdown() {
                     Kategoriler
                 </a>
                 <ul className={`dropdown-menu${isDropdownOpen ? " show" : ""}`}>
-                    <li><NavLink className="dropdown-item"
-                                 to="/categories/deneme">Deneme</NavLink></li>
-                    <li><NavLink className="dropdown-item" to="/categories/category2">Kategori
-                        2</NavLink></li>
-                    <li><NavLink className="dropdown-item" to="/categories/category3">Kategori
-                        3</NavLink></li>
+                    {categoriesList.map((category) => renderCategories(category))}
                 </ul>
             </div>
-
-
         </>
     )
 }

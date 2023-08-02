@@ -1,6 +1,6 @@
 import axios from "axios";
 import {api_helper} from "../../helpers/api_helper";
-import NotificationHelper from "../../helpers/NotificationHelper";
+import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 
 async function profileGetUser({setUserForm, setLoaded, secret}) {
     try {
@@ -33,7 +33,7 @@ function updateProfileInfo({userForm, setLoaded, secret}) {
             })
             .then(async (response) => {
                 await setLoaded(true);
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: response.status,
                     title: response.data.message,
                 })
@@ -41,7 +41,7 @@ function updateProfileInfo({userForm, setLoaded, secret}) {
             .catch((error) => {
                 console.log("asd")
                 console.log(error.response)
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: error.response.status,
                     title: error.response.data.message,
                 })
@@ -73,7 +73,7 @@ function getProfileEmail({setEmailForm, setLoaded, secret}) {
             })
             .catch((error) => {
                 console.log(error.response)
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: error.response.status,
                     title: error.response.data.message,
                 })
@@ -105,7 +105,7 @@ async function updateProfileEmail({emailForm, setEmailForm, setLoaded, secret}) 
                     old_email: emailForm.email,
                     verified_at: null
                 })
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: response.status,
                     title: response.data.message,
                 })
@@ -114,7 +114,7 @@ async function updateProfileEmail({emailForm, setEmailForm, setLoaded, secret}) 
                 await setLoaded(true);
                 console.log("asd")
                 console.log(error.response)
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: error.response.status,
                     title: error.response.data.message,
                 })
@@ -125,9 +125,44 @@ async function updateProfileEmail({emailForm, setEmailForm, setLoaded, secret}) 
     }
 }
 
+
+async function updateProfilePassword({passwordForm,secret}) {
+    try {
+        axios.put(api_helper.api_url + api_helper.user.email.update_password,
+            {
+                old_password: passwordForm.old_password,
+                new_password: passwordForm.new_password,
+                new_password_confirmation: passwordForm.new_password_confirmation,
+            },
+            {
+                headers: {
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            .then(async (response) => {
+                HTTPNotificationHelper({
+                    httpStatus: response.status,
+                    title: response.data.message,
+                })
+            })
+            .catch(async (error) => {
+                console.log(error.response)
+                HTTPNotificationHelper({
+                    httpStatus: error.response.status,
+                    title: error.response.data.message,
+                })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export {
     profileGetUser,
     updateProfileInfo,
     getProfileEmail,
-    updateProfileEmail
+    updateProfileEmail,
+    updateProfilePassword
 }

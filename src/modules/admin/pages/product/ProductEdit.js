@@ -3,7 +3,7 @@ import React from "react";
 import axios from "axios";
 import {api_helper} from "../../../../helpers/api_helper";
 import 'react-notifications-component/dist/theme.css'
-import NotificationHelper from "../../../../helpers/NotificationHelper";
+import HTTPNotificationHelper from "../../../../helpers/HTTPNotificationHelper";
 
 
 export default function ProductEdit() {
@@ -51,14 +51,14 @@ export default function ProductEdit() {
         })
             .then(res => {
                 console.log(res.data);
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: res.data.status_code,
                     title: "Ürün başarıyla güncellendi"
                 })
             })
             .catch(error => {
                 console.log(error);
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: error.response.status,
                     title: error.response.statusText,
                     message: error.response.data.message,

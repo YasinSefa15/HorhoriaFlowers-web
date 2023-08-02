@@ -7,7 +7,6 @@ const api_helper = {
     },
     'category': {
         'read': "categories",
-        'list': "categories/list",
         'view': "categories/", // + slug
         'create': "categories",
         'update': "categories/:id",
@@ -32,6 +31,7 @@ const api_helper = {
         "email" : {
             "get_email" : "user/profile/get-email",
             "update_email" : "user/profile/update-email",
+            "update_password" : "user/profile/update-password",
         },
         "addresses": {
             "view": "user/addresses",

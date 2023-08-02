@@ -2,7 +2,7 @@ import {useAuth} from "../../../../context/AuthContext";
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import {api_helper} from "../../../../helpers/api_helper";
-import NotificationHelper from "../../../../helpers/NotificationHelper";
+import HTTPNotificationHelper from "../../../../helpers/HTTPNotificationHelper";
 import React from "react";
 
 export default function RegisterPage() {
@@ -26,7 +26,7 @@ export default function RegisterPage() {
             const response = await axios.post(api_helper.api_url + api_helper.auth.register, formData);
             console.log(response)
             if (response.status === 201) {
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: response.status,
                     title: response.data.message,
                     message: "Giriş işlemi gerekli",
@@ -36,7 +36,7 @@ export default function RegisterPage() {
                 console.log("e")
             }
         } catch (error) {
-            NotificationHelper({
+            HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message,
             })

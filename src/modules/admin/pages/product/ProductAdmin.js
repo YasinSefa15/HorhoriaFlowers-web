@@ -3,7 +3,7 @@ import axios from "axios";
 import {api_helper} from "../../../../helpers/api_helper";
 import "../../configs/AdminProduct.css"
 import {NavLink, useNavigate, useParams} from "react-router-dom";
-import NotificationHelper from "../../../../helpers/NotificationHelper";
+import HTTPNotificationHelper from "../../../../helpers/HTTPNotificationHelper";
 import 'reactjs-popup/dist/index.css';
 
 export default function ProductAdmin() {
@@ -44,14 +44,14 @@ export default function ProductAdmin() {
             .then(res => {
                 console.log(res.data)
                 setProducts(products.filter(product => product.id !== id))
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: res.data.status_code,
                     title: "Ürün başarıyla silindi"
                 })
             })
             .catch(error => {
                 console.log(error)
-                NotificationHelper({
+                HTTPNotificationHelper({
                     httpStatus: error.response.status,
                     title: error.response.statusText,
                     message: error.response.data.message,

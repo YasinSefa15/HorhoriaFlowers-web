@@ -2,6 +2,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import {useAuth} from "../../../../context/AuthContext";
 import CategoriesDropdown from "./CategoriesDropdown";
+import CustomButton from "../CustomButton";
 
 
 export default function TopNavigationBar() {
@@ -10,9 +11,6 @@ export default function TopNavigationBar() {
     const {setUser, user} = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const logOut = () => {
-        setUser(false); //secret is deleted in AuthProvider
-    }
 
     return (
         <>
@@ -28,63 +26,83 @@ export default function TopNavigationBar() {
 
                 <div className="container-fluid row">
 
-                    <NavLink
-                        to="/"
-                        className="navbar-brand col-2 col-sm-2 col-md-2 fw-bold"
-                    >
-                        Horhoria
-                    </NavLink>
-
+                    <div className="col-4 col-sm-2 col-md-3">
+                        <NavLink
+                            to="/"
+                            className="navbar-brand fw-bold"
+                        >
+                            Horhoria
+                        </NavLink>
+                    </div>
 
                     <div className={"col-4 col-sm-4 col-md-5 container"}>
 
-                    <form
-                        className="d-flex justify-content-center align-items-center "
-                        role="search"
-                    >
-                        <div className="col-11 col-sm-10">
-                            <input
-                                className="form-control me-2 "
-                                type="search"
-                                placeholder="Aradığınız Ürünü Yazınız"
-                                aria-label="Search"
-                                onChange={(e) => setSearch(e.target.value)}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        e.preventDefault()
-                                        navigate("/products?title=" + search)
-                                    }
-                                }}
-                            />
-                        </div>
-                        <div className={"col-1 col-sm-2"}>
-                            <NavLink to={"/products?title=" + search} className="btn btn-outline-primary ">
-                                <i className="fa-solid fa-magnifying-glass"></i>
-                            </NavLink>
-                        </div>
-                    </form>
+                        <form
+                            className="d-flex justify-content-center align-items-center "
+                            role="search"
+                        >
+                            <div className="col-11 col-sm-10">
+                                <input
+                                    className="form-control me-2 "
+                                    type="search"
+                                    placeholder="Aradığınız Ürünü Yazınız"
+                                    aria-label="Search"
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault()
+                                            navigate("/products?title=" + search)
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <div className=" col-sm-2 ps-2">
+                                <CustomButton
+                                    type={"button"}
+                                    style={{borderRadius: "6px", width: "80%"}}
+                                    text={<i className="fa-solid fa-magnifying-glass"></i>}
+                                    onClick={() => navigate("/products?title=" + search)}
+                                ></CustomButton>
+                            </div>
+                        </form>
                     </div>
 
 
                     {user ? (
                         <>
-                            <NavLink className="navbar-brand col-sm-1" to="/profile"> Profil</NavLink>
-                            <NavLink className="navbar-brand col-sm-1" to="/cart"> Sepetim</NavLink>
-                            <NavLink className="navbar-brand col-sm-1" to="/" onClick={(e) => {
-                                logOut();
-                            }}>
-                                <i className="fa-solid fa-right-from-bracket"></i>
-                            </NavLink>
-                            <div
-                                className={"col-1 col-sm-1 navbar-item cursor-pointer "}
-                                onClick={() => {
-                                    navigate("/auth/login");
-                                }}>
-                                <div className={"d-flex align-items-center justify-content-between"}>
-                                    <div className={"d-none d-md-block"}>Profile</div>
-                                    <i className="fa-solid fa-user"></i>
+                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
+
+                            <div className="collapse navbar-collapse row" id="navbarNavAltMarkup">
+                                <div className="navbar-nav">
+                                    <div
+                                        className="col-sm-3 col-md-2 d-flex align-items-center justify-content-center">
+                                            <CategoriesDropdown></CategoriesDropdown>
+                                    </div>
+
+                                    <div
+                                        className={"col-sm-1 navbar-item cursor-pointer "}>
+                                        <div className={"d-flex align-items-center justify-content-center"}>
+                                            <NavLink className="navbar-brand d-md-none d-lg-block"
+                                                     to="/cart"> Sepetim</NavLink>
+                                            <i className="fa-solid fa-cart-shopping"></i>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className={"col-sm-1 navbar-item cursor-pointer"}>
+                                        <div className={"d-flex align-items-center justify-content-center"}>
+                                            <NavLink className="navbar-brand d-md-none d-lg-block"
+                                                     to="/profile"> Profil</NavLink>
+                                            <i className="fa-solid fa-user"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </>
                     ) : (
                         <>
@@ -106,8 +124,6 @@ export default function TopNavigationBar() {
                                     <i className="fa-solid fa-truck"></i>
                                 </div>
                             </div>
-
-
 
 
                             <div
