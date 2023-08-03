@@ -126,7 +126,7 @@ async function updateProfileEmail({emailForm, setEmailForm, setLoaded, secret}) 
 }
 
 
-async function updateProfilePassword({passwordForm,secret}) {
+async function updateProfilePassword({passwordForm, secret}) {
     try {
         axios.put(api_helper.api_url + api_helper.user.email.update_password,
             {
@@ -159,10 +159,165 @@ async function updateProfilePassword({passwordForm,secret}) {
     }
 }
 
+
+async function getProfileAddresses({setAddresses, setLoaded, secret}) {
+    try {
+        axios.get(api_helper.api_url + api_helper.user.addresses.view,
+            {
+                headers: {
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            .then(async (response) => {
+                //console.log(response.data.data.email)
+                await setAddresses(response.data.data)
+                await setLoaded(true);
+            })
+            .catch((error) => {
+                console.log(error.response)
+                HTTPNotificationHelper({
+                    httpStatus: error.response.status,
+                    title: error.response.data.message,
+                })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function createProfileAddresses({addressForm, addresses, setAddresses, setLoaded, secret}) {
+    try {
+        const address = {
+            title: addressForm.title,
+            first_name: addressForm.first_name,
+            last_name: addressForm.last_name,
+            city: addressForm.city,
+            state: addressForm.state,
+            description: addressForm.description,
+            phone: addressForm.phone,
+        }
+        axios.post(api_helper.api_url + api_helper.user.addresses.view,
+            address,
+            {
+                headers: {
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            .then(async (response) => {
+                //console.log(response.data.data.email)
+                HTTPNotificationHelper({
+                    httpStatus: response.status,
+                    title: response.data.message,
+                })
+                await setAddresses([...addresses, address])
+                await setLoaded(true);
+            })
+            .catch((error) => {
+                console.log(error.response)
+                HTTPNotificationHelper({
+                    httpStatus: error.response.status,
+                    title: error.response.data.message,
+                })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function updateProfileAddresses({updateAddressForm, addresses, setAddresses, setLoaded, secret}) {
+    try {
+        const address = {
+            id: updateAddressForm.id,
+            title: updateAddressForm.title,
+            first_name: updateAddressForm.first_name,
+            last_name: updateAddressForm.last_name,
+            city: updateAddressForm.city,
+            state: updateAddressForm.state,
+            description: updateAddressForm.description,
+            phone: updateAddressForm.phone,
+        }
+        console.log("axios ", address)
+        axios.put(api_helper.api_url + api_helper.user.addresses.update + updateAddressForm.id,
+            address,
+            {
+                headers: {
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            .then(async (response) => {
+                HTTPNotificationHelper({
+                    httpStatus: response.status,
+                    title: response.data.message,
+                })
+                await setAddresses(addresses.map((item) => {
+                    if (item.id === address.id) {
+                        return address;
+                    }
+                    return item;
+                }))
+                await setLoaded(true);
+            })
+            .catch((error) => {
+                console.log(error.response)
+                HTTPNotificationHelper({
+                    httpStatus: error.response.status,
+                    title: error.response.data.message,
+                })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function deleteProfileAddresses({selectedAddressId, addresses, setAddresses, setLoaded, secret}) {
+    try {
+        console.log("id", selectedAddressId)
+        axios.delete(api_helper.api_url + api_helper.user.addresses.delete + selectedAddressId,
+            {
+                headers: {
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            .then(async (response) => {
+                console.log(response.data)
+                HTTPNotificationHelper({
+                    httpStatus: response.status,
+                    title: response.data.message,
+                })
+                await setAddresses(addresses.filter((item) => {
+                    return item.id !== selectedAddressId;
+                }))
+                await setLoaded(true);
+            })
+            .catch((error) => {
+                console.log(error.response)
+                HTTPNotificationHelper({
+                    httpStatus: error.response.status,
+                    title: error.response.data.message,
+                })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 export {
     profileGetUser,
     updateProfileInfo,
     getProfileEmail,
     updateProfileEmail,
-    updateProfilePassword
+    updateProfilePassword,
+    getProfileAddresses,
+    createProfileAddresses,
+    updateProfileAddresses,
+    deleteProfileAddresses
 }

@@ -5,5 +5,33 @@ export const colorSchema = {
         textColor: "#221f1f",
         border: "2px solid #221f1f",
         hoverTextColor: "#FFFFFF"
+    },
+    button_success:{
+        backgroundColor: "white",
+        hoverBackgroundColor: "#4CAF50",
+        textColor: "#4CAF50",
+        border: "2px solid #4CAF50",
+        hoverTextColor: "#FFFFFF"
+    },
+    button_danger:{
+        backgroundColor: "white",
+        hoverBackgroundColor: "#f44336",
+        textColor: "#f44336",
+        border: "2px solid #f44336",
+        hoverTextColor: "#FFFFFF"
+    },
+    button_danger_transparent:{
+        backgroundColor: "transparent",
+        hoverBackgroundColor: "#f44336",
+        textColor: "#f44336",
+        border: "1px solid #f44336",
+        hoverTextColor: "#FFFFFF",
+    },
+    info_transparent:{
+        backgroundColor: "transparent",
+        hoverBackgroundColor: "#75D6FF",
+        textColor: "#75D6FF",
+        border: "1px solid #36e4f4",
+        hoverTextColor: "#FFFFFF",
     }
 }

@@ -36,6 +36,8 @@ const api_helper = {
         "addresses": {
             "view": "user/addresses",
             "create": "user/addresses",
+            "update": "user/addresses/",
+            "delete": "user/addresses/",
         }
     }
 }
