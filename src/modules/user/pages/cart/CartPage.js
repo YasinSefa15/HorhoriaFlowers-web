@@ -1,6 +1,4 @@
 import React from 'react';
-import "../../configs/Cart.css"
-import ItemCount from "../../components/cart/ItemCount";
 import {
     deleteLoggedInUserProduct,
     readLoggedInUserCart,
@@ -8,6 +6,9 @@ import {
 } from "../../../../api.requests/cart/CartRequests";
 import TopNavigationBar from "../../components/Home/TopNavigationBar";
 import {useAuth} from "../../../../context/AuthContext";
+import CartCoupon from "../../components/cart/CartCoupon";
+import CartPrice from "../../components/cart/CartPrice";
+import CartProductsList from "../../components/cart/CartProductsList";
 
 
 export default function CartPage() {
@@ -17,7 +18,7 @@ export default function CartPage() {
     const {secret, setCartProducts} = useAuth();
 
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     React.useEffect(() => {
         const loadCartProducts = async () => {
             await readLoggedInUserCart({setProducts: setProducts, secret: secret});
@@ -108,111 +109,34 @@ export default function CartPage() {
         <>
             <TopNavigationBar/>
 
-            <div className="small-container cart-page">
-                <table>
-                    <tr>
-                        <th>Ürün Detayı</th>
-                        <th>Miktar</th>
-                        <th>Ara Tutar</th>
-                    </tr>
-                    {products.map((product) => (
-                        <>
-                            <tr>
-                                <td>
-                                    <div className="cart-info">
-                                        <img
-                                            src={product.image.file_path}
-                                        ></img>
-                                        <div>
-                                            <p>{product.title}</p>
-                                            <small>Fiyat: {product.new_price}₺</small>
-                                            <br/>
-                                            <a href={"#"}
-                                               onClick={(e) => deleteProduct(product.product_id)}
-                                            >
-                                                Sepetten Çıkar
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                </td>
-                                <td>
-                                    <ItemCount
-                                        count={product.quantity}
-                                        id={product.product_id}
-                                        price={product.new_price}
-                                        updateProductQuantity={updateProductQuantity}
-                                        updateTotal={updateTotal}
-                                    ></ItemCount>
-                                </td>
-                                <td>{product.quantity * product.new_price} ₺</td>
-                            </tr>
-                        </>
-                    ))}
-
-                </table>
+            <div className="container mt-4 mb-5">
+                <CartProductsList
+                    products={products}
+                    updateTotal={updateTotal}
+                    updateProductQuantity={updateProductQuantity}
+                    deleteProduct={deleteProduct}
+                ></CartProductsList>
 
                 <div className={"total-price"}>
-
                     {((() => {
                         if (products.length === 0) {
                             return <h2>Cart is empty</h2>
                         }
                         return <>
-
-                            <table>
-                                <th>
-                                    <td>Kupon</td>
-                                </th>
-                                <tr>
-                                    <td>
-                                        <div className="payment-coupon">
-                                            <label>Kupon Giriniz:</label>
-                                            <input type="text"></input>
-                                            <button>Ekle</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <div>
-
+                            <div className="container">
+                                <div className="row">
+                                    <CartCoupon></CartCoupon>
+                                    <div className="col col-0 col-sm-2"></div>
+                                    <CartPrice
+                                        total={total}
+                                        subTotal={subTotal}
+                                    ></CartPrice>
+                                </div>
                             </div>
-
-                            <table>
-                                <th>
-                                    Toplam
-                                </th>
-                                <th>
-
-                                </th>
-                                <tr>
-                                    <td>Ara Toplam</td>
-                                    <td>{subTotal}₺</td>
-                                </tr>
-                                <tr>
-                                    <td>Vergi</td>
-                                    <td>20₺</td>
-                                </tr>
-                                <tr>
-                                    <td>Kargo Ücreti</td>
-                                    <td>20₺</td>
-                                </tr>
-                                <hr></hr>
-                                <tr>
-                                    <td>Total</td>
-                                    <td>{total}₺</td>
-                                </tr>
-                            </table>
-
                         </>
                     }))()}
-
-
                 </div>
-
             </div>
-
         </>
     )
 

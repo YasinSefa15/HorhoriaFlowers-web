@@ -39,6 +39,10 @@ const api_helper = {
             "update": "user/addresses/",
             "delete": "user/addresses/",
         }
+    },
+    "order" : {
+        "index": "orders",
+        //"view": "orders/", //id
     }
 }
 

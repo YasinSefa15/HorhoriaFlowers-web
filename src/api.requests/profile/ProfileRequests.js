@@ -309,6 +309,33 @@ async function deleteProfileAddresses({selectedAddressId, addresses, setAddresse
     }
 }
 
+async function getProfileOrders({setOrders, setLoaded, secret}) {
+    try {
+        axios.get(api_helper.api_url + api_helper.order.index,
+            {
+                headers: {
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            .then(async (response) => {
+                //console.log(response.data)
+                await setOrders(response.data.data)
+                await setLoaded(true);
+            })
+            .catch((error) => {
+                console.log(error.response)
+                HTTPNotificationHelper({
+                    httpStatus: error.response.status,
+                    title: error.response.data.message,
+                })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 export {
     profileGetUser,
@@ -319,5 +346,6 @@ export {
     getProfileAddresses,
     createProfileAddresses,
     updateProfileAddresses,
-    deleteProfileAddresses
+    deleteProfileAddresses,
+    getProfileOrders
 }

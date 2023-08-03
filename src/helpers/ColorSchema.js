@@ -1,4 +1,5 @@
 export const colorSchema = {
+    warning_color :"#f44336",
     button : {
         backgroundColor: "white",
         hoverBackgroundColor: "#221f1f",
@@ -33,5 +34,12 @@ export const colorSchema = {
         textColor: "#75D6FF",
         border: "1px solid #36e4f4",
         hoverTextColor: "#FFFFFF",
+    },
+    cart : {
+        primary: "#3c3c3c",
+        primaryText: "white",
+        primaryFontSize: "20px",
+        primaryFontWeight: "500",
+        borderBottom: "1px solid #DDD",
     }
 }

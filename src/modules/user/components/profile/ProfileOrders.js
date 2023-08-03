@@ -1,4 +1,27 @@
+import React, {useState} from "react";
+import {useAuth} from "../../../../context/AuthContext";
+import {
+    createProfileAddresses,
+    getProfileAddresses,
+    getProfileOrders
+} from "../../../../api.requests/profile/ProfileRequests";
+
 export default function ProfileOrders() {
+    const [orders, setOrders] = useState([]);
+    const [loaded, setLoaded] = React.useState(false);
+    const {secret} = useAuth();
+
+    React.useEffect(() => {
+        const fetchOrders = async () => {
+            await getProfileOrders({setOrders, setLoaded, secret})
+        }
+
+        fetchOrders().then(() => {
+        })
+    }, [])
+
+
+
     return (
         <>
             <div className="d-flex justify-content-center">
