@@ -1,5 +1,5 @@
 import {NavLink, useNavigate} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useAuth} from "../../../../context/AuthContext";
 import CategoriesDropdown from "./CategoriesDropdown";
 import CustomButton from "../CustomButton";
@@ -11,6 +11,9 @@ export default function TopNavigationBar() {
     const {setUser, user} = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+    useEffect(() => {
+    console.log("top user ", user)
+    }, [user])
 
     return (
         <>
@@ -80,7 +83,7 @@ export default function TopNavigationBar() {
                                 <div className="navbar-nav">
                                     <div
                                         className="col-sm-3 col-md-2 d-flex align-items-center justify-content-center">
-                                            <CategoriesDropdown></CategoriesDropdown>
+                                        <CategoriesDropdown></CategoriesDropdown>
                                     </div>
 
                                     <div
@@ -115,11 +118,11 @@ export default function TopNavigationBar() {
                             ></div>
 
                             <div
-                                className={"col-1 col-sm-1 navbar-item cursor-pointer"}
+                                className={"col-1 col-sm-1 cursor-pointer"}
                                 onClick={() => {
                                     navigate("/auth/login");
                                 }}>
-                                <div className={"d-flex align-items-center justify-content-between"}>
+                                <div className={"d-flex navbar-item align-items-center justify-content-between"}>
                                     <div className={"d-none d-md-block"}>Kargo Takip</div>
                                     <i className="fa-solid fa-truck"></i>
                                 </div>
@@ -127,11 +130,11 @@ export default function TopNavigationBar() {
 
 
                             <div
-                                className={"col-1 col-sm-1 navbar-item cursor-pointer"}
+                                className={"col-1 col-sm-1 cursor-pointer"}
                                 onClick={() => {
                                     navigate("/auth/login");
                                 }}>
-                                <div className={"d-flex align-items-center justify-content-between"}>
+                                <div className={"navbar-item d-flex align-items-center justify-content-between"}>
                                     <div className={"d-none d-md-block cursor-pointer"}>Giriş Yap</div>
                                     <i className="fa-solid fa-right-to-bracket"></i>
                                 </div>

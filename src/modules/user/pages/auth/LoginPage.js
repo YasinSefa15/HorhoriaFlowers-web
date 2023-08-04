@@ -5,6 +5,7 @@ import axios from "axios";
 import {api_helper} from "../../../../helpers/api_helper";
 import HTTPNotificationHelper from "../../../../helpers/HTTPNotificationHelper";
 import React from "react";
+import {Helmet} from "react-helmet";
 
 export default function LoginPage() {
     const {user, secret, setUser, setSecret} = useAuth()
@@ -15,7 +16,7 @@ export default function LoginPage() {
         console.log("----login page.js")
         console.log(user)
         if (user !== false && secret !== null) {
-            navigate("/products?title=&page=1")
+            navigate("/")
         }
     }, [])
 
@@ -59,6 +60,15 @@ export default function LoginPage() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Giriş Yap</title>
+                <meta
+                    name="description"
+                    content="Hooria e-ticaret platformuna giriş yapın. Hesabınıza erişim sağlayın, indirimlerden yararlanın ve hızlı alışveriş deneyimi yaşayın. Geniş ürün yelpazemizle ihtiyacınız olan her şey burada!"
+                />
+                {/* Diğer meta etiketleri burada ekleyebilirsiniz */}
+            </Helmet>
+
             <div className="center">
                 <h1>Giriş Yap</h1>
                 <form onSubmit={handleSubmit}>

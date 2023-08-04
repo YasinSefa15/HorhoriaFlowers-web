@@ -9,6 +9,7 @@ import {useAuth} from "../../../../context/AuthContext";
 import CartCoupon from "../../components/cart/CartCoupon";
 import CartPrice from "../../components/cart/CartPrice";
 import CartProductsList from "../../components/cart/CartProductsList";
+import {Helmet} from "react-helmet";
 
 
 export default function CartPage() {
@@ -108,6 +109,15 @@ export default function CartPage() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Sepetim</title>
+                <meta
+                    name="description"
+                    content="Hooria e-ticaret platformunda sepetinizi görüntüleyin, ürünleri düzenleyin ve alışverişinizi tamamlayın. İhtiyacınız olan ürünleri sepetinizde bulabilir ve hızlı alışveriş deneyimi yaşayabilirsiniz."
+                />
+                {/* Diğer meta etiketleri burada ekleyebilirsiniz */}
+            </Helmet>
+
             <TopNavigationBar/>
 
             <div className="container mt-4 mb-5">

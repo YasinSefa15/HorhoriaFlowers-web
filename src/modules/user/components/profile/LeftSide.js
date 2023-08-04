@@ -1,7 +1,12 @@
 import {NavLink} from "react-router-dom";
-import React from "react";
+import React, {useState} from "react";
+import {Modal} from "react-bootstrap";
+import CustomButton from "../CustomButton";
+import {useAuth} from "../../../../context/AuthContext";
 
 export default function LeftSide() {
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const {setSecret} = useAuth()
     return (
         <>
             <div
@@ -63,11 +68,59 @@ export default function LeftSide() {
 
                 <hr></hr>
 
-                <div className="">
-                    <NavLink to={"/profile/shipping-status"}>
-                        <h5>Çıkış Yap</h5>
-                    </NavLink>
+                <div className="cursor-pointer"
+                     onClick={() => {
+                         setShowLogoutModal(true)
+                     }}>
+                    <h5>Çıkış Yap</h5>
                 </div>
             </div>
+
+            <Modal show={showLogoutModal} onHide={() => {
+                setShowLogoutModal(false)
+            }}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Çıkış Yap</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <div className="container">
+                        <div className="row">
+                            <div className="row">
+                                <div className="row">
+                                    <div className="col">Çıkış yapmak istediğiniz emin misiniz?</div>
+                                </div>
+                            </div>
+                            <br></br>
+
+                        </div>
+                    </div>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <CustomButton
+                        text="Kapat"
+                        onClick={() => {
+                            setShowLogoutModal(false)
+                        }}
+                    >
+                    </CustomButton>
+
+                    <CustomButton
+                        text="Çıkış Yap"
+                        onClick={() => {
+                            setShowLogoutModal(false)
+                            const fetchData = async () => {
+                                await setSecret(null)
+                            };
+                            fetchData().then(r => {
+                            });
+                        }}
+                        status="danger"
+                    >
+                    </CustomButton>
+                </Modal.Footer>
+            </Modal>
         </>)
 }

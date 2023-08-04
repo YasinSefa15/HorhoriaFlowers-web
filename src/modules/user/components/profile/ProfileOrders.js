@@ -5,6 +5,7 @@ import {
     getProfileAddresses,
     getProfileOrders
 } from "../../../../api.requests/profile/ProfileRequests";
+import {Helmet} from "react-helmet";
 
 export default function ProfileOrders() {
     const [orders, setOrders] = useState([]);
@@ -21,9 +22,14 @@ export default function ProfileOrders() {
     }, [])
 
 
-
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Siparişlerim</title>
+                <meta name="description"
+                      content="Hooria e-ticaret platformunda verdiğiniz siparişleri görüntüleyin, takip edin ve geçmiş siparişlerinizi kontrol edin. Sipariş durumlarınızı ve ayrıntılarınızı inceleyin."/>
+            </Helmet>
+
             <div className="d-flex justify-content-center">
                 <h3>Siparişlerim </h3>
                 <div>
@@ -91,7 +97,7 @@ export default function ProfileOrders() {
                         <div
                             className="row"
                         >
-                            <div className="col col-sm-2" >
+                            <div className="col col-sm-2">
                                 <img
                                     src="http://127.0.0.1:8000/storage/attached_files/products/64aee48cc2643.jpg"
                                     className="img-fluid"
@@ -111,7 +117,7 @@ export default function ProfileOrders() {
                         <div
                             className="row"
                         >
-                            <div className="col col-sm-2" >
+                            <div className="col col-sm-2">
                                 <img
                                     src="http://127.0.0.1:8000/storage/attached_files/products/64aee48cc2643.jpg"
                                     className="img-fluid"
@@ -125,10 +131,6 @@ export default function ProfileOrders() {
                         </div>
                     </div>
                 </div>
-
-
-
-
 
 
             </div>
@@ -192,7 +194,7 @@ export default function ProfileOrders() {
                         <div
                             className="row"
                         >
-                            <div className="col col-sm-2" >
+                            <div className="col col-sm-2">
                                 <img
                                     src="http://127.0.0.1:8000/storage/attached_files/products/64aee48cc2643.jpg"
                                     className="img-fluid"
@@ -212,7 +214,7 @@ export default function ProfileOrders() {
                         <div
                             className="row"
                         >
-                            <div className="col col-sm-2" >
+                            <div className="col col-sm-2">
                                 <img
                                     src="http://127.0.0.1:8000/storage/attached_files/products/64aee48cc2643.jpg"
                                     className="img-fluid"
@@ -226,10 +228,6 @@ export default function ProfileOrders() {
                         </div>
                     </div>
                 </div>
-
-
-
-
 
 
             </div>

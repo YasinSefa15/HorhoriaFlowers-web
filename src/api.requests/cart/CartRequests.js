@@ -12,7 +12,7 @@ const readLoggedInUserCart = async ({setProducts, secret}) => {
         }
     })
         .then(res => {
-            console.log("db: read cart")
+            //console.log("db: read cart")
             let result = [];
             res.data.data.map((product, index) => {
                 result.push(product)

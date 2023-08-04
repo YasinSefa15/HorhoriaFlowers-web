@@ -6,6 +6,7 @@ import {useState} from "react";
 import CustomButton from "../../components/CustomButton";
 import addCartInDetail from "../../../../api.requests/cart/CartRequests";
 import {useAuth} from "../../../../context/AuthContext";
+import {Helmet} from "react-helmet";
 
 export default function ProductDetail() {
     //todo ürün sepette mi? sepetteyse miktarını getir
@@ -36,6 +37,15 @@ export default function ProductDetail() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - {product.title}</title>
+                <meta
+                    name="description"
+                    content={`Hooria e-ticaret platformunda ${product.title} ürününün detaylarını keşfedin. En yeni ürünleri inceleyin, indirimlerden yararlanın ve hızlı alışveriş deneyimi yaşayın. Geniş ürün yelpazemizle ihtiyacınız olan her şey burada!`}
+                />
+                {/* Diğer meta etiketleri burada ekleyebilirsiniz */}
+            </Helmet>
+
             <div className="container mt-5">
                 <div>
                     {((() => {

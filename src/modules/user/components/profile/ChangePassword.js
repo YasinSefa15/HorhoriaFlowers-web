@@ -4,6 +4,7 @@ import {useAuth} from "../../../../context/AuthContext";
 import NotificationHelper from "../../../../helpers/NotificationHelper";
 import {updateProfilePassword} from "../../../../api.requests/profile/ProfileRequests";
 import {useNavigate} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 export default function ChangePassword() {
     const [passwordForm, setPasswordForm] = useState({
@@ -11,7 +12,7 @@ export default function ChangePassword() {
         new_password: "",
         new_password_confirmation: "",
     })
-    const {secret,setSecret} = useAuth();
+    const {secret, setSecret} = useAuth();
 
 
     const handleSubmit = () => {
@@ -21,7 +22,7 @@ export default function ChangePassword() {
                 title: "Yeni şifreniz eskisi ile aynı olamaz"
             });
             return;
-        }else if (passwordForm.new_password !== passwordForm.new_password_confirmation) {
+        } else if (passwordForm.new_password !== passwordForm.new_password_confirmation) {
             NotificationHelper({
                 type: "warning",
                 title: "Girdiğiniz şifreler birbiri ile uyuşmuyor"
@@ -42,6 +43,12 @@ export default function ChangePassword() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Şifre Değiştir</title>
+                <meta name="description"
+                      content="Hooria e-ticaret platformunda şifrenizi güvenli bir şekilde değiştirin. Hesabınızın güvenliğini artırın ve yeni şifrenizi belirleyin."/>
+            </Helmet>
+
             <h3>Şifre Değiştir</h3>
 
             <div className="container">
@@ -86,7 +93,8 @@ export default function ChangePassword() {
                     <div className="col-sm-3">Yeni Şifrenizi Tekrar Giriniz</div>
 
                     <div className="col-sm-6">
-                        <input type="password" className="form-control " id="name" value={passwordForm.new_password_confirmation}
+                        <input type="password" className="form-control " id="name"
+                               value={passwordForm.new_password_confirmation}
                                onChange={(e) => {
                                    setPasswordForm({...passwordForm, new_password_confirmation: e.target.value})
                                }}/>

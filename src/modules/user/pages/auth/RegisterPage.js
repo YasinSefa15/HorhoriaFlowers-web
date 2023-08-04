@@ -4,6 +4,7 @@ import axios from "axios";
 import {api_helper} from "../../../../helpers/api_helper";
 import HTTPNotificationHelper from "../../../../helpers/HTTPNotificationHelper";
 import React from "react";
+import {Helmet} from "react-helmet";
 
 export default function RegisterPage() {
     const navigate = useNavigate()
@@ -45,6 +46,15 @@ export default function RegisterPage() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Kayıt Ol</title>
+                <meta
+                    name="description"
+                    content="Hooria e-ticaret platformunda kayıt olun. Hesap oluşturarak indirimlerden yararlanın, hızlı alışveriş deneyimi yaşayın ve geniş ürün yelpazemizle ihtiyacınız olan her şeyi keşfedin!"
+                />
+                {/* Diğer meta etiketleri burada ekleyebilirsiniz */}
+            </Helmet>
+
             <div className="center">
                 <h1>Kayıt Ol</h1>
                 <form onSubmit={handleSubmit}>

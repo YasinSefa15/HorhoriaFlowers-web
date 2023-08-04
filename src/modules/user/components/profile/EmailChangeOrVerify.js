@@ -6,6 +6,7 @@ import {
 } from "../../../../api.requests/profile/ProfileRequests";
 import LoadingScreen from "../LoadingScreen";
 import CustomButton from "../CustomButton";
+import {Helmet} from "react-helmet";
 
 export default function EmailChangeOrVerify() {
     const [emailForm, setEmailForm] = useState(null)
@@ -38,6 +39,11 @@ export default function EmailChangeOrVerify() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Email Değiştir/Onayla</title>
+                <meta name="description" content="Hooria e-ticaret platformunda email adresinizi değiştirin ve yeni email adresinizi onaylayın. Hesabınızın güvenliğini ve iletişim bilgilerinizi güncelleyin." />
+            </Helmet>
+
             {loaded ? (
                 <>
                     <div className="container">

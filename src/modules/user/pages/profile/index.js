@@ -4,6 +4,7 @@ import Footer from "../../components/Home/footer/Footer";
 import React from "react";
 import "../../configs/ProfilePage.css"
 import LeftSide from "../../components/profile/LeftSide";
+import {Helmet} from "react-helmet";
 
 export default function ProfileLayout() {
 

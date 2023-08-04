@@ -3,6 +3,7 @@ import {useAuth} from "../../../../context/AuthContext";
 import LoadingScreen from "../LoadingScreen";
 import {profileGetUser, updateProfileInfo} from "../../../../api.requests/profile/ProfileRequests";
 import CustomButton from "../CustomButton";
+import {Helmet} from "react-helmet";
 
 export default function ProfileUserInformation() {
     const [userForm, setUserForm] = React.useState(null)
@@ -33,6 +34,14 @@ export default function ProfileUserInformation() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Profilim</title>
+                <meta
+                    name="description"
+                    content="Hooria e-ticaret platformunda profilinizi görüntüleyin, bilgilerinizi düzenleyin ve alışveriş deneyiminizi yönetin. Profilinizdeki bilgileri güncelleyebilir, sipariş geçmişinizi inceleyebilir ve hesap ayarlarınızı düzenleyebilirsiniz."
+                />
+                {/* Diğer meta etiketleri burada ekleyebilirsiniz */}
+            </Helmet>
 
             {loaded ? (
                 <>

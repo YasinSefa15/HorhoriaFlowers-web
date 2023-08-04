@@ -11,6 +11,7 @@ import {Modal} from "react-bootstrap";
 import UpdateAddressModal from "./address/UpdateAddressModal";
 import CreateAddressModal from "./address/CreateAddressModal";
 import DeleteAddressModal from "./address/DeleteAddressModal";
+import {Helmet} from "react-helmet";
 
 export default function ProfileAddresses() {
     const [addresses, setAddresses] = React.useState([]);
@@ -65,6 +66,11 @@ export default function ProfileAddresses() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Adreslerim</title>
+                <meta name="description" content="Hooria e-ticaret platformunda kayıtlı adreslerinizi görüntüleyin, düzenleyin ve yönetin. Adreslerinizi güncelleyin ve farklı teslimat adresleri ekleyin." />
+            </Helmet>
+
             <div>
                 <h2>Kayıtlı Adreslerim</h2>
 

@@ -2,6 +2,7 @@ import React from "react";
 import {useAuth} from "../../../../context/AuthContext";
 import LoadingScreen from "../LoadingScreen";
 import {getProfileUserCoupons} from "../../../../api.requests/profile/ProfileRequests";
+import {Helmet} from "react-helmet";
 
 export default function ProfileUserCoupons() {
     const [userCoupons, setUserCoupons] = React.useState([]);
@@ -19,6 +20,11 @@ export default function ProfileUserCoupons() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - Kuponlarım</title>
+                <meta name="description" content="Hooria e-ticaret platformunda sahip olduğunuz ve kullanabileceğiniz kuponları görüntüleyin. İndirimlerden yararlanarak alışveriş yapın ve avantajlı fiyatlarla ürünler satın alın." />
+            </Helmet>
+
             <div className="container">
                 <div className="row">
                     <h3>Tanımlı Kuponlarım</h3>

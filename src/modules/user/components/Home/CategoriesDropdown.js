@@ -12,7 +12,11 @@ export default function CategoriesDropdown({categories}) {
     const renderCategories = (category) => {
         return (
             <li key={category.id}>
-                <NavLink className="dropdown-item" to={"/categories/" + category.slug}>
+                <NavLink
+                    className="dropdown-item"
+                    to={"/categories/" + category.slug}
+                    state={{title: category.title}}
+                >
                     {category.title}
                 </NavLink>
                 {category.children && category.children.length > 0 && (

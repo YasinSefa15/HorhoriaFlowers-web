@@ -24,7 +24,7 @@ export const AuthProvider = ({children}) => {
         console.log("user changed")
         const loadCartProducts = async () => {
             await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
-            console.log("cart products loaded");
+            //console.log("cart products loaded");
         };
 
         const removeLocalStorage = async () => {
@@ -41,7 +41,7 @@ export const AuthProvider = ({children}) => {
         const handleLogout = async () => {
             if (user === false || secret === null) {
                 await removeLocalStorage();
-                navigate("/auth/login");
+                navigate("/");
                 return;
             }
             await setLocalStorage();

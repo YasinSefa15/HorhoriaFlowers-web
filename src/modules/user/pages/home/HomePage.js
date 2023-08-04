@@ -7,6 +7,7 @@ import ProductCart from "../../components/product_cart/ProductCart";
 import {useNavigate} from "react-router-dom";
 import {createLoggedInUserProduct, readLoggedInUserCart} from "../../../../api.requests/cart/CartRequests";
 import {useAuth} from "../../../../context/AuthContext";
+import {Helmet} from "react-helmet";
 
 export default function HomePage() {
     const navigate = useNavigate();
@@ -85,6 +86,15 @@ export default function HomePage() {
 
     return (
         <>
+            <Helmet>
+                <title>Hooria E-Ticaret - En Yeni Ürünleri Keşfedin!</title>
+                <meta
+                    name="description"
+                    content="Hooria e-ticaret platformunda en yeni ürünleri keşfedin, indirimlerden yararlanın ve hızlı alışveriş deneyimi yaşayın. Geniş ürün yelpazemizle ihtiyacınız olan her şey burada!"
+                />
+                {/* Diğer meta etiketleri burada ekleyebilirsiniz */}
+            </Helmet>
+
             {/* Carousel */}
             <Carousel>
                 <Carousel.Item>

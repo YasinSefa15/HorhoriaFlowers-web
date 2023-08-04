@@ -10,7 +10,7 @@ export default function PageItems({pageCount, currentPage, changeCurrentPage}) {
     }
 
     //console.log(nums, currentPage - 5 > 0 ? currentPage - 5 : currentPage, currentPage + 5 < pageCount ? currentPage + 5 : pageCount)
-    console.log("pagination pagecount and current page", pageCount, currentPage)
+    //console.log("pagination pagecount and current page", pageCount, currentPage)
 
     return nums.map(i => (
         <li

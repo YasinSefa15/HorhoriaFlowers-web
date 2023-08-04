@@ -13,7 +13,7 @@ import AdminRoute from "./modules/user/components/AdminRoute";
 import CartPage from "./modules/user/pages/cart/CartPage";
 import ProductEdit from "./modules/admin/pages/product/ProductEdit";
 import RegisterPage from "./modules/user/pages/auth/RegisterPage";
-import Products from "./modules/user/components/product_cart/Products";
+import Products from "./modules/user/components/Products";
 import ProfileOrders from "./modules/user/components/profile/ProfileOrders";
 import ProfileAddresses from "./modules/user/components/profile/ProfileAddresses";
 import ProfileShippingStatus from "./modules/user/components/profile/ProfileShippingStatus";
@@ -21,6 +21,8 @@ import ProfileUserInformation from "./modules/user/components/profile/ProfileUse
 import ChangePassword from "./modules/user/components/profile/ChangePassword";
 import EmailChangeOrVerify from "./modules/user/components/profile/EmailChangeOrVerify";
 import ProfileUserCoupons from "./modules/user/components/profile/ProfileUserCoupons";
+import ProductSearch from "./modules/user/pages/product_search/ProductSearch";
+import CategoryProducts from "./modules/user/pages/category_products/CategoryProducts";
 
 const routes = [
     {
@@ -33,7 +35,7 @@ const routes = [
             },
             {
                 path: '/categories/:slug',
-                element: <Products></Products>
+                element: <CategoryProducts></CategoryProducts>
             },
             {
                 path: '/products/:slug',
@@ -41,7 +43,7 @@ const routes = [
             },
             {
                 path: '/products',
-                element: <Products></Products>
+                element: <ProductSearch></ProductSearch>
             }
         ]
     },
