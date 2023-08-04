@@ -336,6 +336,33 @@ async function getProfileOrders({setOrders, setLoaded, secret}) {
     }
 }
 
+async function getProfileUserCoupons({setUserCoupons, setLoaded, secret}) {
+    try {
+        axios.get(api_helper.api_url + api_helper.coupon.index,
+            {
+                headers: {
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            .then(async (response) => {
+                //console.log(response.data)
+                await setUserCoupons(response.data.data)
+                await setLoaded(true);
+            })
+            .catch((error) => {
+                console.log(error.response)
+                HTTPNotificationHelper({
+                    httpStatus: error.response.status,
+                    title: error.response.data.message,
+                })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 export {
     profileGetUser,
@@ -347,5 +374,6 @@ export {
     createProfileAddresses,
     updateProfileAddresses,
     deleteProfileAddresses,
-    getProfileOrders
+    getProfileOrders,
+    getProfileUserCoupons
 }

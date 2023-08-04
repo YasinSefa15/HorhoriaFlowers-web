@@ -48,6 +48,14 @@ export default function LeftSide() {
                 <hr></hr>
 
                 <div className="">
+                    <NavLink to={"/profile/coupons"}>
+                        <h5>Kuponlarım</h5>
+                    </NavLink>
+                </div>
+
+                <hr></hr>
+
+                <div className="">
                     <NavLink to={"/profile/shipping-status"}>
                         <h5>Kargom Nerede</h5>
                     </NavLink>

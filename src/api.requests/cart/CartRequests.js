@@ -144,7 +144,7 @@ async function getCouponDiscount({
                                      appliedCoupons
                                  }) {
     try {
-        axios.get(api_helper.api_url + api_helper.coupon.index + coupon,
+        axios.get(api_helper.api_url + api_helper.coupon.view + coupon,
             {
                 headers: {
                     "Authorization": "Bearer " + secret,

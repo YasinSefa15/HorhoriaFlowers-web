@@ -45,7 +45,8 @@ const api_helper = {
         //"view": "orders/", //id
     },
     "coupon" : {
-        "index": "coupons/", //code
+        "view": "coupons/", //code
+        "index": "coupons",
     }
 }
 

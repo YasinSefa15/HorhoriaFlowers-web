@@ -20,6 +20,7 @@ import ProfileShippingStatus from "./modules/user/components/profile/ProfileShip
 import ProfileUserInformation from "./modules/user/components/profile/ProfileUserInformation";
 import ChangePassword from "./modules/user/components/profile/ChangePassword";
 import EmailChangeOrVerify from "./modules/user/components/profile/EmailChangeOrVerify";
+import ProfileUserCoupons from "./modules/user/components/profile/ProfileUserCoupons";
 
 const routes = [
     {
@@ -65,6 +66,10 @@ const routes = [
             {
                 path: 'addresses',
                 element: <ProfileAddresses></ProfileAddresses>
+            },
+            {
+                path: 'coupons',
+                element: <ProfileUserCoupons></ProfileUserCoupons>
             },
             {
                 path: 'shipping-status',

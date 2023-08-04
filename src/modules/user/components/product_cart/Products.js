@@ -17,6 +17,7 @@ export default function Products() {
     const navigate = useNavigate();
     const [sortBy, setSortBy] = useState(null);
     const [onStock, setOnStock] = useState(0);
+    const [heading, setHeading] = useState(null);
 
     const addToCart = (event, id, title) => {
         event.stopPropagation();
@@ -55,8 +56,29 @@ export default function Products() {
             params: params
         })
             .then(res => {
-                console.log("rendered")
+                //console.log("rendered")
                 const params = new URLSearchParams(window.location.search);
+                const pathName =  new URLSearchParams(window.location.pathname)
+                const pathParts = pathName.toString().split('%2F');
+                let desiredPart = decodeURIComponent(pathParts[1]);
+
+                //rid of the '=' at the end
+                if (desiredPart.endsWith('=')) {
+                    desiredPart = desiredPart.slice(0, -1);
+                }
+
+                if (desiredPart === "categories") {
+                    let searchedCategory = decodeURIComponent(pathParts[2]);
+                    //rid of the '=' at the end
+                    if (searchedCategory.endsWith('=')) {
+                        searchedCategory = searchedCategory.slice(0, -1);
+                    }
+
+                    //console.log("searched " , searchedCategory)
+                    setHeading(searchedCategory + " kategorisindeki ürünleri görüntülüyorsunuz")
+                }else { //product search
+                    setHeading(params.get('title') + " ürününü ile ilgili sonuçları görüntülüyorsunuz")
+                }
 
                 if (params.get("page") === null) {
                     params.set("page", requestedPage.toString())
@@ -102,6 +124,10 @@ export default function Products() {
     return (
         <>
             <div className="container mt-4">
+                <div className="row mt-1 mb-2">
+                    <h4>{heading}</h4>
+                </div>
+
                 <div className="row mb-3 justify-content-between">
                     <div className="col d-flex align-items-center">
                         <div className="form-check">
