@@ -15,8 +15,9 @@ export default function CartPage() {
     const [products, setProducts] = React.useState([])
     const [subTotal, setSubTotal] = React.useState(parseInt(0))
     const [total, setTotal] = React.useState(parseInt(0))
+    const [discount, setDiscount] = React.useState(0)
+    const [appliedCoupons, setAppliedCoupons] = React.useState([])
     const {secret, setCartProducts} = useAuth();
-
 
 
     React.useEffect(() => {
@@ -124,13 +125,26 @@ export default function CartPage() {
                         }
                         return <>
                             <div className="container">
-                                <div className="row">
-                                    <CartCoupon></CartCoupon>
-                                    <div className="col col-0 col-sm-2"></div>
-                                    <CartPrice
-                                        total={total}
-                                        subTotal={subTotal}
-                                    ></CartPrice>
+                                <div className="row d-flex justify-content-around">
+                                    <div className="col col-sm-4">
+                                        <CartCoupon
+                                            appliedCoupons={appliedCoupons}
+                                            setAppliedCoupons={setAppliedCoupons}
+                                            total={total}
+                                            setTotal={setTotal}
+                                            discount={discount}
+                                            setDiscount={setDiscount}
+                                        ></CartCoupon>
+                                    </div>
+
+                                    <div className="col col-12 col-sm-6 mt-5 mt-sm-0">
+                                        <CartPrice
+                                            total={total}
+                                            subTotal={subTotal}
+                                            discount={discount}
+                                            setDiscount={setDiscount}
+                                        ></CartPrice>
+                                    </div>
                                 </div>
                             </div>
                         </>

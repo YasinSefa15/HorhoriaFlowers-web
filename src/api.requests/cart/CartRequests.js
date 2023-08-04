@@ -137,10 +137,51 @@ export default function addCartInDetail(title, id, quantity, secret) {
         })
 }
 
+async function getCouponDiscount({
+                                     coupon, discount,
+                                     setDiscount, setLoaded,
+                                     secret, setAppliedCoupons,
+                                     appliedCoupons
+                                 }) {
+    try {
+        axios.get(api_helper.api_url + api_helper.coupon.index + coupon,
+            {
+                headers: {
+                    "Authorization": "Bearer " + secret,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                }
+            })
+            .then(async (response) => {
+                //console.log(response.data)
+                await setDiscount(discount + parseFloat(response.data.data))
+                await setLoaded(true);
+                await setAppliedCoupons([...appliedCoupons, {
+                    coupon: coupon,
+                    discount: parseFloat(response.data.data)
+                }])
+                HTTPNotificationHelper({
+                    httpStatus: response.status,
+                    title: response.data.message,
+                })
+            })
+            .catch((error) => {
+                console.log(error.response)
+                HTTPNotificationHelper({
+                    httpStatus: error.response.status,
+                    title: error.response.data.message,
+                })
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 export {
     updateLoggedInUserCart,
     readLoggedInUserCart,
     deleteLoggedInUserProduct,
-    createLoggedInUserProduct
+    createLoggedInUserProduct,
+    getCouponDiscount
 }

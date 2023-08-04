@@ -37,6 +37,8 @@ export const colorSchema = {
     },
     cart : {
         primary: "#3c3c3c",
+        secondary: "#f5f5f5",
+        secondaryText: "#3c3c3c",
         primaryText: "white",
         primaryFontSize: "20px",
         primaryFontWeight: "500",
