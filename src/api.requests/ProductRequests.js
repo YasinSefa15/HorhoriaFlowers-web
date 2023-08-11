@@ -46,6 +46,29 @@ async function getSearchedProducts({
     }
 }
 
+async function getProductDetail({
+                                    slug,
+                                    setProduct,
+                                    setLoading,
+                                    setMainImage
+                                }) {
+    try {
+        axios.get(api_helper.api_url + api_helper.product.view + slug, {})
+            .then(async res => {
+                await setProduct(res.data.data)
+                console.log(res.data.data)
+                await setMainImage(res.data.data.images[0].file_path)
+                await setLoading(true)
+            })
+            .catch(error => {
+                console.log("error");
+                console.log(error)
+            })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 async function getCategoryProducts({
                                        params,
                                        setProducts,
@@ -112,5 +135,6 @@ async function getCategoryTitleFromSlug({
 export {
     getSearchedProducts,
     getCategoryProducts,
-    getCategoryTitleFromSlug
+    getCategoryTitleFromSlug,
+    getProductDetail
 }

@@ -5,7 +5,7 @@ export default function ProductCart({product, handleDivClick, addToCart}) {
         <>
             <div
                 className={"product-cart-box col-12  col-sm-6 col-md-6 col-lg-4 col-xl-3 .col-xxl-3 "
-                    + (+product.quantity === 0 ? "product-cart-disabled" : "") + " mb-4"}
+                    + (+product.total_quantity === 0 ? "product-cart-disabled" : "") + " mb-4"}
                 onClick={() => handleDivClick(product)}
                 style={{
                     marginBottom: "10px",
@@ -17,12 +17,12 @@ export default function ProductCart({product, handleDivClick, addToCart}) {
 
                 <div className="position-relative">
                     <img
-                        src={product.images[0].file_path}
+                        src={product.images ? product.images[0].file_path : product.image.file_path}
                         alt="product name"
                         className="w-100 h-auto mb-2"
                     />
                     <div
-                        className={"overlay" + (+product.quantity === 0 ? " product-cart-disabled" : " visually-hidden")}
+                        className={"overlay" + (+product.total_quantity === 0 ? " product-cart-disabled" : " visually-hidden")}
                     >
                         Tükendi
                     </div>
@@ -76,7 +76,7 @@ export default function ProductCart({product, handleDivClick, addToCart}) {
                 </span>
 
                 <i
-                    className={"cart-icon fa-solid fa-cart-plus" + (+product.quantity === 0 ? " visually-hidden" : "")}
+                    className={"cart-icon fa-solid fa-cart-plus" + (+product.total_quantity === 0 ? " visually-hidden" : "")}
                     style={{
                         position: "absolute",
                         bottom: 0,
