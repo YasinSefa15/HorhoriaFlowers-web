@@ -5,7 +5,7 @@ import {useNavigate} from "react-router-dom";
 const Context = createContext();
 
 export const AuthProvider = ({children}) => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || false);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
     const [secret, setSecret] = useState(JSON.parse(localStorage.getItem('secret')) || null);
     const [cartProducts, setCartProducts] = useState(localStorage.getItem('cartProducts') || null)
 
@@ -39,9 +39,9 @@ export const AuthProvider = ({children}) => {
         }
 
         const handleLogout = async () => {
-            if (user === false || secret === null) {
+            if (user === null || secret === null) {
                 await removeLocalStorage();
-                navigate("/");
+                await navigate("/");
                 return;
             }
             await setLocalStorage();

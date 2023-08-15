@@ -9,6 +9,7 @@ import {useAuth} from "../../../../context/AuthContext";
 import {Helmet} from "react-helmet";
 import {getProductDetail} from "../../../../api.requests/ProductRequests";
 import LoadingScreen from "../../components/LoadingScreen";
+import StarRatingComponent from "../../components/StarRatingComponent";
 
 export default function ProductDetail() {
     const {slug} = useParams();
@@ -34,6 +35,12 @@ export default function ProductDetail() {
         productDetail().then(r => {
         })
 
+        handleLocalStorage()
+        //console.log(products.find((product) => product.product_id === product.id))
+
+    }, [])
+
+    const handleLocalStorage = () => {
         const products = JSON.parse(JSON.stringify(cartProducts));
 
         if (products) {
@@ -43,9 +50,11 @@ export default function ProductDetail() {
                 }
             }
         }
-        //console.log(products.find((product) => product.product_id === product.id))
-
-    }, [])
+    }
+    const handleAddCart = (title, id, quantity) => {
+        addCartInDetail(title, id, quantity, secret)
+        handleLocalStorage()
+    }
 
     const changeImage = (id) => {
         setMainImage(product.images[id].file_path)
@@ -68,7 +77,7 @@ export default function ProductDetail() {
                         <div>
                             {((() => {
                                 const titles = product.categories.titles.split("/")
-                                console.log("titles ", titles)
+                                //console.log("titles ", titles)
                                 const slugs = product.categories.slugs.split("/")
                                 return (
                                     <>
@@ -145,28 +154,9 @@ export default function ProductDetail() {
 
                                     <h2 className="fw-bold">{product.new_price}₺</h2>
 
-                                    <div className="p-detail-rating">
-                                        <i
-                                            className="fa-solid fa-star"
-                                            style={{
-                                                color: "#FFD700"
-                                            }}
-                                        ></i>
-                                        <i
-                                            className="fa-solid fa-star"
-                                            style={{
-                                                color: "#FFD700"
-                                            }}
-                                        ></i>
-                                        <i
-                                            className="fa-solid fa-star"
-                                            style={{
-                                                color: "#FFD700"
-                                            }}
-                                        ></i>
-                                        <i className="fa-solid fa-star"></i>
-                                        <i className="fa-solid fa-star"></i>
-                                    </div>
+                                    <StarRatingComponent
+                                        rating={product.average_rating}
+                                    ></StarRatingComponent>
 
                                 </div>
 
@@ -258,7 +248,7 @@ export default function ProductDetail() {
                                                     height: "50px",
                                                 }}
                                                 onClick={() => {
-                                                    addCartInDetail(product.title, product.id, quantity, secret)
+                                                    handleAddCart(product.title, product.id, quantity)
                                                 }}
                                             ></CustomButton>
                                         </div>

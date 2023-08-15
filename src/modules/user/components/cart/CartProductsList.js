@@ -32,6 +32,7 @@ export default function CartProductsList({products, deleteProduct, updateProduct
             <div className="row mt-4">
                 {products.map((product) => (
                     <>
+                    {console.log("product", product)}
                         <div className="row mb-2">
                             <div className="col d-flex flex-wrap">
                                 <img

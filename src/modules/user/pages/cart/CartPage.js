@@ -75,6 +75,7 @@ export default function CartPage() {
     }
 
     const updateProductQuantity = (product_id, quantity) => {
+        console.log("updateProductQuantity", product_id, quantity)
         if (quantity < 1) {
             return
         }

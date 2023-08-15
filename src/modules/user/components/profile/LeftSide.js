@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import React, {useState} from "react";
 import {Modal} from "react-bootstrap";
 import CustomButton from "../CustomButton";
@@ -6,7 +6,8 @@ import {useAuth} from "../../../../context/AuthContext";
 
 export default function LeftSide() {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
-    const {setSecret} = useAuth()
+    const {setSecret, setUser} = useAuth()
+
     return (
         <>
             <div
@@ -113,6 +114,7 @@ export default function LeftSide() {
                             setShowLogoutModal(false)
                             const fetchData = async () => {
                                 await setSecret(null)
+                                await setUser(null)
                             };
                             fetchData().then(r => {
                             });

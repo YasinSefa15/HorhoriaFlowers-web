@@ -12,7 +12,7 @@ export default function TopNavigationBar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
-    console.log("top user ", user)
+        console.log("top user ", user)
     }, [user])
 
     return (
@@ -73,21 +73,21 @@ export default function TopNavigationBar() {
 
                     {user ? (
                         <>
-                            <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            <button className="navbar-toggler col-2" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
                                     aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="navbar-toggler-icon"></span>
                             </button>
 
-                            <div className="collapse navbar-collapse row" id="navbarNavAltMarkup">
-                                <div className="navbar-nav">
+                            <div className="collapse navbar-collapse row col col-sm-4" id="navbarNavAltMarkup">
+                                <div className="navbar-nav col d-flex justify-content-end">
                                     <div
-                                        className="col-sm-3 col-md-2 d-flex align-items-center justify-content-center">
+                                        className="d-flex align-items-center justify-content-center">
                                         <CategoriesDropdown></CategoriesDropdown>
                                     </div>
 
                                     <div
-                                        className={"col-sm-1 navbar-item cursor-pointer "}>
+                                        className={" navbar-item cursor-pointer "}>
                                         <div className={"d-flex align-items-center justify-content-center"}>
                                             <NavLink className="navbar-brand d-md-none d-lg-block"
                                                      to="/cart"> Sepetim</NavLink>
@@ -96,7 +96,7 @@ export default function TopNavigationBar() {
                                     </div>
 
                                     <div
-                                        className={"col-sm-1 navbar-item cursor-pointer"}>
+                                        className={"navbar-item cursor-pointer"}>
                                         <div className={"d-flex align-items-center justify-content-center"}>
                                             <NavLink className="navbar-brand d-md-none d-lg-block"
                                                      to="/profile"> Profil</NavLink>
@@ -109,43 +109,37 @@ export default function TopNavigationBar() {
                         </>
                     ) : (
                         <>
-                            <div className="col-3 col-sm-3 col-md-2">
-                                <CategoriesDropdown></CategoriesDropdown>
-                            </div>
+                            <button className="navbar-toggler col-2" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="navbar-toggler-icon"></span>
+                            </button>
 
-                            <div
-                                className="icons-area-nav"
-                            ></div>
+                            <div className="collapse navbar-collapse row col col-sm-3" id="navbarNavAltMarkup">
+                                <div className="navbar-nav col d-flex justify-content-end">
+                                    <div
+                                        className="d-flex align-items-center justify-content-center">
+                                        <CategoriesDropdown></CategoriesDropdown>
+                                    </div>
 
-                            <div
-                                className={"col-1 col-sm-1 cursor-pointer"}
-                                onClick={() => {
-                                    navigate("/auth/login");
-                                }}>
-                                <div className={"d-flex navbar-item align-items-center justify-content-between"}>
-                                    <div className={"d-none d-md-block"}>Kargo Takip</div>
-                                    <i className="fa-solid fa-truck"></i>
+                                    <div
+                                        className={"navbar-item cursor-pointer"}>
+                                        <div className={"d-flex align-items-center justify-content-center"}>
+                                            <NavLink className="navbar-brand d-md-none d-lg-block"
+                                                     to="/auth/login"> Giriş Yap</NavLink>
+                                            <i className="fa-solid fa-right-to-bracket"></i>
+                                        </div>
+                                    </div>
+
+                                    <div
+                                        className={"navbar-item cursor-pointer"}>
+                                        <div className={"d-flex align-items-center justify-content-center"}>
+                                            <NavLink className="navbar-brand d-md-none d-lg-block"
+                                                     to="/auth/login">Sepetim</NavLink>
+                                            <i className="fa-solid fa-cart-shopping"></i>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-
-
-                            <div
-                                className={"col-1 col-sm-1 cursor-pointer"}
-                                onClick={() => {
-                                    navigate("/auth/login");
-                                }}>
-                                <div className={"navbar-item d-flex align-items-center justify-content-between"}>
-                                    <div className={"d-none d-md-block cursor-pointer"}>Giriş Yap</div>
-                                    <i className="fa-solid fa-right-to-bracket"></i>
-                                </div>
-                            </div>
-
-                            <div
-                                className={"col-1 navbar-item cursor-pointer"}
-                                onClick={() => {
-                                    navigate("/auth/login");
-                                }}>
-                                <i className="fa-solid fa-cart-shopping"></i>
                             </div>
                         </>
 
