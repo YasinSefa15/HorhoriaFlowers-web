@@ -106,10 +106,11 @@ const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
         })
 }
 
-export default function addCartInDetail(title, id, quantity, secret) {
+export default function addCartInDetail(title, id, quantity, secret,selectedSize) {
     const data = {
         product_id: id,
-        quantity: quantity
+        quantity: quantity,
+        selectedSize: selectedSize
     }
 
     axios.post((api_helper.api_url + api_helper.carts.create), data, {

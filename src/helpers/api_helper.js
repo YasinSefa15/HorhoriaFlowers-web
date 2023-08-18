@@ -23,6 +23,8 @@ const api_helper = {
     'carts': {
         'view': "carts",
         'create': "carts",
+        'sync': "carts/sync",
+        'visitor_products': "carts/visitor-products",
         'update': "carts/:product_id",
         'delete': "carts/:product_id"
     },

@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {createLoggedInUserProduct, readLoggedInUserCart} from "../../../../api.requests/cart/CartRequests";
 import {useAuth} from "../../../../context/AuthContext";
 import {Helmet} from "react-helmet";
+import {addVisitorProductToCart} from "../../../../api.requests/cart/VisitorRequests";
 
 export default function HomePage() {
     const navigate = useNavigate();
@@ -69,6 +70,11 @@ export default function HomePage() {
 
     const addToCart = (event, id, title, secret) => {
         event.stopPropagation();
+
+        if (!secret) {
+            addVisitorProductToCart({title, id: id, quantity: 1});
+            return;
+        }
         createLoggedInUserProduct({
             product_id: id,
             secret: secret,
@@ -77,11 +83,9 @@ export default function HomePage() {
 
         const loadCartProducts = async () => {
             await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
-            console.log("cart products loaded");
         };
         loadCartProducts().then(r => {
         });
-
     }
 
     return (

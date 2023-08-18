@@ -10,6 +10,7 @@ import CartCoupon from "../../components/cart/CartCoupon";
 import CartPrice from "../../components/cart/CartPrice";
 import CartProductsList from "../../components/cart/CartProductsList";
 import {Helmet} from "react-helmet";
+import {getVisitorCartProducts} from "../../../../api.requests/cart/VisitorRequests";
 
 
 export default function CartPage() {
@@ -18,11 +19,24 @@ export default function CartPage() {
     const [total, setTotal] = React.useState(parseInt(0))
     const [discount, setDiscount] = React.useState(0)
     const [appliedCoupons, setAppliedCoupons] = React.useState([])
+    const [visitorProLoad, setVisitorProLoad] = React.useState(false)
     const {secret, setCartProducts} = useAuth();
 
 
     React.useEffect(() => {
         const loadCartProducts = async () => {
+            const visitorCartProducts = localStorage.getItem("visitorCartProducts");
+            if (visitorCartProducts) {
+                await getVisitorCartProducts({
+                    setProducts: setProducts,
+                    cartProducts: visitorCartProducts,
+                    products: products
+                })
+
+                await setVisitorProLoad(true)
+
+                return
+            }
             await readLoggedInUserCart({setProducts: setProducts, secret: secret});
             console.log("cart products loaded");
             setCartProducts(products)
@@ -57,8 +71,27 @@ export default function CartPage() {
     }, [])
 
     React.useEffect(() => {
+        const visitorCartProducts = localStorage.getItem("visitorCartProducts");
+        if (visitorProLoad) {
+            const JSONVisitorCartProducts = JSON.parse(visitorCartProducts);
+            const updatedProducts = products.map(product => {
+                const cartProduct = JSONVisitorCartProducts.find(cartItem => cartItem.id === product.id);
+                // Eşleşen ürünü bul, yoksa null döner
+
+                if (cartProduct) {
+                    return {
+                        ...product,
+                        quantity: cartProduct.quantity // quantity değerini ekliyoruz
+                    };
+                }
+                return product;
+            });
+            setProducts(updatedProducts);
+        }
+    }, [visitorProLoad])
+
+    React.useEffect(() => {
         let total = 0;
-        console.log("products", products)
 
         products.map((product, index) => {
             total += product.new_price * product.quantity
@@ -75,13 +108,15 @@ export default function CartPage() {
     }
 
     const updateProductQuantity = (product_id, quantity) => {
-        console.log("updateProductQuantity", product_id, quantity)
         if (quantity < 1) {
             return
         }
 
         const a = products.map((product, index) => {
             if (product.product_id === product_id) {
+                if (secret === null) {
+                    return {...product, quantity: quantity}
+                }
                 updateLoggedInUserCart({product_id: product_id, quantity: quantity, secret});
                 return {...product, quantity: quantity}
             }
@@ -89,15 +124,22 @@ export default function CartPage() {
         });
 
         setProducts(a)
-        setCartProducts(a)
-
+        if (secret === null) {
+            localStorage.setItem("visitorCartProducts", JSON.stringify(a));
+            return
+        }
         // Update the cartProducts in the context with the new quantity
-
+        setCartProducts(a)
     }
 
     const deleteProduct = (product_id) => {
         setProducts(products.filter((product, index) => {
-            if (product.product_id === product_id) {
+            if ((product.product_id || product.id) === product_id) {
+                if (secret === null) {
+                    const a = products.filter((product, index) => product.id !== product_id)
+                    localStorage.setItem("visitorCartProducts", JSON.stringify(a));
+                    return false;
+                }
                 deleteLoggedInUserProduct({product_id: product_id, secret})
                 //localden
                 setCartProducts(products.filter((product, index) => product.product_id !== product_id))

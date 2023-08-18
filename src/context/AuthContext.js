@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {readLoggedInUserCart} from "../api.requests/cart/CartRequests";
-import {useNavigate} from "react-router-dom";
+import {syncVisitorCartProductsToLoggedInUserCartProducts} from "../api.requests/cart/VisitorRequests";
 
 const Context = createContext();
 
@@ -8,8 +8,6 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
     const [secret, setSecret] = useState(JSON.parse(localStorage.getItem('secret')) || null);
     const [cartProducts, setCartProducts] = useState(localStorage.getItem('cartProducts') || null)
-
-    const navigate = useNavigate()
 
     const data = {
         user,
@@ -21,16 +19,21 @@ export const AuthProvider = ({children}) => {
     }
 
     useEffect(() => {
-        console.log("user changed")
         const loadCartProducts = async () => {
+            if (localStorage.getItem("visitorCartProducts")) {
+                await syncVisitorCartProductsToLoggedInUserCartProducts({
+                    cartProducts: localStorage.getItem("visitorCartProducts") ?? JSON.stringify([]),
+                    secret: secret
+                })
+            }
             await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
-            //console.log("cart products loaded");
         };
 
         const removeLocalStorage = async () => {
             await localStorage.removeItem("user")
             await localStorage.removeItem("secret")
             await localStorage.removeItem("cartProducts")
+            await localStorage.setItem("visitorCartProducts", localStorage.getItem("visitorCartProducts") ?? JSON.stringify([]))
         }
 
         const setLocalStorage = async () => {
@@ -41,7 +44,7 @@ export const AuthProvider = ({children}) => {
         const handleLogout = async () => {
             if (user === null || secret === null) {
                 await removeLocalStorage();
-                await navigate("/");
+                //await navigate("/");
                 return;
             }
             await setLocalStorage();

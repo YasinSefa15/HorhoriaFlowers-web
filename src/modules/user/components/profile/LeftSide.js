@@ -7,6 +7,7 @@ import {useAuth} from "../../../../context/AuthContext";
 export default function LeftSide() {
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const {setSecret, setUser} = useAuth()
+    const navigate = useNavigate()
 
     return (
         <>
@@ -115,6 +116,7 @@ export default function LeftSide() {
                             const fetchData = async () => {
                                 await setSecret(null)
                                 await setUser(null)
+                                await navigate("/");
                             };
                             fetchData().then(r => {
                             });

@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
-import {api_helper} from "../../../helpers/api_helper";
 import ProductCart from "./product_cart/ProductCart";
 import {createLoggedInUserProduct, readLoggedInUserCart} from "../../../api.requests/cart/CartRequests";
 import {useAuth} from "../../../context/AuthContext";
@@ -9,6 +7,7 @@ import CustomPagination from "./pagination/CustomPagination";
 import './product_cart/ProductCart.css';
 import LoadingScreen from "./LoadingScreen";
 import {getCategoryProducts, getSearchedProducts} from "../../../api.requests/ProductRequests";
+import {addVisitorProductToCart} from "../../../api.requests/cart/VisitorRequests";
 
 export default function Products({heading, setTitle, paramsProp, slug}) {
     const [totalPage, setTotalPage] = React.useState(1)
@@ -24,6 +23,12 @@ export default function Products({heading, setTitle, paramsProp, slug}) {
 
     const addToCart = (event, id, title) => {
         event.stopPropagation();
+
+        if (!secret) {
+            addVisitorProductToCart({title, id: id, quantity: 1});
+            return;
+        }
+
         createLoggedInUserProduct({
             product_id: id,
             secret: secret,
@@ -32,7 +37,6 @@ export default function Products({heading, setTitle, paramsProp, slug}) {
 
         const loadCartProducts = async () => {
             await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
-            console.log("cart products loaded");
         };
         loadCartProducts().then(r => {
         });
@@ -71,7 +75,7 @@ export default function Products({heading, setTitle, paramsProp, slug}) {
             })
         } else if (params.category_slug !== undefined) {
             console.log("params.category_slug   " + params.category_slug)
-            console.log("params   " , params)
+            console.log("params   ", params)
             const fetchProducts = async () => {
                 await getCategoryProducts({
                     params: params,

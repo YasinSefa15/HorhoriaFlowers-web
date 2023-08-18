@@ -37,7 +37,6 @@ export default function CartPrice({total, subTotal, discount}) {
             <br></br>
 
             {((() => {
-                console.log("d:", discount)
                 if (discount > 0) {
                     return (
                         <>

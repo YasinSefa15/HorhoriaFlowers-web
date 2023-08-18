@@ -1,8 +1,10 @@
 import ItemCount from "./ItemCount";
 import React from "react";
 import {colorSchema} from "../../../../helpers/ColorSchema";
+import {useNavigate} from "react-router-dom";
 
 export default function CartProductsList({products, deleteProduct, updateProductQuantity, updateTotal}) {
+    const navigate = useNavigate();
     return (
         <>
             <div className="row">
@@ -32,7 +34,6 @@ export default function CartProductsList({products, deleteProduct, updateProduct
             <div className="row mt-4">
                 {products.map((product) => (
                     <>
-                    {console.log("product", product)}
                         <div className="row mb-2">
                             <div className="col d-flex flex-wrap">
                                 <img
@@ -45,7 +46,9 @@ export default function CartProductsList({products, deleteProduct, updateProduct
                                     }}
                                 ></img>
                                 <div>
-                                    <p style={{fontSize: "20px"}}>{product.title}</p>
+                                    <p style={{fontSize: "20px", cursor: "pointer"}}
+                                       onClick={() => navigate("/products/" + product.slug)}
+                                    >{product.title}</p>
                                     <small>Fiyat: {product.new_price}₺</small>
                                     {((() => {
                                         if (product.new_price !== product.old_price) {
@@ -79,7 +82,7 @@ export default function CartProductsList({products, deleteProduct, updateProduct
                                            textDecoration: "none",
                                            fontSize: "14px",
                                        }}
-                                       onClick={(e) => deleteProduct(product.product_id)}
+                                       onClick={(e) => deleteProduct(product.product_id || product.id)}
                                     >
                                         Sepetten Çıkar
                                     </a>

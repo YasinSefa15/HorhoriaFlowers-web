@@ -10,6 +10,7 @@ import {Helmet} from "react-helmet";
 import {getProductDetail} from "../../../../api.requests/ProductRequests";
 import LoadingScreen from "../../components/LoadingScreen";
 import StarRatingComponent from "../../components/StarRatingComponent";
+import {updateVisitorProductCart} from "../../../../api.requests/cart/VisitorRequests";
 
 export default function ProductDetail() {
     const {slug} = useParams();
@@ -17,12 +18,12 @@ export default function ProductDetail() {
     const [loading, setLoading] = useState(false)
     const [mainImage, setMainImage] = useState(null)// useState(product.images[0].file_path)
     const [quantity, setQuantity] = useState(1)
-    const {secret, cartProducts, setCartProducts} = useAuth();
+    const {secret, cartProducts} = useAuth();
+    const [selectedSize, setSelectedSize] = useState(null);
     const navigate = useNavigate();
     //console.log(location.state)
 
     useEffect(() => {
-
         const productDetail = async () => {
             await getProductDetail({
                 slug: slug,
@@ -41,7 +42,13 @@ export default function ProductDetail() {
     }, [])
 
     const handleLocalStorage = () => {
-        const products = JSON.parse(JSON.stringify(cartProducts));
+        let products = null;
+
+        if (secret) {
+            products = JSON.parse(JSON.stringify(cartProducts));
+        } else {
+            products = JSON.parse(localStorage.getItem("visitorCartProducts"));
+        }
 
         if (products) {
             for (let i = 0; i < products.length; i++) {
@@ -51,10 +58,19 @@ export default function ProductDetail() {
             }
         }
     }
-    const handleAddCart = (title, id, quantity) => {
-        addCartInDetail(title, id, quantity, secret)
+    const handleAddCart = (title, id, quantity, selectedSize) => {
+        if (secret) {
+            addCartInDetail(title, id, quantity, secret,selectedSize)
+        } else {
+            updateVisitorProductCart({id, quantity,selectedSize})
+        }
         handleLocalStorage()
+
     }
+
+    const handleSizeChange = (event) => {
+        setSelectedSize(event.target.value);
+    };
 
     const changeImage = (id) => {
         setMainImage(product.images[id].file_path)
@@ -162,14 +178,18 @@ export default function ProductDetail() {
 
 
                                 <div className="d-flex justify-content-center">
-                                    <select className="my-3">
-                                        <option>Beden Seçiniz</option>
-                                        <option>XXL</option>
-                                        <option>XL</option>
-                                        <option>Large</option>
-                                        <option>Medium</option>
-                                        <option>Small</option>
-                                    </select>
+                                    {
+                                        product.sizes.length > 0 ?
+                                            (<>
+                                                <select className="my-3" onChange={handleSizeChange}>
+                                                    {product.sizes.map((size) => {
+                                                        return (
+                                                            <option>{size.value}</option>
+                                                        );
+                                                    })}
+                                                </select>
+                                            </>) : <div className="mb-3"></div>
+                                    }
                                 </div>
 
 
@@ -248,7 +268,7 @@ export default function ProductDetail() {
                                                     height: "50px",
                                                 }}
                                                 onClick={() => {
-                                                    handleAddCart(product.title, product.id, quantity)
+                                                    handleAddCart(product.title, product.id, quantity, selectedSize)
                                                 }}
                                             ></CustomButton>
                                         </div>

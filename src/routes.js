@@ -1,6 +1,6 @@
 import HomePage from "./modules/user/pages/home/HomePage";
 import HomePageLayout from "./modules/user/pages/home";
-import PrivateRoute from "./modules/user/components/PrivateRoute";
+import PrivateRoute from "./modules/user/configs/PrivateRoute";
 import ProfileLayout from "./modules/user/pages/profile";
 import AuthLayout from "./modules/user/pages/auth/AuthLayout";
 import LoginPage from "./modules/user/pages/auth/LoginPage";
@@ -9,11 +9,10 @@ import ProductDetail from "./modules/user/pages/product_detail/ProductDetail";
 import AdminLayout from "./modules/admin/pages/AdminLayout";
 import ProductAdmin from "./modules/admin/pages/product/ProductAdmin";
 import AdminPage from "./modules/admin/pages/AdminPage";
-import AdminRoute from "./modules/user/components/AdminRoute";
+import AdminRoute from "./modules/user/configs/AdminRoute";
 import CartPage from "./modules/user/pages/cart/CartPage";
 import ProductEdit from "./modules/admin/pages/product/ProductEdit";
 import RegisterPage from "./modules/user/pages/auth/RegisterPage";
-import Products from "./modules/user/components/Products";
 import ProfileOrders from "./modules/user/components/profile/ProfileOrders";
 import ProfileAddresses from "./modules/user/components/profile/ProfileAddresses";
 import ProfileShippingStatus from "./modules/user/components/profile/ProfileShippingStatus";
@@ -108,12 +107,10 @@ const routes = [
         children: [
             {
                 index: true,
-                admin: true,
                 element: <AdminPage></AdminPage>
             },
             {
                 path: 'products',
-                admin: true,
                 element: <ProductAdmin></ProductAdmin>,
             },
             {

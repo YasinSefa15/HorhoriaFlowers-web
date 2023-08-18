@@ -8,11 +8,9 @@ import CustomButton from "../CustomButton";
 export default function TopNavigationBar() {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    const {setUser, user} = useAuth();
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const {user} = useAuth();
 
     useEffect(() => {
-        console.log("top user ", user)
     }, [user])
 
     return (
@@ -135,7 +133,7 @@ export default function TopNavigationBar() {
                                         className={"navbar-item cursor-pointer"}>
                                         <div className={"d-flex align-items-center justify-content-center"}>
                                             <NavLink className="navbar-brand d-md-none d-lg-block"
-                                                     to="/auth/login">Sepetim</NavLink>
+                                                     to="/cart">Sepetim</NavLink>
                                             <i className="fa-solid fa-cart-shopping"></i>
                                         </div>
                                     </div>
