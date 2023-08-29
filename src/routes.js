@@ -22,6 +22,7 @@ import EmailChangeOrVerify from "./modules/user/components/profile/EmailChangeOr
 import ProfileUserCoupons from "./modules/user/components/profile/ProfileUserCoupons";
 import ProductSearch from "./modules/user/pages/product_search/ProductSearch";
 import CategoryProducts from "./modules/user/pages/category_products/CategoryProducts";
+import OrderIndex from "./modules/user/pages/order/OrderIndex";
 
 const routes = [
     {
@@ -49,6 +50,11 @@ const routes = [
     {
         path: '/cart',
         element: <CartPage></CartPage>
+
+    },
+    {
+        path: '/order',
+        element: <OrderIndex></OrderIndex>
 
     },
     {

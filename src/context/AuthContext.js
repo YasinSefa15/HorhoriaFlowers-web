@@ -20,12 +20,14 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const loadCartProducts = async () => {
-            if (localStorage.getItem("visitorCartProducts")) {
+            const visitorCartProducts = JSON.parse(localStorage.getItem("visitorCartProducts") ?? "[]")
+            if (visitorCartProducts.length) {
                 await syncVisitorCartProductsToLoggedInUserCartProducts({
-                    cartProducts: localStorage.getItem("visitorCartProducts") ?? JSON.stringify([]),
+                    cartProducts: visitorCartProducts ?? JSON.stringify([]),
                     secret: secret
                 })
             }
+            await localStorage.removeItem("visitorCartProducts")
             await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
         };
 
@@ -60,8 +62,10 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const setCartProducts = async () => {
+            console.log(cartProducts)
             if ((secret !== null && cartProducts !== null) || Array.isArray(localStorage.getItem('cartProducts'))) {
                 await localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                //await localStorage.setItem("cartProducts", JSON.stringify([]))
             }
         };
         setCartProducts().then(r => {

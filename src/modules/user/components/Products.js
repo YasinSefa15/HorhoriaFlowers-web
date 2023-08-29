@@ -1,13 +1,17 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import ProductCart from "./product_cart/ProductCart";
-import {createLoggedInUserProduct, readLoggedInUserCart} from "../../../api.requests/cart/CartRequests";
+import {
+    addCartIfNotExists,
+    createLoggedInUserProduct,
+    readLoggedInUserCart
+} from "../../../api.requests/cart/CartRequests";
 import {useAuth} from "../../../context/AuthContext";
 import CustomPagination from "./pagination/CustomPagination";
 import './product_cart/ProductCart.css';
 import LoadingScreen from "./LoadingScreen";
 import {getCategoryProducts, getSearchedProducts} from "../../../api.requests/ProductRequests";
-import {addVisitorProductToCart} from "../../../api.requests/cart/VisitorRequests";
+import {addVisitorProductToCart, addVisitorProductToCartIfNotExists} from "../../../api.requests/cart/VisitorRequests";
 
 export default function Products({heading, setTitle, paramsProp, slug}) {
     const [totalPage, setTotalPage] = React.useState(1)
@@ -25,17 +29,14 @@ export default function Products({heading, setTitle, paramsProp, slug}) {
         event.stopPropagation();
 
         if (!secret) {
-            addVisitorProductToCart({title, id: id, quantity: 1});
+            addVisitorProductToCartIfNotExists({title, id: id, quantity: 1});
             return;
         }
 
-        createLoggedInUserProduct({
-            product_id: id,
-            secret: secret,
-            product_title: title,
-        })
-
         const loadCartProducts = async () => {
+            await addCartIfNotExists({
+                id, secret, title,
+            })
             await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
         };
         loadCartProducts().then(r => {

@@ -10,7 +10,7 @@ import {Helmet} from "react-helmet";
 import {getProductDetail} from "../../../../api.requests/ProductRequests";
 import LoadingScreen from "../../components/LoadingScreen";
 import StarRatingComponent from "../../components/StarRatingComponent";
-import {updateVisitorProductCart} from "../../../../api.requests/cart/VisitorRequests";
+import {addVisitorProductToCart, updateVisitorProductCart} from "../../../../api.requests/cart/VisitorRequests";
 
 export default function ProductDetail() {
     const {slug} = useParams();
@@ -36,36 +36,18 @@ export default function ProductDetail() {
         productDetail().then(r => {
         })
 
-        handleLocalStorage()
         //console.log(products.find((product) => product.product_id === product.id))
 
     }, [])
 
-    const handleLocalStorage = () => {
-        let products = null;
-
+    const handleAddCart = async (title, id, quantity, selectedSize) => {
         if (secret) {
-            products = JSON.parse(JSON.stringify(cartProducts));
-        } else {
-            products = JSON.parse(localStorage.getItem("visitorCartProducts"));
-        }
+            //if product already in the cart, get old quantity field
+            addCartInDetail({title, id, quantity, secret, selectedSize, product})
 
-        if (products) {
-            for (let i = 0; i < products.length; i++) {
-                if (products[i].slug === slug) {
-                    setQuantity(products[i].quantity)
-                }
-            }
-        }
-    }
-    const handleAddCart = (title, id, quantity, selectedSize) => {
-        if (secret) {
-            addCartInDetail(title, id, quantity, secret,selectedSize)
         } else {
-            updateVisitorProductCart({id, quantity,selectedSize})
+            addVisitorProductToCart({id, quantity, title,product})
         }
-        handleLocalStorage()
-
     }
 
     const handleSizeChange = (event) => {

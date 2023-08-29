@@ -34,7 +34,7 @@ export default function CategoriesDropdown({categories}) {
             <div className="dropdown" onMouseEnter={() => setIsDropdownOpen(true)}
                  onMouseLeave={() => setIsDropdownOpen(false)}
                  style={{position: "relative"}}>
-                <a className="navbar-brand" role="button" data-bs-toggle="dropdown"
+                <a className="navbar-brand m-0" role="button" data-bs-toggle="dropdown"
                    aria-expanded={isDropdownOpen}>
                     Kategoriler
                 </a>

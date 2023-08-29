@@ -5,10 +5,18 @@ import {Carousel, Container, Row, Col, Button} from 'react-bootstrap';
 import getDiscountedProducts from "../../../../api.requests/HomePageRequests";
 import ProductCart from "../../components/product_cart/ProductCart";
 import {useNavigate} from "react-router-dom";
-import {createLoggedInUserProduct, readLoggedInUserCart} from "../../../../api.requests/cart/CartRequests";
+import {
+    addCartIfNotExists,
+    addCartInDetailButton,
+    createLoggedInUserProduct,
+    readLoggedInUserCart
+} from "../../../../api.requests/cart/CartRequests";
 import {useAuth} from "../../../../context/AuthContext";
 import {Helmet} from "react-helmet";
-import {addVisitorProductToCart} from "../../../../api.requests/cart/VisitorRequests";
+import {
+    addVisitorProductToCart,
+    addVisitorProductToCartIfNotExists
+} from "../../../../api.requests/cart/VisitorRequests";
 
 export default function HomePage() {
     const navigate = useNavigate();
@@ -39,7 +47,7 @@ export default function HomePage() {
         } else if (screenWidth >= 768) {
             setItemsPerPage(2); // Orta ekranlarda 3 ürün göster
         } else {
-            setItemsPerPage(1); // Küçük ekranlarda 2 ürün göster
+            setItemsPerPage(2); // Küçük ekranlarda 2 ürün göster
         }
     };
 
@@ -72,16 +80,16 @@ export default function HomePage() {
         event.stopPropagation();
 
         if (!secret) {
-            addVisitorProductToCart({title, id: id, quantity: 1});
+            addVisitorProductToCartIfNotExists({title, id: id, quantity: 1});
             return;
         }
-        createLoggedInUserProduct({
-            product_id: id,
-            secret: secret,
-            product_title: title,
-        })
 
         const loadCartProducts = async () => {
+            await addCartIfNotExists({
+                id, secret, title,
+            }).then(r => {
+            })
+
             await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
         };
         loadCartProducts().then(r => {
@@ -103,7 +111,12 @@ export default function HomePage() {
             <Carousel>
                 <Carousel.Item>
                     <img
-                        className="d-block w-100"
+                        className="d-block"
+                        style={{
+                            width:"100%",
+                            height:"100%",
+                            objectFit: "cover"
+                        }}
                         src="https://via.placeholder.com/1920x500"
                         alt="Slide 1"
                     />

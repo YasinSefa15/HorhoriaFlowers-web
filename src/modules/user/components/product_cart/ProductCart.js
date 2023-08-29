@@ -4,7 +4,7 @@ export default function ProductCart({product, handleDivClick, addToCart}) {
     return (
         <>
             <div
-                className={"product-cart-box col-12  col-sm-6 col-md-6 col-lg-4 col-xl-3 .col-xxl-3 "
+                className={"product-cart-box col-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 .col-xxl-3 "
                     + (+product.total_quantity === 0 ? "product-cart-disabled" : "") + " mb-4"}
                 onClick={() => handleDivClick(product)}
                 style={{

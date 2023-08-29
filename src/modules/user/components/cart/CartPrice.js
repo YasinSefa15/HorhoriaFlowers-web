@@ -1,8 +1,11 @@
 import {colorSchema} from "../../../../helpers/ColorSchema";
 import CustomButton from "../CustomButton";
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
 export default function CartPrice({total, subTotal, discount}) {
+    const navigate = useNavigate();
+
     return (
         <>
             <div className="row mb-4">
@@ -67,6 +70,7 @@ export default function CartPrice({total, subTotal, discount}) {
                         style={{
                             width: "max-content",
                         }}
+                        onClick={() => navigate("/order")}
                     ></CustomButton>
                 </div>
             </div>

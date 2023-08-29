@@ -11,12 +11,14 @@ export default function ProfileUserInformation() {
     const {secret} = useAuth();
 
     React.useEffect(() => {
-        const fetchData = async () => {
-            await profileGetUser({setUserForm, setLoaded, secret});
-        };
+        if(secret){
+            const fetchData = async () => {
+                await profileGetUser({setUserForm, setLoaded, secret});
+            };
 
-        fetchData().then(r => {
-        });
+            fetchData().then(r => {
+            });
+        }
     }, [secret]);
 
 

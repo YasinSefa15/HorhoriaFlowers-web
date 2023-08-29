@@ -16,6 +16,7 @@ const readLoggedInUserCart = async ({setProducts, secret}) => {
             let result = [];
             res.data.data.map((product, index) => {
                 result.push(product)
+                return product
             })
             setProducts(result)
         })
@@ -106,7 +107,12 @@ const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
         })
 }
 
-export default function addCartInDetail(title, id, quantity, secret,selectedSize) {
+
+export default function addCartInDetail({title, id, quantity, secret, selectedSize, product}) {
+    let storageProducts = JSON.parse(localStorage.getItem("cartProducts"));
+    const oldQuantity = storageProducts.find((product) => (product.id || product.product_id) === id)?.quantity
+    const newQuantityValue = (oldQuantity ?? 0) + quantity
+
     const data = {
         product_id: id,
         quantity: quantity,
@@ -121,13 +127,28 @@ export default function addCartInDetail(title, id, quantity, secret,selectedSize
             },
         }
     )
-        .then(res => {
+        .then(async res => {
+            if (oldQuantity) {
+                storageProducts.map((product) => {
+                    if ((product.product_id || product.id) === id) {
+                        product.quantity = newQuantityValue
+                    }
+                    return product
+                })
+                await localStorage.setItem("cartProducts", JSON.stringify(storageProducts))
+            } else {
+                let storageProduct = product
+                storageProduct.quantity = newQuantityValue;
+                storageProduct.image = storageProduct.images.find((img) => img.order === 0);
+
+                storageProducts.push(storageProduct)
+                await localStorage.setItem("cartProducts", JSON.stringify(storageProducts))
+            }
             HTTPNotificationHelper({
                 httpStatus: res.status,
                 title: "Sepete eklendi",
                 message: title + " sepete eklendi"
             })
-
         })
         .catch(error => {
             console.log(error);
@@ -176,13 +197,56 @@ async function getCouponDiscount({
     } catch (error) {
         console.log(error)
     }
+
 }
 
+async function addCartIfNotExists({id,title, secret}) {
+    let storageProducts = await JSON.parse(localStorage.getItem("cartProducts"));
+    const oldQuantity = storageProducts.find((product) => (product.product_id) === id)
+
+
+    if (oldQuantity) {
+        HTTPNotificationHelper({
+            title: "Ürün zaten sepetinizde",
+            httpStatus: 409,
+        })
+        return
+    }
+
+    const data = {
+        product_id: id,
+        quantity: 1,
+    }
+
+    axios.post((api_helper.api_url + api_helper.carts.create), data, {
+            headers: {
+                'Authorization': `Bearer ${secret}`,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        }
+    )
+        .then(async res => {
+            HTTPNotificationHelper({
+                httpStatus: res.status,
+                title: "Sepete eklendi",
+                message: title + " sepete eklendi"
+            })
+        })
+        .catch(error => {
+            console.log(error);
+            HTTPNotificationHelper({
+                httpStatus: error.response.status,
+                title: error.response.data.message
+            })
+        })
+}
 
 export {
     updateLoggedInUserCart,
     readLoggedInUserCart,
     deleteLoggedInUserProduct,
     createLoggedInUserProduct,
-    getCouponDiscount
+    getCouponDiscount,
+    addCartIfNotExists
 }

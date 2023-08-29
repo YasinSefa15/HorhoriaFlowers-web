@@ -1,6 +1,5 @@
 import PageItems from "./PageItems";
 import React from "react";
-import uuidGenerator from "../../../../helpers/uuidGenerator";
 
 export default function CustomPagination({currentPage, pageCount, changeCurrentPage}) {
     return (
@@ -33,6 +32,9 @@ export default function CustomPagination({currentPage, pageCount, changeCurrentP
 
                         <li
                             className={"page-item " + (pageCount === currentPage ? "disabled" : "")}
+                            style={{
+                                cursor: "pointer"
+                            }}
                             onClick={() => {
                                 changeCurrentPage(1)
                             }}
