@@ -15,11 +15,12 @@ import {getVisitorCartProducts} from "../../../../api.requests/cart/VisitorReque
 
 export default function CartPage() {
     const [products, setProducts] = React.useState([])
-    const [subTotal, setSubTotal] = React.useState(parseInt(0))
-    const [total, setTotal] = React.useState(parseInt(0))
+    const [subTotal, setSubTotal] = React.useState(0)
+    const [total, setTotal] = React.useState(0)
     const [discount, setDiscount] = React.useState(0)
     const [appliedCoupons, setAppliedCoupons] = React.useState([])
     const [visitorProLoad, setVisitorProLoad] = React.useState(false)
+    const [cargoPrice, setCargoPrice] = React.useState(37.99)
     const {secret, setCartProducts} = useAuth();
 
 
@@ -91,20 +92,36 @@ export default function CartPage() {
     }, [visitorProLoad])
 
     React.useEffect(() => {
-        let total = 0;
+        let calculatedSubTotal = 0;
 
         products.map((product, index) => {
-            total += product.new_price * product.quantity
+            calculatedSubTotal += product.new_price * product.quantity
+            return product
         })
-        setSubTotal(total)
-        setTotal(total + 20 + 20)
+        setSubTotal(calculatedSubTotal)
+        let localCargo = 0
+        if (calculatedSubTotal > 300) {
+            setCargoPrice(0)
+            console.log("set 0")
+        } else {
+            localCargo = 38.99
+            setCargoPrice(37.99)
+        }
+        console.log("calculatedSubTotal", calculatedSubTotal)
+        console.log("cargoPrice", cargoPrice)
+        setTotal(calculatedSubTotal + localCargo - discount)
 
-    }, [products])
+    }, [products, discount])
 
 
     const updateTotal = (price, quantity) => {
         setSubTotal(subTotal + (price * quantity))
-        setTotal(subTotal + 20 + 20) //todo vergi + kargo
+        if (subTotal > 300) {
+            setCargoPrice(0)
+        } else {
+            setCargoPrice(37.99)
+        }
+        setTotal(subTotal + cargoPrice) //todo vergi + kargo
     }
 
     const updateProductQuantity = (product_id, quantity) => {
@@ -196,6 +213,8 @@ export default function CartPage() {
                                             subTotal={subTotal}
                                             discount={discount}
                                             setDiscount={setDiscount}
+                                            cargoPrice={cargoPrice}
+                                            appliedCoupons={appliedCoupons}
                                         ></CartPrice>
                                     </div>
                                 </div>

@@ -162,7 +162,7 @@ async function updateProfilePassword({passwordForm, secret}) {
 
 async function getProfileAddresses({setAddresses, setLoaded, secret}) {
     try {
-        axios.get(api_helper.api_url + api_helper.user.addresses.view,
+        axios.get(api_helper.api_url + api_helper.user.addresses.read,
             {
                 headers: {
                     "Authorization": "Bearer " + secret,
@@ -198,7 +198,7 @@ async function createProfileAddresses({addressForm, addresses, setAddresses, set
             description: addressForm.description,
             phone: addressForm.phone,
         }
-        axios.post(api_helper.api_url + api_helper.user.addresses.view,
+        axios.post(api_helper.api_url + api_helper.user.addresses.read,
             address,
             {
                 headers: {

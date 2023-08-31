@@ -62,7 +62,6 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const setCartProducts = async () => {
-            console.log(cartProducts)
             if ((secret !== null && cartProducts !== null) || Array.isArray(localStorage.getItem('cartProducts'))) {
                 await localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                 //await localStorage.setItem("cartProducts", JSON.stringify([]))

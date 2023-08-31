@@ -166,7 +166,7 @@ async function getCouponDiscount({
                                      appliedCoupons
                                  }) {
     try {
-        axios.get(api_helper.api_url + api_helper.coupon.view + coupon,
+        await axios.get(api_helper.api_url + api_helper.coupon.view + coupon,
             {
                 headers: {
                     "Authorization": "Bearer " + secret,
@@ -175,8 +175,9 @@ async function getCouponDiscount({
                 }
             })
             .then(async (response) => {
-                //console.log(response.data)
+                console.log("x." , discount,discount + parseFloat(response.data.data))
                 await setDiscount(discount + parseFloat(response.data.data))
+                console.log("y.z" , discount)
                 await setLoaded(true);
                 await setAppliedCoupons([...appliedCoupons, {
                     coupon: coupon,

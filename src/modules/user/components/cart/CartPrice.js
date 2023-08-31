@@ -3,7 +3,7 @@ import CustomButton from "../CustomButton";
 import React from "react";
 import {useNavigate} from "react-router-dom";
 
-export default function CartPrice({total, subTotal, discount}) {
+export default function CartPrice({total, subTotal, discount, cargoPrice,appliedCoupons}) {
     const navigate = useNavigate();
 
     return (
@@ -20,21 +20,15 @@ export default function CartPrice({total, subTotal, discount}) {
 
             <div className="row" style={{borderBottom: colorSchema.cart.borderBottom}}>
                 <div className="col">Ara Toplam</div>
-                <div className="col mb-2">{subTotal}</div>
+                <div className="col mb-2">{subTotal} ₺</div>
             </div>
 
-            <br></br>
-
-            <div className="row" style={{borderBottom: colorSchema.cart.borderBottom}}>
-                <div className="col">Vergiler</div>
-                <div className="col mb-2">20₺</div>
-            </div>
 
             <br></br>
 
             <div className="row" style={{borderBottom: colorSchema.cart.borderBottom}}>
                 <div className="col">Kargo Ücreti</div>
-                <div className="col mb-2">20₺</div>
+                <div className="col mb-2">{cargoPrice} ₺</div>
             </div>
 
             <br></br>
@@ -46,7 +40,7 @@ export default function CartPrice({total, subTotal, discount}) {
                             <div className="row"
                                  style={{borderBottom: colorSchema.cart.borderBottom}}>
                                 <div className="col">Kupon İndirimi</div>
-                                <div className="col mb-2">-{discount}₺</div>
+                                <div className="col mb-2">-{discount} ₺</div>
                             </div>
                             <br></br>
                         </>
@@ -70,7 +64,12 @@ export default function CartPrice({total, subTotal, discount}) {
                         style={{
                             width: "max-content",
                         }}
-                        onClick={() => navigate("/order")}
+                        onClick={() => navigate("/order", {
+                            state: {
+                                total: total,
+                                coupons: appliedCoupons,
+                            }
+                        })}
                     ></CustomButton>
                 </div>
             </div>

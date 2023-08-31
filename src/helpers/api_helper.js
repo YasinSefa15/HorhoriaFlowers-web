@@ -31,23 +31,24 @@ const api_helper = {
     "user": {
         "view": "user/profile",
         "update": "user/profile",
-        "email" : {
-            "get_email" : "user/profile/get-email",
-            "update_email" : "user/profile/update-email",
-            "update_password" : "user/profile/update-password",
+        "email": {
+            "get_email": "user/profile/get-email",
+            "update_email": "user/profile/update-email",
+            "update_password": "user/profile/update-password",
         },
         "addresses": {
-            "view": "user/addresses",
+            "read": "user/addresses",
+            "view": "user/addresses/", //id,
             "create": "user/addresses",
             "update": "user/addresses/",
             "delete": "user/addresses/",
         }
     },
-    "order" : {
+    "order": {
         "index": "orders",
         //"view": "orders/", //id
     },
-    "coupon" : {
+    "coupon": {
         "view": "coupons/", //code
         "index": "coupons",
     }

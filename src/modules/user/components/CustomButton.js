@@ -33,7 +33,7 @@ export default function CustomButton(props) {
         transitionDuration: "0.4s",
         fontWeight: "bold",
         width: "20%",
-        height: "40px",
+        height: "max-content",
         minWidth: "min-content",
         outline: "none"
     };

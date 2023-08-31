@@ -19,6 +19,7 @@ export default function CartCoupon({appliedCoupons, setAppliedCoupons, total, se
             if (appliedCoupons.some(e => e.coupon === coupon)) {
                 return;
             }
+            console.log("x")
             await getCouponDiscount({
                 coupon: coupon,
                 discount: discount,
@@ -28,7 +29,12 @@ export default function CartCoupon({appliedCoupons, setAppliedCoupons, total, se
                 setAppliedCoupons: setAppliedCoupons,
                 appliedCoupons: appliedCoupons
             })
+            console.log("y")
+
+            console.log(discount)
             await setTotal(total - discount)
+            console.log("total", total)
+
         }
 
         check().then(r => {
@@ -39,6 +45,7 @@ export default function CartCoupon({appliedCoupons, setAppliedCoupons, total, se
         const newAppliedCoupons = appliedCoupons.filter(e => e.coupon !== coupon)
         await setAppliedCoupons(newAppliedCoupons)
         await setTotal(total + discount)
+        await setDiscount(0)
     }
 
     return (
@@ -62,7 +69,8 @@ export default function CartCoupon({appliedCoupons, setAppliedCoupons, total, se
                 </div>
                 <div className="col">
                     <input type="text" onChange={(e) => {
-                        setCoupon(e.target.value)
+                        setCoupon(e.target.value.toUpperCase())
+                        e.target.value = e.target.value.toUpperCase()
                     }}></input>
                 </div>
                 <div className="col">

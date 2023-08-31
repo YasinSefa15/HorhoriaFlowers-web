@@ -122,6 +122,7 @@ export default function CreateAddressModal({
                             setShowModal(false)
                             //setAddressForm({})
                             handleAddressCreate().then(r => {
+                                setAddressForm({})
                             })
                         }}
                         status="success"

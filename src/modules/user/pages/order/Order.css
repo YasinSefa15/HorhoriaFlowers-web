@@ -1,0 +1,45 @@
+.message-overplay{
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.order-message-box-error {
+    border: 1px solid #000000;
+    border-radius: 11px;
+    padding: 20px;
+    width: max-content;
+    text-align: center;
+    background-color: #ffffff;
+}
+.order-message-title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.order-message-text{
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+
+.order-step{
+    padding: 20px;
+    background: #5f98ee;
+    color: #ffffff;
+}
+
+.order-step.active{
+    background: #0d6efd;
+    color: #ffffff;
+}
+
+.order-step.selected{
+    background: #003b91;
+    color: #ffffff;
+}
