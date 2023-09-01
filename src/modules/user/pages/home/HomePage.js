@@ -76,17 +76,17 @@ export default function HomePage() {
     const visibleItemsNew = newProducts.slice(startIndexNew, startIndexNew + itemsPerPage);
     const {secret, setCartProducts} = useAuth();
 
-    const addToCart = (event, id, title, secret) => {
+    const addToCart = (event, id, title, secret, size_id, size_value) => {
         event.stopPropagation();
 
         if (!secret) {
-            addVisitorProductToCartIfNotExists({title, id: id, quantity: 1});
+            addVisitorProductToCartIfNotExists({title, id: id, quantity: 1, size_id, size_value});
             return;
         }
 
         const loadCartProducts = async () => {
             await addCartIfNotExists({
-                id, secret, title,
+                id, secret, title, size_id
             }).then(r => {
             })
 
@@ -113,8 +113,8 @@ export default function HomePage() {
                     <img
                         className="d-block"
                         style={{
-                            width:"100%",
-                            height:"100%",
+                            width: "100%",
+                            height: "100%",
                             objectFit: "cover"
                         }}
                         src="https://via.placeholder.com/1920x500"
@@ -166,18 +166,17 @@ export default function HomePage() {
                     <Col>
                         <Row>
                             {visibleItemsDiscount.map(item => (
-                                <>
-                                    <ProductCart
-                                        product={item}
-                                        handleDivClick={() => {
-                                            navigate("/products/" + item.slug, {state: {product: item}})
-                                        }}
-                                        addToCart={(event) => {
-                                            addToCart(event, item.id, item.title, secret)
-                                        }}
+                                <ProductCart
+                                    key={item.id + item.slug + item.sizes[0].id}
+                                    product={item}
+                                    handleDivClick={() => {
+                                        navigate("/products/" + item.slug, {state: {product: item}})
+                                    }}
+                                    addToCart={(event) => {
+                                        addToCart(event, item.id, item.title, secret, item.sizes[0].id, item.sizes[0].value)
+                                    }}
 
-                                    ></ProductCart>
-                                </>
+                                ></ProductCart>
                             ))}
                         </Row>
                     </Col>
@@ -211,18 +210,17 @@ export default function HomePage() {
                     <Col>
                         <Row>
                             {visibleItemsNew.map(item => (
-                                <>
-                                    <ProductCart
-                                        product={item}
-                                        handleDivClick={() => {
-                                            navigate("/products/" + item.slug, {state: {product: item}})
-                                        }}
-                                        addToCart={(event) => {
-                                            addToCart(event, item.id, item.title, secret)
-                                        }}
+                                <ProductCart
+                                    key={item.id + item.slug + item.sizes[0].id}
+                                    product={item}
+                                    handleDivClick={() => {
+                                        navigate("/products/" + item.slug, {state: {product: item}})
+                                    }}
+                                    addToCart={(event) => {
+                                        addToCart(event, item.id, item.title, secret, item.sizes[0].id, item.sizes[0].value)
+                                    }}
 
-                                    ></ProductCart>
-                                </>
+                                ></ProductCart>
                             ))}
                         </Row>
                     </Col>

@@ -53,7 +53,7 @@ export default function OrderStep2({selectedAddressId, secret, total}) {
 
 
             <div className="row">
-                <h3>Tutar: {total} ₺</h3>
+                <h3>Tutar: {total === -1 ? productsTotal : total} ₺</h3>
             </div>
         </>
     )

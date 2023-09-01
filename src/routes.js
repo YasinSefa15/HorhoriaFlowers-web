@@ -23,6 +23,7 @@ import ProfileUserCoupons from "./modules/user/components/profile/ProfileUserCou
 import ProductSearch from "./modules/user/pages/product_search/ProductSearch";
 import CategoryProducts from "./modules/user/pages/category_products/CategoryProducts";
 import OrderIndex from "./modules/user/pages/order/OrderIndex";
+import SuccessOrder from "./modules/user/pages/order/SuccessOrder";
 
 const routes = [
     {
@@ -55,7 +56,10 @@ const routes = [
     {
         path: '/order',
         element: <OrderIndex></OrderIndex>
-
+    },
+    {
+        path: '/order/:slug',
+        element: <SuccessOrder></SuccessOrder>
     },
     {
         path: '/profile',

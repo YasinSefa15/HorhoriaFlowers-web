@@ -9,9 +9,19 @@ export default function ProductSearch() {
     const [heading, setHeading] = useState("");
     const [params, setParams] = useState(new URLSearchParams(window.location.search));
     const [title, setTitle] = useState(params.get('title'));
+    const [previousTitle, setPreviousTitle] = useState('');
 
     useEffect(() => {
-        setHeading(params.get('title') + " ürününü ile ilgili arama sonuçları görüntülüyorsunuz")
+        //todo title değişmiyor
+        setParams(new URLSearchParams(window.location.search))
+        setTitle(params.get('title'))
+    }, []);
+
+    useEffect(() => {
+        setParams(new URLSearchParams(window.location.search))
+        console.log("params" , params.get("title"))
+        console.log("x", params.get('title'))
+        setHeading(params.get('title') + " ürünü ile ilgili arama sonuçları görüntülüyorsunuz")
     }, [title])
 
     return (

@@ -25,17 +25,17 @@ export default function Products({heading, setTitle, paramsProp, slug}) {
     const [loading, setLoading] = useState(false);
     //const [heading, setHeading] = useState(null);
 
-    const addToCart = (event, id, title) => {
+    const addToCart = (event, id, title, size_id) => {
         event.stopPropagation();
 
         if (!secret) {
-            addVisitorProductToCartIfNotExists({title, id: id, quantity: 1});
+            addVisitorProductToCartIfNotExists({title, id: id, quantity: 1, size_id});
             return;
         }
 
         const loadCartProducts = async () => {
             await addCartIfNotExists({
-                id, secret, title,
+                id, secret, title, size_id
             })
             await readLoggedInUserCart({setProducts: setCartProducts, secret: secret});
         };
@@ -75,8 +75,6 @@ export default function Products({heading, setTitle, paramsProp, slug}) {
             fetchProducts().then(r => {
             })
         } else if (params.category_slug !== undefined) {
-            console.log("params.category_slug   " + params.category_slug)
-            console.log("params   ", params)
             const fetchProducts = async () => {
                 await getCategoryProducts({
                     params: params,
@@ -141,7 +139,7 @@ export default function Products({heading, setTitle, paramsProp, slug}) {
                                             setSortBy(e.target.value)
                                         }}
                                     >
-                                        <option selected>Varsayılan Sıralama</option>
+                                        <option>Varsayılan Sıralama</option>
                                         <option
                                             value="new_price|asc">
                                             Artan Fiyata Göre Sırala
@@ -161,13 +159,12 @@ export default function Products({heading, setTitle, paramsProp, slug}) {
 
                             {products.map((product, index) => {
                                 return (
-                                    <>
-                                        <ProductCart
-                                            addToCart={addToCart}
-                                            handleDivClick={handleDivClick}
-                                            product={product}
-                                        ></ProductCart>
-                                    </>
+                                    <ProductCart
+                                        key={product.slug + product.sizes[0].id}
+                                        addToCart={addToCart}
+                                        handleDivClick={handleDivClick}
+                                        product={product}
+                                    ></ProductCart>
                                 )
                             })}
 

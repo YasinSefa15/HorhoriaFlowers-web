@@ -40,7 +40,7 @@ export default function LoginPage() {
 
                 setSecret(response.data.token)
 
-                navigate("/products?title=&page=1")
+                navigate("/")
 
                 HTTPNotificationHelper({
                     httpStatus: response.status,

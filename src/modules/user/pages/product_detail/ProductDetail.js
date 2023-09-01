@@ -19,7 +19,8 @@ export default function ProductDetail() {
     const [mainImage, setMainImage] = useState(null)// useState(product.images[0].file_path)
     const [quantity, setQuantity] = useState(1)
     const {secret, cartProducts} = useAuth();
-    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedSizeID, setSelectedSizeID] = useState(null)
+    const [selectedSizeValue, setSelectedSizeValue] = useState(null)
     const navigate = useNavigate();
     //console.log(location.state)
 
@@ -29,29 +30,32 @@ export default function ProductDetail() {
                 slug: slug,
                 setProduct: setProduct,
                 setLoading,
-                setMainImage
+                setMainImage,
+                setSelectedSizeID,
+                setSelectedSizeValue
             })
         }
 
         productDetail().then(r => {
         })
 
-        //console.log(products.find((product) => product.product_id === product.id))
-
     }, [])
 
-    const handleAddCart = async (title, id, quantity, selectedSize) => {
+    const handleAddCart = async ({title, id, quantity, size_id, size_value}) => {
         if (secret) {
             //if product already in the cart, get old quantity field
-            addCartInDetail({title, id, quantity, secret, selectedSize, product})
+            addCartInDetail({title, id, quantity, secret, size_id, product, size_value})
 
         } else {
-            addVisitorProductToCart({id, quantity, title,product})
+            addVisitorProductToCart({id, quantity, title, product, size_id, size_value})
         }
     }
 
     const handleSizeChange = (event) => {
-        setSelectedSize(event.target.value);
+        console.log("event.target.id", event.target.value)
+        const [id, value] = event.target.value.split("?=")
+        setSelectedSizeID(id)
+        setSelectedSizeValue(value)
     };
 
     const changeImage = (id) => {
@@ -166,7 +170,8 @@ export default function ProductDetail() {
                                                 <select className="my-3" onChange={handleSizeChange}>
                                                     {product.sizes.map((size) => {
                                                         return (
-                                                            <option>{size.value}</option>
+                                                            <option key={size.id}
+                                                                    value={size.id + "?=" + size.value}>{size.value}</option>
                                                         );
                                                     })}
                                                 </select>
@@ -250,7 +255,13 @@ export default function ProductDetail() {
                                                     height: "50px",
                                                 }}
                                                 onClick={() => {
-                                                    handleAddCart(product.title, product.id, quantity, selectedSize)
+                                                    handleAddCart({
+                                                        title: product.title,
+                                                        id: product.id,
+                                                        quantity,
+                                                        size_id: parseInt(selectedSizeID),
+                                                        size_value: selectedSizeValue
+                                                    })
                                                 }}
                                             ></CustomButton>
                                         </div>

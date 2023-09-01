@@ -15,6 +15,7 @@ export default function PageItems({pageCount, currentPage, changeCurrentPage}) {
     return nums.map(i => (
         <li
             className={"page-item " + (currentPage === parseInt(i) ? "active" : "")}
+            key={i}
         >
             <a className="page-link" href="#"
                onClick={(e) => {

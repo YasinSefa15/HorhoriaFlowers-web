@@ -26,7 +26,7 @@ const api_helper = {
         'sync': "carts/sync",
         'visitor_products': "carts/visitor-products",
         'update': "carts/:product_id",
-        'delete': "carts/:product_id"
+        'delete': "carts/delete"
     },
     "user": {
         "view": "user/profile",
@@ -47,6 +47,7 @@ const api_helper = {
     "order": {
         "index": "orders",
         //"view": "orders/", //id
+        "create": "orders",
     },
     "coupon": {
         "view": "coupons/", //code

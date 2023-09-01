@@ -33,7 +33,6 @@ export default function CartPage() {
                     cartProducts: visitorCartProducts,
                     products: products
                 })
-
                 await setVisitorProLoad(true)
 
                 return
@@ -55,7 +54,6 @@ export default function CartPage() {
                         setCartProducts(products)
                     });
                 }
-                console.log("cart products loaded yyy");
             } catch (error) {
                 console.error("Error parsing cartProducts from local storage:", error);
                 loadCartProducts().then(r => {
@@ -76,7 +74,11 @@ export default function CartPage() {
         if (visitorProLoad) {
             const JSONVisitorCartProducts = JSON.parse(visitorCartProducts);
             const updatedProducts = products.map(product => {
-                const cartProduct = JSONVisitorCartProducts.find(cartItem => cartItem.id === product.id);
+                const cartProduct = JSONVisitorCartProducts.find(cartItem => {
+                    return (
+                        (cartItem.id || cartItem.product_id) === (product.id || product.product_id)
+                        && cartItem.size_id === product.size_id)
+                });
                 // Eşleşen ürünü bul, yoksa null döner
 
                 if (cartProduct) {
@@ -102,13 +104,10 @@ export default function CartPage() {
         let localCargo = 0
         if (calculatedSubTotal > 300) {
             setCargoPrice(0)
-            console.log("set 0")
         } else {
             localCargo = 38.99
             setCargoPrice(37.99)
         }
-        console.log("calculatedSubTotal", calculatedSubTotal)
-        console.log("cargoPrice", cargoPrice)
         setTotal(calculatedSubTotal + localCargo - discount)
 
     }, [products, discount])
@@ -121,20 +120,20 @@ export default function CartPage() {
         } else {
             setCargoPrice(37.99)
         }
-        setTotal(subTotal + cargoPrice) //todo vergi + kargo
+        setTotal(subTotal + cargoPrice)
     }
 
-    const updateProductQuantity = (product_id, quantity) => {
+    const updateProductQuantity = (product_id, quantity, size_id) => {
         if (quantity < 1) {
             return
         }
 
         const a = products.map((product, index) => {
-            if (product.product_id === product_id) {
+            if (product.product_id === product_id && product.size_id === size_id) {
                 if (secret === null) {
                     return {...product, quantity: quantity}
                 }
-                updateLoggedInUserCart({product_id: product_id, quantity: quantity, secret});
+                updateLoggedInUserCart({product_id: product_id, quantity: quantity, secret, size_id});
                 return {...product, quantity: quantity}
             }
             return product;
@@ -149,17 +148,26 @@ export default function CartPage() {
         setCartProducts(a)
     }
 
-    const deleteProduct = (product_id) => {
+    const deleteProduct = (product_id, size_id) => {
         setProducts(products.filter((product, index) => {
-            if ((product.product_id || product.id) === product_id) {
+            if ((product.product_id || product.id) === product_id && product.size_id === size_id) {
                 if (secret === null) {
-                    const a = products.filter((product, index) => product.id !== product_id)
+                    const a = products.filter((product, index) => {
+                        if ((product.id === product_id && product.size_id === size_id)) {
+                            return false
+                        }
+                        return true
+                    })
                     localStorage.setItem("visitorCartProducts", JSON.stringify(a));
                     return false;
                 }
-                deleteLoggedInUserProduct({product_id: product_id, secret})
+                deleteLoggedInUserProduct({product_id: product_id, secret, size_id}).then(r => {
+                })
                 //localden
-                setCartProducts(products.filter((product, index) => product.product_id !== product_id))
+                setCartProducts(products.filter((product, index) => {
+                    //return !(((product.id || product.product_id) === product_id) && product.size_id === size_id);
+                    return true
+                }))
                 //setUpdated(!updated)
                 return false;
             }

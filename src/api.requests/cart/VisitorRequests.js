@@ -2,10 +2,12 @@ import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 import axios from "axios";
 import {api_helper} from "../../helpers/api_helper";
 
-const addVisitorProductToCart = ({title, id, quantity, product}) => {
+const addVisitorProductToCart = ({title, id, quantity, product, size_id, size_value}) => {
     const add = async () => {
         let productsInCart = JSON.parse(localStorage.getItem("visitorCartProducts"));
-        const foundItem = productsInCart.find(item => (item.id || item.product_id) === id);
+        const foundItem = productsInCart.find(item => {
+            return (item.id || item.product_id) === id && item.size_id === size_id
+        });
 
         HTTPNotificationHelper({
             httpStatus: 201,
@@ -15,8 +17,10 @@ const addVisitorProductToCart = ({title, id, quantity, product}) => {
 
         if (foundItem) {
             foundItem.quantity += quantity
-        }else{
+        } else {
             product.quantity = quantity
+            product.size_id = size_id
+            product.size_value = size_value
             productsInCart.push(product)
         }
 
@@ -26,10 +30,12 @@ const addVisitorProductToCart = ({title, id, quantity, product}) => {
     add()
 }
 
-const addVisitorProductToCartIfNotExists = ({title, id, quantity}) => {
+const addVisitorProductToCartIfNotExists = ({title, id, quantity, size_id, size_value}) => {
     const add = async () => {
         let productsInCart = JSON.parse(localStorage.getItem("visitorCartProducts"));
-        const foundItem = productsInCart.some(item => item.id === id);
+        const foundItem = productsInCart.some(item => {
+            return (item.id || item.product_id) === id && item.size_id === size_id
+        });
 
         if (foundItem) {
             HTTPNotificationHelper({
@@ -44,7 +50,9 @@ const addVisitorProductToCartIfNotExists = ({title, id, quantity}) => {
             })
             productsInCart.push({
                 id: id,
-                quantity: quantity
+                quantity: quantity,
+                size_id: size_id,
+                size_value: size_value
             })
             await localStorage.setItem("visitorCartProducts", JSON.stringify(productsInCart))
         }
@@ -111,7 +119,7 @@ const getVisitorCartProducts = async ({cartProducts, setProducts}) => {
             })
             await setProducts(mapped)
         }).catch(error => {
-            console.log("error", error)
+            console.log("error getting visitor cart products", error)
         })
     }
 }

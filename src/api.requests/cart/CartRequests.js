@@ -12,7 +12,6 @@ const readLoggedInUserCart = async ({setProducts, secret}) => {
         }
     })
         .then(res => {
-            //console.log("db: read cart")
             let result = [];
             res.data.data.map((product, index) => {
                 result.push(product)
@@ -29,9 +28,10 @@ const readLoggedInUserCart = async ({setProducts, secret}) => {
         })
 }
 
-const updateLoggedInUserCart = ({product_id, quantity, secret}) => {
+const updateLoggedInUserCart = ({product_id, quantity, secret, size_id}) => {
     axios.put((api_helper.api_url + api_helper.carts.update).replace(':product_id', product_id), {
             quantity: quantity,
+            size_id: size_id
         },
         {
             headers: {
@@ -52,8 +52,11 @@ const updateLoggedInUserCart = ({product_id, quantity, secret}) => {
         })
 }
 
-const deleteLoggedInUserProduct = ({product_id, secret}) => {
-    axios.delete((api_helper.api_url + api_helper.carts.delete).replace(':product_id', product_id), {
+const deleteLoggedInUserProduct = async ({product_id, secret, size_id}) => {
+    await axios.post((api_helper.api_url + api_helper.carts.delete), {
+            product_id: product_id,
+            size_id: size_id
+        }, {
             headers: {
                 'Authorization': `Bearer ${secret}`,
                 'Content-Type': 'application/json',
@@ -62,6 +65,7 @@ const deleteLoggedInUserProduct = ({product_id, secret}) => {
         }
     )
         .then(res => {
+            console.log("delete", res.data)
             HTTPNotificationHelper({
                 httpStatus: res.status,
                 title: "Ürün sepetten silindi",
@@ -69,7 +73,7 @@ const deleteLoggedInUserProduct = ({product_id, secret}) => {
 
         })
         .catch(error => {
-            //console.log(error);
+            console.log("silme hata " , error);
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.statusText,
@@ -108,17 +112,27 @@ const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
 }
 
 
-export default function addCartInDetail({title, id, quantity, secret, selectedSize, product}) {
+export default function addCartInDetail({title, id, quantity, secret, size_id, product, size_value}) {
     let storageProducts = JSON.parse(localStorage.getItem("cartProducts"));
-    const oldQuantity = storageProducts.find((product) => (product.id || product.product_id) === id)?.quantity
+
+    //const oldQuantity = storageProducts.find((product) => (product.id || product.product_id) === id)?.quantity
+
+    const oldQuantity = storageProducts.find((product) => {
+        return (product.id || product.product_id) === id && product.size_id === size_id
+    })?.quantity
+
+    console.log("old quantity ", oldQuantity)
+
     const newQuantityValue = (oldQuantity ?? 0) + quantity
+    console.log("new quantity ", newQuantityValue)
 
     const data = {
         product_id: id,
-        quantity: quantity,
-        selectedSize: selectedSize
+        quantity: newQuantityValue,
+        size_id: size_id
     }
 
+    console.log("data", data)
     axios.post((api_helper.api_url + api_helper.carts.create), data, {
             headers: {
                 'Authorization': `Bearer ${secret}`,
@@ -128,9 +142,10 @@ export default function addCartInDetail({title, id, quantity, secret, selectedSi
         }
     )
         .then(async res => {
+            console.log("res", res.data)
             if (oldQuantity) {
                 storageProducts.map((product) => {
-                    if ((product.product_id || product.id) === id) {
+                    if ((product.product_id || product.id) === id && product.size_id === size_id) {
                         product.quantity = newQuantityValue
                     }
                     return product
@@ -139,8 +154,9 @@ export default function addCartInDetail({title, id, quantity, secret, selectedSi
             } else {
                 let storageProduct = product
                 storageProduct.quantity = newQuantityValue;
+                product.size_id = size_id;
                 storageProduct.image = storageProduct.images.find((img) => img.order === 0);
-
+                storageProduct.size_value = size_value;
                 storageProducts.push(storageProduct)
                 await localStorage.setItem("cartProducts", JSON.stringify(storageProducts))
             }
@@ -175,9 +191,9 @@ async function getCouponDiscount({
                 }
             })
             .then(async (response) => {
-                console.log("x." , discount,discount + parseFloat(response.data.data))
+                console.log("x.", discount, discount + parseFloat(response.data.data))
                 await setDiscount(discount + parseFloat(response.data.data))
-                console.log("y.z" , discount)
+                console.log("y.z", discount)
                 await setLoaded(true);
                 await setAppliedCoupons([...appliedCoupons, {
                     coupon: coupon,
@@ -201,11 +217,14 @@ async function getCouponDiscount({
 
 }
 
-async function addCartIfNotExists({id,title, secret}) {
+async function addCartIfNotExists({id, title, secret, size_id}) {
     let storageProducts = await JSON.parse(localStorage.getItem("cartProducts"));
-    const oldQuantity = storageProducts.find((product) => (product.product_id) === id)
+    const oldQuantity = storageProducts.find((product) => {
+        return (product.id || product.product_id) === id && product.size_id === size_id
+    })
 
 
+    console.log(oldQuantity)
     if (oldQuantity) {
         HTTPNotificationHelper({
             title: "Ürün zaten sepetinizde",
@@ -217,6 +236,7 @@ async function addCartIfNotExists({id,title, secret}) {
     const data = {
         product_id: id,
         quantity: 1,
+        size_id: size_id
     }
 
     axios.post((api_helper.api_url + api_helper.carts.create), data, {
