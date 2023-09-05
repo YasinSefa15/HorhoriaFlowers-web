@@ -1,20 +1,22 @@
 import {useAuth} from "../../../context/AuthContext";
-import {Navigate, useLocation} from "react-router-dom";
-
+import {useEffect} from "react";
+import Page404 from "../pages/error/Page404";
+import getIsAdmin from "../../../api.requests/UnclassifiedRequests";
 
 export default function AdminRoute({children}) {
-    const {user} = useAuth();
-    const location = useLocation();
+    const {secret, isAdmin, setIsAdmin} = useAuth();
 
-    if (false && !user) {
-        //todo is admin check it
-        return <Navigate
-            to="/admin"
-            replace={true} //when user clicks back button, they will not be redirected to login page
-            state={{
-                return_url: location.pathname + location.search //return to page requested after login
-            }}
-        />
+    useEffect(() => {
+        const isAdmin = async () => {
+            await getIsAdmin({secret: secret, setIsAdmin: setIsAdmin})
+        }
+        isAdmin().then(r => {
+
+        })
+    }, [])
+
+    if (!isAdmin) {
+        return <Page404></Page404>
     }
 
     return children

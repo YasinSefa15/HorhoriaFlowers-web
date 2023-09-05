@@ -8,7 +8,7 @@ import React from "react";
 import {Helmet} from "react-helmet";
 
 export default function LoginPage() {
-    const {user, secret, setUser, setSecret} = useAuth()
+    const {user, secret, handleLogin, setSecret} = useAuth()
     const navigate = useNavigate()
 
 
@@ -29,14 +29,10 @@ export default function LoginPage() {
 
         try {
             const response = await axios.post(api_helper.api_url + api_helper.auth.login, formData);
-            console.log(response)
+            console.log(response.data.data)
             if (response.status === 200) {
                 const data = response.data.data
-                setUser({
-                    id: data.id,
-                    first_name: data.first_name,
-                    last_name: data.last_name,
-                })
+                handleLogin(data)
 
                 setSecret(response.data.token)
 

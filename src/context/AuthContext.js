@@ -1,22 +1,24 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {readLoggedInUserCart} from "../api.requests/cart/CartRequests";
 import {syncVisitorCartProductsToLoggedInUserCartProducts} from "../api.requests/cart/VisitorRequests";
+import getIsAdmin from "../api.requests/UnclassifiedRequests";
 
 const Context = createContext();
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+    const [isAdmin, setIsAdmin] = useState(false)
     const [secret, setSecret] = useState(JSON.parse(localStorage.getItem('secret')) || null);
     const [cartProducts, setCartProducts] = useState(localStorage.getItem('cartProducts') || null)
 
-    const data = {
-        user,
-        setUser,
-        secret,
-        setSecret,
-        cartProducts,
-        setCartProducts
-    }
+    useEffect(() => {
+        const isAdmin = async () => {
+            await getIsAdmin({secret: secret, setIsAdmin: setIsAdmin})
+        }
+        isAdmin().then(r => {
+
+        })
+    }, []);
 
     useEffect(() => {
         const loadCartProducts = async () => {
@@ -71,6 +73,27 @@ export const AuthProvider = ({children}) => {
         });
     }, [cartProducts])
 
+    const handleLogin = async (data) => {
+        setUser({
+            id: data.id,
+            first_name: data.first_name,
+            last_name: data.last_name,
+        })
+
+        setSecret(data.token)
+    }
+
+    const data = {
+        user,
+        setUser,
+        secret,
+        setSecret,
+        cartProducts,
+        setCartProducts,
+        handleLogin,
+        isAdmin,
+        setIsAdmin
+    }
 
     return (
         <Context.Provider value={data}>

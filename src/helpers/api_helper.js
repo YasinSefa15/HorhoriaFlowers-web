@@ -31,6 +31,7 @@ const api_helper = {
     "user": {
         "view": "user/profile",
         "update": "user/profile",
+        "is_admin": "user/is-admin",
         "email": {
             "get_email": "user/profile/get-email",
             "update_email": "user/profile/update-email",

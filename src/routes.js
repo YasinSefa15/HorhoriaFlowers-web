@@ -8,7 +8,6 @@ import Page404 from "./modules/user/pages/error/Page404";
 import ProductDetail from "./modules/user/pages/product_detail/ProductDetail";
 import AdminLayout from "./modules/admin/pages/AdminLayout";
 import ProductAdmin from "./modules/admin/pages/product/ProductAdmin";
-import AdminPage from "./modules/admin/pages/AdminPage";
 import AdminRoute from "./modules/user/configs/AdminRoute";
 import CartPage from "./modules/user/pages/cart/CartPage";
 import ProductEdit from "./modules/admin/pages/product/ProductEdit";
@@ -24,6 +23,14 @@ import ProductSearch from "./modules/user/pages/product_search/ProductSearch";
 import CategoryProducts from "./modules/user/pages/category_products/CategoryProducts";
 import OrderIndex from "./modules/user/pages/order/OrderIndex";
 import SuccessOrder from "./modules/user/pages/order/SuccessOrder";
+import AdminHomePage from "./modules/admin/pages/AdminHomePage";
+import AdminProducts from "./modules/admin/pages/AdminProducts";
+import AdminCategories from "./modules/admin/pages/AdminCategories";
+import AdminOrders from "./modules/admin/pages/AdminOrders";
+import AdminStatistics from "./modules/admin/pages/AdminStatistics";
+import AdminStock from "./modules/admin/pages/AdminStock";
+import AdminUsers from "./modules/admin/pages/AdminUsers";
+import AdminProfile from "./modules/admin/pages/AdminProfile";
 
 const routes = [
     {
@@ -117,21 +124,35 @@ const routes = [
         children: [
             {
                 index: true,
-                element: <AdminPage></AdminPage>
+                element: <AdminHomePage></AdminHomePage>
             },
             {
                 path: 'products',
-                element: <ProductAdmin></ProductAdmin>,
-            },
-            {
-                path: 'products/:slug',
-                admin: true,
-                element: <ProductEdit></ProductEdit>
+                element: <AdminProducts></AdminProducts>,
             },
             {
                 path: 'categories',
-                admin: true,
-                element: <ProductAdmin></ProductAdmin>
+                element: <AdminCategories></AdminCategories>
+            },
+            {
+                path: 'orders',
+                element: <AdminOrders></AdminOrders>
+            },
+            {
+                path: 'statistics',
+                element: <AdminStatistics></AdminStatistics>
+            },
+            {
+                path: 'stock',
+                element: <AdminStock></AdminStock>
+            },
+            {
+                path: 'users',
+                element: <AdminUsers></AdminUsers>
+            },
+            {
+                path: 'profile',
+                element: <AdminProfile></AdminProfile>
             }
         ]
     },

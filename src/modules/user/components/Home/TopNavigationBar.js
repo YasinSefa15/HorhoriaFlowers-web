@@ -8,7 +8,7 @@ import CustomButton from "../CustomButton";
 export default function TopNavigationBar() {
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
-    const {user} = useAuth();
+    const {user, isAdmin} = useAuth();
 
     useEffect(() => {
     }, [user])
@@ -70,45 +70,84 @@ export default function TopNavigationBar() {
 
 
                     {user ? (
+
                         <>
-                            <button className="navbar-toggler col-2" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                                    aria-expanded="false" aria-label="Toggle navigation">
-                                <span className="navbar-toggler-icon"></span>
-                            </button>
+                            {isAdmin ? (
+                                    <>
+                                        < button className="navbar-toggler col-2" type="button" data-bs-toggle="collapse"
+                                                 data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                                                 aria-expanded="false" aria-label="Toggle navigation">
+                                            <span className="navbar-toggler-icon"></span>
+                                        </button>
 
-                            <div className="collapse navbar-collapse row col col-sm-4" id="navbarNavAltMarkup">
-                                <div className="navbar-nav col d-flex justify-content-end">
-                                    <div
-                                        className="d-flex align-items-center justify-content-center m-sm-0 me-lg-3 me-xl-4">
-                                        <CategoriesDropdown></CategoriesDropdown>
-                                    </div>
+                                        <div className="collapse navbar-collapse row col col-sm-4" id="navbarNavAltMarkup">
+                                            <div className="navbar-nav col d-flex justify-content-end">
+                                                <div
+                                                    className="d-flex align-items-center justify-content-center m-sm-0 me-lg-3 me-xl-4">
+                                                    <CategoriesDropdown></CategoriesDropdown>
+                                                </div>
 
-                                    <div
-                                        className={"navbar-item cursor-pointer m-sm-0 me-lg-3 me-xl-4"}
-                                        onClick={() => {
-                                            navigate("/cart")
-                                        }}
-                                    >
-                                        <div className={"d-flex align-items-center justify-content-center"}>
-                                            <div className="navbar-brand  me-2">Sepetim</div>
-                                            <i className="fa-solid fa-cart-shopping"></i>
+                                                <div
+                                                    className={"navbar-item cursor-pointer"}
+                                                    onClick={() => {
+                                                        navigate("/admin")
+                                                    }}
+                                                >
+                                                    <div className={"d-flex align-items-center justify-content-center"}>
+                                                        <div className="navbar-brand me-2">Kontrol Paneli</div>
+                                                        <i className="fa-solid fa-shop"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </>
+                                )
+                                : (
+                                    <>
+                                        < button className="navbar-toggler col-2" type="button"
+                                                 data-bs-toggle="collapse"
+                                                 data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                                                 aria-expanded="false" aria-label="Toggle navigation">
+                                            <span className="navbar-toggler-icon"></span>
+                                        </button>
 
-                                    <div
-                                        className={"navbar-item cursor-pointer"}
-                                        onClick={() => {
-                                            navigate("/profile")
-                                        }}
-                                    >
-                                        <div className={"d-flex align-items-center justify-content-center"}>
-                                            <div className="navbar-brand me-2">Profilim</div>
-                                            <i className="fa-solid fa-user"></i>
+                                        <div className="collapse navbar-collapse row col col-sm-4"
+                                             id="navbarNavAltMarkup">
+                                            <div className="navbar-nav col d-flex justify-content-end">
+                                                <div
+                                                    className="d-flex align-items-center justify-content-center m-sm-0 me-lg-3 me-xl-4">
+                                                    <CategoriesDropdown></CategoriesDropdown>
+                                                </div>
+
+                                                <div
+                                                    className={"navbar-item cursor-pointer m-sm-0 me-lg-3 me-xl-4"}
+                                                    onClick={() => {
+                                                        navigate("/cart")
+                                                    }}
+                                                >
+                                                    <div className={"d-flex align-items-center justify-content-center"}>
+                                                        <div className="navbar-brand  me-2">Sepetim</div>
+                                                        <i className="fa-solid fa-cart-shopping"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div
+                                                    className={"navbar-item cursor-pointer"}
+                                                    onClick={() => {
+                                                        navigate("/profile")
+                                                    }}
+                                                >
+                                                    <div className={"d-flex align-items-center justify-content-center"}>
+                                                        <div className="navbar-brand me-2">Profilim</div>
+                                                        <i className="fa-solid fa-user"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </>
+                                )
+                            }
+
 
                         </>
                     ) : (
@@ -157,5 +196,6 @@ export default function TopNavigationBar() {
                 </div>
             </nav>
         </>
-    );
+    )
+        ;
 }
