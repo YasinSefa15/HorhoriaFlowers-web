@@ -165,6 +165,27 @@ function Sidebar() {
                 </div>
 
                 <div
+                    id="Kategoriler"
+                    className="sidebar-item"
+                    onMouseEnter={(e) => {
+                        hoveredItem.current = "Kategoriler";
+                        handleMouseEnter("Kategoriler");
+                    }}
+                    onMouseLeave={(e) => {
+                        handleMouseLeave("Kategoriler");
+                    }}
+                    onClick={() => {
+                        handleItemClick("Kategoriler");
+                        navigate("/admin/categories");
+                    }}>
+                    <div
+                        className={`list-item d-flex align-items-center ${activeItem === "Kategoriler" ? "selected" : ""}`}>
+                        <i className="fas fa-list me-md-2"></i>
+                        <span className="d-none d-md-block">Kategoriler</span>
+                    </div>
+                </div>
+
+                <div
                     id="Çıkış Yap"
                     className="sidebar-item"
                     onMouseEnter={(e) => {
