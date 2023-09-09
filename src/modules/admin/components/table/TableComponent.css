@@ -21,7 +21,7 @@
 
 .visibility-item {
   align-items: center;
-  max-width: 25px;
+  min-width: min-content;
 }
 .visibility-item > span > input{
   margin-right: 10px;

@@ -1,6 +1,16 @@
 const api_helper = {
     'api_url': 'http://127.0.0.1:8000/api/',
     "home": "home",
+    "admin": {
+        "users": {
+            "read": "admin/users",
+            "create": "admin/users",
+        },
+        "categories": {
+            "read": "admin/categories",
+            "create": "admin/categories",
+        }
+    },
     'auth': {
         'login': "auth/login",
         'register': "auth/register",

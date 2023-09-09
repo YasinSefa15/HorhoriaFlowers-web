@@ -2,8 +2,8 @@ export const colorSchema = {
     warning_color :"#f44336",
     button : {
         backgroundColor: "white",
-        hoverBackgroundColor: "#221f1f",
-        textColor: "#221f1f",
+        hoverBackgroundColor: "#2c2a2a",
+        textColor: "#2c2a2a",
         border: "2px solid #221f1f",
         hoverTextColor: "#FFFFFF"
     },
