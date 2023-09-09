@@ -18,8 +18,13 @@ export default function TableComponent({
             <div className="container spec-table">
                 <div className="row spec-table-operations">
                     <div className="col d-flex justify-content-end">
-                        <SearchComponent/>
-                        <FilterComponent></FilterComponent>
+                        <SearchComponent
+                            handleSearchChange={tableState.handleSearchChange}
+                        />
+                        <FilterComponent
+                            options={tableState.orderOptions}
+                            handleFilterChange={tableState.handleFilterChange}
+                        />
 
                         <ColumnsVisibility
                             setShowColumns={setShowColumns}
@@ -85,7 +90,13 @@ export default function TableComponent({
                                 }
 
                                 return <div className="col"
-                                            key={"a" + (showableColumnNames.current[showable]) + "b"}>{item[showableColumnNames.current[showable]]}</div>;
+                                            style={{
+                                                overflow: "hidden",   // Metni sığdırmak için taşan kısmı gizle
+                                                textOverflow: "ellipsis",  // Taşan metni "..." ile göster
+                                                whiteSpace: "nowrap",  // Metni tek satırda tut
+                                            }}
+                                            key={"a" + (showableColumnNames.current[showable]) + "b"}>{item[showableColumnNames.current[showable]]}
+                                </div>;
                             })}
                         </div>;
                     }

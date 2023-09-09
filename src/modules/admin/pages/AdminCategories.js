@@ -12,7 +12,17 @@ import AdminCreateModal from "../components/modals/AdminCreateModal";
 import LoadingScreen from "../../user/components/LoadingScreen";
 
 export default function AdminCategories() {
-    const tableState = useTableState();
+    const tableState = useTableState({
+        loadDataQueryWithParams: getAdminCategories,
+        passedOrderOptions: [
+            {name: "En yeni oluşturulanlar", orderName: "created_at", orderDirection: "desc"},
+            {name: "En eski oluşturulanlar", orderName: "created_at", orderDirection: "asc"},
+            {name: "En yeni güncellenenler", orderName: "updated_at", orderDirection: "desc"},
+            {name: "En eski güncellenenler", orderName: "updated_at", orderDirection: "asc"},
+            {name: "Başlık (A-Z)", orderName: "title", orderDirection: "asc"},
+            {name: "Başlık (Z-A)", orderName: "title", orderDirection: "desc"},
+        ]
+    });
     const [isLoaded, setIsLoaded] = useState(false);
     const [categoriesMapped, setCategoriesMapped] = useState([]);
     const {secret} = useAuth();
@@ -37,13 +47,6 @@ export default function AdminCategories() {
         ])
 
         const load = async () => {
-            await getAdminCategories({
-                setData: tableState.setData,
-                setTotalPages: tableState.setTotalPages,
-                setCurrentPage: tableState.setCurrentPage,
-                requestParams: tableState.requestParams,
-                secret,
-            })
             await getAdminCategoriesMapped({setCategoriesMapped, secret})
         }
 
@@ -52,23 +55,6 @@ export default function AdminCategories() {
         setIsLoaded(true)
     }, []);
 
-    useEffect(() => {
-        if (tableState.requestedPage === null) {
-            return;
-        }
-        console.log("requestParams", tableState.requestParams)
-        const load = async () => {
-            await getAdminCategories({
-                setData: tableState.setData,
-                setTotalPages: tableState.setTotalPages,
-                setCurrentPage: tableState.setCurrentPage,
-                requestParams: tableState.requestParams,
-                secret,
-            })
-        }
-
-        load().then(r => [])
-    }, [tableState.requestParams]);
 
     if (!isLoaded) {
         return <LoadingScreen/>
@@ -96,8 +82,7 @@ export default function AdminCategories() {
 
             <TableComponent
                 tableState={tableState}
-            >
-            </TableComponent>
+            />
 
             <AdminCreateModal
                 showModal={tableState.showCreateModal}

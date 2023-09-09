@@ -1,11 +1,11 @@
 import {api_helper} from "../../helpers/api_helper";
 import axios from "axios";
-import NotificationHelper from "../../helpers/NotificationHelper";
 import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 
 
-const getAdminUsers = async ({setData, secret, setTotalPages, setCurrentPage}) => {
+const getAdminUsers = async ({setData, secret, setTotalPages, setCurrentPage, requestParams}) => {
     await axios.get(api_helper.api_url + api_helper.admin.users.read, {
+        params: requestParams,
         headers: {
             "Authorization": "Bearer " + secret,
         }

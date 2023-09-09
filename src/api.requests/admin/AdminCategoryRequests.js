@@ -4,6 +4,7 @@ import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 
 
 const getAdminCategories = async ({setData, secret, setTotalPages, setCurrentPage, requestParams}) => {
+    console.log("SORGU GİTTİ")
     await axios.get(api_helper.api_url + api_helper.admin.categories.read, {
         params: requestParams,
         headers: {
@@ -11,13 +12,14 @@ const getAdminCategories = async ({setData, secret, setTotalPages, setCurrentPag
         }
     })
         .then(async response => {
-            //console.log(response.data)
+            console.log(response.data)
             await setData(response.data.data)
             await setTotalPages(response.data.meta.last_page)
             await setCurrentPage(response.data.meta.current_page)
         })
         .catch(error => {
-            console.log(error.messages)
+            console.log(requestParams)
+            console.log(error)
         })
 }
 

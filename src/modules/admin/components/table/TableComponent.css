@@ -1,60 +1,73 @@
 .spec-table {
-  padding: 15px 40px;
+    padding: 15px 40px;
 }
 
 .spec-table-operations {
-  background-color: #fdfcfc;
-  border: 1px #EDEEF2 solid;
-  border-radius: 5px 5px 0px 0px;
-  padding: 8px;
+    background-color: #fdfcfc;
+    border: 1px #EDEEF2 solid;
+    border-radius: 5px 5px 0px 0px;
+    padding: 8px;
+}
+
+.table-search-comp {
+    height: 100%;
+    border: 1px #EDEEF2 solid;
+    border-radius: 5px;
+}
+
+.table-search-comp:focus {
+    outline: none;
+    border: 1px #a1a4ab solid;
 }
 
 .spec-table-operation {
-  width: min-content;
-  border: 1px #e7e8ec solid;
-  padding: 8px;
-  border-radius: 8px;
+    width: min-content;
+    border: 1px #e7e8ec solid;
+    padding: 8px;
+    border-radius: 8px;
 }
-.visibility-menu.show{
-  min-width: 110px;
+
+.visibility-menu.show {
+    min-width: 110px;
 }
 
 .visibility-item {
-  align-items: center;
-  min-width: min-content;
+    align-items: center;
+    min-width: min-content;
 }
-.visibility-item > span > input{
-  margin-right: 10px;
+
+.visibility-item > span > input {
+    margin-right: 10px;
 }
 
 .spec-table-header {
-  background-color: #F9FAFC;
-  border: 1px #EDEEF2 solid;
-  padding: 8px;
+    background-color: #F9FAFC;
+    border: 1px #EDEEF2 solid;
+    padding: 8px;
 }
 
 .spec-table-header-title {
-  font-size: 1rem;
-  font-weight: bolder;
-  color: #5f5f61;
-  width: max-content;
+    font-size: 1rem;
+    font-weight: bolder;
+    color: #5f5f61;
+    width: max-content;
 }
 
 .spec-table-row {
-  border-left: 1px #EDEEF2 solid;
-  border-right: 1px #EDEEF2 solid;
-  border-bottom: 1px #EDEEF2 solid;
-  font-size: 1rem;
-  padding: 12px;
+    border-left: 1px #EDEEF2 solid;
+    border-right: 1px #EDEEF2 solid;
+    border-bottom: 1px #EDEEF2 solid;
+    font-size: 1rem;
+    padding: 12px;
 }
 
 .spec-table-row:hover {
-  background-color: #f4f5f6;
+    background-color: #f4f5f6;
 }
 
 .spec-nav-area {
-  padding: 12px 24px;
-  border-left: 1px #EDEEF2 solid;
-  border-right: 1px #EDEEF2 solid;
-  border-bottom: 1px #EDEEF2 solid;
+    padding: 12px 24px;
+    border-left: 1px #EDEEF2 solid;
+    border-right: 1px #EDEEF2 solid;
+    border-bottom: 1px #EDEEF2 solid;
 }

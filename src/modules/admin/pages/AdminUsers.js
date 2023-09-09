@@ -9,11 +9,22 @@ import AdminCreateModal from "../components/modals/AdminCreateModal";
 import AdminUpdateModal from "../components/modals/AdminUpdateModal";
 
 export default function AdminUsers() {
-    const tableState = useTableState();
+    const tableState = useTableState({
+        loadDataQueryWithParams: getAdminUsers,
+        passedOrderOptions: [
+            {name: "En yeni oluşturulanlar", orderName: "created_at", orderDirection: "DESC"},
+            {name: "En eski oluşturulanlar", orderName: "created_at", orderDirection: "ASC"},
+            {name: "En yeni güncellenenler", orderName: "updated_at", orderDirection: "DESC"},
+            {name: "En eski güncellenenler", orderName: "updated_at", orderDirection: "ASC"},
+            {name: "Ad (A-Z)", orderName: "first_name", orderDirection: "ASC"},
+            {name: "Ad (Z-A)", orderName: "first_name", orderDirection: "DESC"},
+            {name: "Telefon (A-Z)", orderName: "phone", orderDirection: "ASC"},
+            {name: "Telefon (Z-A)", orderName: "phone", orderDirection: "DESC"},
+        ]
+    });
     const [isLoaded, setIsLoaded] = useState(false);
     const {secret} = useAuth();
 
-    const [modals, setModals] = useState((<></>))
 
     useEffect(() => {
         tableState.setTableColumns([
@@ -24,26 +35,12 @@ export default function AdminUsers() {
             {field: "created_at", name: "Kayıt Tarihi", checked: true},
             {field: "actions", name: "İşlemler", checked: true},
         ])
-
-        const load = async () => {
-            await getAdminUsers({
-                setData: tableState.setData,
-                setTotalPages: tableState.setTotalPages,
-                setCurrentPage: tableState.setCurrentPage,
-                secret,
-            })
-        }
-
-        load().then(r => {
-        })
-
         setIsLoaded(true)
     }, []);
 
 
     const handleNewData = ({newData}) => {
         const post = async () => {
-            console.log("POST")
             await createAdminUser({secret, data: newData});
         }
         post().then(r => {
@@ -51,7 +48,6 @@ export default function AdminUsers() {
     };
     useEffect(() => {
         console.log("use effect", tableState.clickedData)
-        showModals();
     }, [tableState.clickedData]);
 
     const handleUpdateData = ({newData}) => {
@@ -64,18 +60,6 @@ export default function AdminUsers() {
         }
         put().then(r => {
         })
-    }
-
-    const showModals = () => {
-        if (tableState.clickedData === null) {
-            return;
-        }
-
-        return (
-            <>
-
-            </>
-        )
     }
 
     if (!isLoaded) {

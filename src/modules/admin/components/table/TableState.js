@@ -1,6 +1,8 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {getAdminCategories} from "../../../../api.requests/admin/AdminCategoryRequests";
+import {useAuth} from "../../../../context/AuthContext";
 
-function useTableState() {
+function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
     const [data, setData] = useState([]);
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
@@ -9,9 +11,28 @@ function useTableState() {
     const [showViewModal, setShowViewModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [requestedPage, setRequestedPage] = useState(null);
+    const [requestedPage, setRequestedPage] = useState(1);
     const [tableColumns, setTableColumns] = useState([]);
-    const [requestParams, setRequestParams] = useState({});//{limit: 10, page: 1, title: "", onStock: 0, orderBy: null}
+    const [search, setSearch] = useState("");//{limit: 10, page: 1, search: "", onStock: 0, orderBy: null}
+    const [requestParams, setRequestParams] = useState({});//{limit: 10, page: 1, search: "", onStock: 0, orderBy: null}
+    const [orderOptions, setOrderOptions] = useState(passedOrderOptions ?? []);// {name: "Ad (A-Z)",orderName: "first_name", orderDirection: "ASC"},
+    const {secret} = useAuth();
+
+    useEffect(() => {
+        console.log("tableState.requestParams", requestParams)
+        const load = async () => {
+            await loadDataQueryWithParams({
+                setData: setData,
+                setTotalPages: setTotalPages,
+                setCurrentPage: setCurrentPage,
+                requestParams: requestParams,
+                secret,
+            })
+        }
+
+        load().then(r => [])
+    }, [requestParams]);
+
 
     const handleCheckboxChange = (columnName) => {
         setTableColumns((prevColumns) =>
@@ -35,6 +56,26 @@ function useTableState() {
         setRequestParams({...requestParams, page: requestedPageCopy + value})
     }
 
+    const handleSearchChange = ({searchText}) => {
+        console.log("handleSearchChange", searchText)
+        setRequestedPage(1)
+        if (searchText === "") {
+            setSearch("")
+            setRequestParams({...requestParams, search: "", page: 1})
+            return;
+        }
+        setSearch(searchText)
+        setRequestParams({...requestParams, search: searchText, page: 1})
+    }
+
+    const handleFilterChange = ({value}) => {
+        //value has orderName and orderDirection
+        console.log("handleFilterChange", value)
+        setRequestedPage(1)
+        setRequestParams({...requestParams, orderName: value.orderName, orderDirection: value.orderDirection, page: 1,})
+    }
+
+
     return {
         data,
         setData,
@@ -55,6 +96,10 @@ function useTableState() {
         requestedPage,
         setRequestedPage,
         handlePageChange,
+        handleSearchChange,
+        handleFilterChange,
+        orderOptions,
+        setOrderOptions,
         requestParams,
         setRequestParams,
         tableColumns,
