@@ -1,5 +1,6 @@
 import {Store} from "react-notifications-component";
 
+//todo who use
 export default function NotificationHelper({type, title}) {
     Store.addNotification({
         title: title,

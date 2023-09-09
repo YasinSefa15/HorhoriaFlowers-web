@@ -2,21 +2,24 @@ import TableComponent from "../components/table/TableComponent";
 import useTableState from "../components/table/TableState";
 import {useEffect, useState} from "react";
 import LoadingScreen from "../../user/components/LoadingScreen";
-import {createAdminUser, getAdminUsers} from "../../../api.requests/admin/AdminUserRequests";
+import {createAdminUser, getAdminUsers, updateAdminUser} from "../../../api.requests/admin/AdminUserRequests";
 import {useAuth} from "../../../context/AuthContext";
 import CustomButton from "../../user/components/CustomButton";
 import AdminCreateModal from "../components/modals/AdminCreateModal";
+import AdminUpdateModal from "../components/modals/AdminUpdateModal";
 
 export default function AdminUsers() {
     const tableState = useTableState();
-    const [createModalShow, setCreateModalShow] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const {secret} = useAuth();
+
+    const [modals, setModals] = useState((<></>))
 
     useEffect(() => {
         tableState.setTableColumns([
             {field: "full_name", name: "Ad Soyad", checked: true},
             {field: "phone", name: "Telefon", checked: true},
+            {field: "email", name: "Emmil", checked: true},
             {field: "is_admin", name: "Admin", checked: true},
             {field: "created_at", name: "Kayıt Tarihi", checked: true},
             {field: "actions", name: "İşlemler", checked: true},
@@ -37,13 +40,43 @@ export default function AdminUsers() {
         setIsLoaded(true)
     }, []);
 
+
     const handleNewData = ({newData}) => {
         const post = async () => {
+            console.log("POST")
             await createAdminUser({secret, data: newData});
         }
         post().then(r => {
         })
     };
+    useEffect(() => {
+        console.log("use effect", tableState.clickedData)
+        showModals();
+    }, [tableState.clickedData]);
+
+    const handleUpdateData = ({newData}) => {
+        const put = async () => {
+            console.log("FORM DATA : ", newData)
+            await updateAdminUser({
+                secret, data: newData, pageData: tableState.data,
+                setPageData: tableState.setData
+            });
+        }
+        put().then(r => {
+        })
+    }
+
+    const showModals = () => {
+        if (tableState.clickedData === null) {
+            return;
+        }
+
+        return (
+            <>
+
+            </>
+        )
+    }
 
     if (!isLoaded) {
         return <LoadingScreen></LoadingScreen>
@@ -64,7 +97,7 @@ export default function AdminUsers() {
                         width: "max-content",
                     }}
                     onClick={() => {
-                        setCreateModalShow(true)
+                        tableState.setShowCreateModal(true)
                     }}
                 />
             </div>
@@ -72,8 +105,8 @@ export default function AdminUsers() {
             <TableComponent tableState={tableState}/>
 
             <AdminCreateModal
-                showModal={createModalShow}
-                setShowCreateModal={setCreateModalShow}
+                showModal={tableState.showCreateModal}
+                setShowCreateModal={tableState.setShowCreateModal}
                 handleNewData={handleNewData}
                 title={"Yeni Kullanıcı Ekle"}
                 fields={[
@@ -84,6 +117,23 @@ export default function AdminUsers() {
                     {field: "email", name: "E-Posta", required: true, type: "text"},
                     {field: "password", name: "Şifre", required: true, type: "password"},
                     {field: "password_confirmation", name: "Şifre Tekrar", required: true, type: "password"},
+                ]}
+            />
+
+            <AdminUpdateModal
+                showUpdateModal={tableState.showUpdateModal}
+                setShowUpdateModal={tableState.setShowUpdateModal}
+                handleUpdateData={handleUpdateData}
+                clickedData={tableState.clickedData}
+                title={"Kullanıcıyı Düzenle"}
+                fields={[
+                    {field: "first_name", name: "Ad", required: false, type: "text"},
+                    {field: "last_name", name: "Soyad", required: false, type: "text"},
+                    {field: "phone", name: "Telefon", required: false, type: "text"},
+                    {field: "is_admin", name: "Admin", required: false, type: "checkbox", checked: false},
+                    {field: "email", name: "E-Posta", required: false, type: "text"},
+                    {field: "password", name: "Şifre", required: false, type: "password"},
+                    {field: "password_confirmation", name: "Şifre Tekrar", required: false, type: "password"},
                 ]}
             />
         </>

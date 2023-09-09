@@ -1,5 +1,7 @@
 import {api_helper} from "../../helpers/api_helper";
 import axios from "axios";
+import NotificationHelper from "../../helpers/NotificationHelper";
+import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 
 
 const getAdminUsers = async ({setData, secret, setTotalPages, setCurrentPage}) => {
@@ -40,7 +42,40 @@ const createAdminUser = async ({data, secret}) => {
         })
 }
 
+const updateAdminUser = async ({data, secret, pageData, setPageData}) => {
+    await axios.put(api_helper.api_url + api_helper.admin.users.update + data.id, {
+            first_name: data.first_name,
+            last_name: data.last_name,
+            phone: data.phone,
+            email: data.email,
+            password: data.password,
+            password_confirmation: data.password_confirmation,
+            is_admin: data.is_admin,
+        },
+        {
+            headers: {
+                "Authorization": "Bearer " + secret,
+            }
+        })
+        .then(async response => {
+            await setPageData(pageData.map((item) => item.id === data.id ? data : item))
+            HTTPNotificationHelper({
+                httpStatus: response.status,
+                title: response.data.message
+            })
+        })
+        .catch(error => {
+            HTTPNotificationHelper({
+                httpStatus: error.response.status,
+                title: error.response.data.message,
+                message: "E-posta ve/veya şifreniz hatalı",
+            })
+            console.log(error.message)
+        })
+}
+
 export {
     getAdminUsers,
-    createAdminUser
+    createAdminUser,
+    updateAdminUser,
 }

@@ -60,10 +60,8 @@ const validationFunctions = {
     checkbox: (value, min, max) => {
         return typeof value === 'boolean' || value === undefined
     },
-    select: (value) => {
-        console.log("select", value)
-        return value >= 0  || value === undefined
-    }
+    select: (value) => value >= 0 || value === undefined
+
 };
 
 
@@ -93,7 +91,7 @@ const validateForm = async ({fields, data, setErrors}) => {
             )
         ) {
             errors[fieldForm.field] = errorMessage;
-        } else if (!confirmation && !validationFunction(data[fieldForm.field], min, max)) {
+        } else if (!confirmation && data[fieldForm.field] !== undefined && !validationFunction(data[fieldForm.field], min, max)) {
             errors[fieldForm.field] = errorMessage;
         }
     }
