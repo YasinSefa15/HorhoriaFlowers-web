@@ -49,8 +49,7 @@ export default function AdminCreateModal({showModal, setShowCreateModal, handleN
                 }}>
                     {field.options.map((option, index) => {
                         return <option value={option.value} key={index}
-                                       selected={option.value === newData[field.field]}
-
+                                       defaultChecked={option.value === newData[field.field]}
                         >{option.text}</option>
                     })}
                 </select>

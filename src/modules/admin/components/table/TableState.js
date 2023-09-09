@@ -9,7 +9,9 @@ function useTableState() {
     const [showViewModal, setShowViewModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [requestedPage, setRequestedPage] = useState(null);
     const [tableColumns, setTableColumns] = useState([]);
+    const [requestParams, setRequestParams] = useState({});//{limit: 10, page: 1, title: "", onStock: 0, orderBy: null}
 
     const handleCheckboxChange = (columnName) => {
         setTableColumns((prevColumns) =>
@@ -20,6 +22,18 @@ function useTableState() {
             )
         );
     };
+
+    const handlePageChange = ({value}) => {
+        let requestedPageCopy = requestedPage
+        if (requestedPageCopy === null) {
+            requestedPageCopy = 1
+        }
+        if (requestedPageCopy + value === 0 || requestedPageCopy + value === totalPages + 1) {
+            return;
+        }
+        setRequestedPage(requestedPageCopy + value)
+        setRequestParams({...requestParams, page: requestedPageCopy + value})
+    }
 
     return {
         data,
@@ -38,6 +52,11 @@ function useTableState() {
         setCurrentPage,
         totalPages,
         setTotalPages,
+        requestedPage,
+        setRequestedPage,
+        handlePageChange,
+        requestParams,
+        setRequestParams,
         tableColumns,
         setTableColumns,
         handleCheckboxChange,

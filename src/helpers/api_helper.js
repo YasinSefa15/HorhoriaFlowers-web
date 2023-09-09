@@ -10,6 +10,7 @@ const api_helper = {
         "categories": {
             "read": "admin/categories",
             "create": "admin/categories",
+            "mapped": "admin/categories/mapped",
         }
     },
     'auth': {

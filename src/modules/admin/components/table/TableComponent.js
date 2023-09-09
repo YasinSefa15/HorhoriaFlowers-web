@@ -84,7 +84,8 @@ export default function TableComponent({
                                     </div>
                                 }
 
-                                return <div className="col" key={"a" + (showableColumnNames.current[showable]) + "b"}>{item[showableColumnNames.current[showable]]}</div>;
+                                return <div className="col"
+                                            key={"a" + (showableColumnNames.current[showable]) + "b"}>{item[showableColumnNames.current[showable]]}</div>;
                             })}
                         </div>;
                     }
@@ -94,11 +95,17 @@ export default function TableComponent({
                         <CustomButton
                             text="Önceki"
                             style={{width: "10%"}}
+                            onClick={() => {
+                                tableState.handlePageChange({value: -1})
+                            }}
                         ></CustomButton>
                         <span>{tableState.totalPages} Sayfadan {tableState.currentPage}. Görüntüleniyor</span>
                         <CustomButton
                             text="Sonraki"
                             style={{width: "10%"}}
+                            onClick={() => {
+                                tableState.handlePageChange({value: 1})
+                            }}
                         ></CustomButton>
                     </div>
                 </div>

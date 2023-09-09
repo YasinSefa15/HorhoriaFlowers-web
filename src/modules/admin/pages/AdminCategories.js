@@ -2,20 +2,25 @@ import TableComponent from "../components/table/TableComponent";
 import {useEffect, useState} from "react";
 import useTableState from "../components/table/TableState";
 import {useAuth} from "../../../context/AuthContext";
-import {createAdminCategory, getAdminCategories} from "../../../api.requests/admin/AdminCategoryRequests";
+import {
+    createAdminCategory,
+    getAdminCategories,
+    getAdminCategoriesMapped
+} from "../../../api.requests/admin/AdminCategoryRequests";
 import CustomButton from "../../user/components/CustomButton";
 import AdminCreateModal from "../components/modals/AdminCreateModal";
+import LoadingScreen from "../../user/components/LoadingScreen";
 
 export default function AdminCategories() {
     const tableState = useTableState();
     const [isLoaded, setIsLoaded] = useState(false);
-    const [createModalShow, setCreateModalShow] = useState(false);
-    const [clickedData, setClickedData] = useState([]);
+    const [categoriesMapped, setCategoriesMapped] = useState([]);
     const {secret} = useAuth();
 
     const handleNewData = ({newData}) => {
         const post = async () => {
             await createAdminCategory({secret, data: newData});
+            setIsLoaded(true)
         }
         post().then(r => {
         })
@@ -26,7 +31,7 @@ export default function AdminCategories() {
         tableState.setTableColumns([
             {field: "title", name: "Başlık", checked: true},
             {field: "slug", name: "Slug", checked: true},
-            {field: "parent_id", name: "Ana Kategori", checked: true},
+            {field: "parent_name", name: "Üst Kategori", checked: true},
             {field: "created_at", name: "Oluşturulma Tarihi", checked: true},
             {field: "actions", name: "İşlemler", checked: true},
         ])
@@ -36,14 +41,38 @@ export default function AdminCategories() {
                 setData: tableState.setData,
                 setTotalPages: tableState.setTotalPages,
                 setCurrentPage: tableState.setCurrentPage,
+                requestParams: tableState.requestParams,
                 secret,
             })
+            await getAdminCategoriesMapped({setCategoriesMapped, secret})
         }
 
         load().then(r => [])
 
         setIsLoaded(true)
     }, []);
+
+    useEffect(() => {
+        if (tableState.requestedPage === null) {
+            return;
+        }
+        console.log("requestParams", tableState.requestParams)
+        const load = async () => {
+            await getAdminCategories({
+                setData: tableState.setData,
+                setTotalPages: tableState.setTotalPages,
+                setCurrentPage: tableState.setCurrentPage,
+                requestParams: tableState.requestParams,
+                secret,
+            })
+        }
+
+        load().then(r => [])
+    }, [tableState.requestParams]);
+
+    if (!isLoaded) {
+        return <LoadingScreen/>
+    }
 
     return (
         <>
@@ -60,7 +89,7 @@ export default function AdminCategories() {
                         width: "max-content",
                     }}
                     onClick={() => {
-                        setCreateModalShow(true)
+                        tableState.setShowCreateModal(true)
                     }}
                 />
             </div>
@@ -71,8 +100,8 @@ export default function AdminCategories() {
             </TableComponent>
 
             <AdminCreateModal
-                showModal={createModalShow}
-                setShowCreateModal={setCreateModalShow}
+                showModal={tableState.showCreateModal}
+                setShowCreateModal={tableState.setShowCreateModal}
                 handleNewData={handleNewData}
                 title={"Yeni Kategori Ekle"}
                 fields={[
@@ -84,7 +113,7 @@ export default function AdminCategories() {
                         type: "select",
                         options: [
                             {value: 0, text: "Üst Kategori Yok"},
-                            ...tableState.data.map((item) => {
+                            ...categoriesMapped.map((item) => {
                                 return {value: item.id, text: item.title}
                             })
                         ]
