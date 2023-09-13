@@ -2,13 +2,18 @@ import OrderStep1 from "./steps/OrderStep1";
 import {useEffect, useState} from "react";
 import CustomButton from "../../components/CustomButton";
 import OrderStep2 from "./steps/OrderStep2";
-import OrderStep3 from "./steps/OrderStep3";
 import {useAuth} from "../../../../context/AuthContext";
-import {getOrderSelectedAddressDetail} from "../../../../api.requests/OrderRequests";
+import {giveOrder} from "../../../../api.requests/OrderRequests";
+import OrderPlaced from "./OrderPlaced";
+import {Helmet} from "react-helmet";
+import {useNavigate} from "react-router-dom";
+import HTTPNotificationHelper from "../../../../helpers/HTTPNotificationHelper";
 
 export default function OrderWizard({total}) {
     const [selectedAddressId, setSelectedAddressId] = useState(null);
     const {secret} = useAuth()
+    const [isOrdered, setIsOrdered] = useState(false)
+    const [orderCode, setOrderCode] = useState(null)
 
     const steps = [
         {
@@ -33,7 +38,10 @@ export default function OrderWizard({total}) {
     const handleOrder = () => {
         console.log("handleOrder")
         const fetchAddresses = async () => {
-            //await getOrderSelectedAddressDetail({selectedAddressId, setAddress, secret})
+            await giveOrder({
+                selectedAddressId, secret,
+                setIsOrdered, setOrderCode
+            })
         }
 
         fetchAddresses().then(() => {
@@ -41,9 +49,17 @@ export default function OrderWizard({total}) {
         })
     }
 
+    if (isOrdered) {
+        return <OrderPlaced orderCode={orderCode}/>
+    }
 
     return (
         <>
+            <Helmet>
+                <title>Sipariş Ver - Hooria E-Ticaret</title>
+                <meta name="description"
+                      content="Hooria e-ticaret platformunda ürün siparişi verin. Dilediğiniz ürünleri seçin ve siparişinizi tamamlayın."/>
+            </Helmet>
 
             <div className="container">
                 <div className="row d-flex mb-3">

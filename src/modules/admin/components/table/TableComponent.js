@@ -87,6 +87,12 @@ export default function TableComponent({
                                     return <div className="col" key={"a" + (showableColumnNames.current[showable]) + "b"}>
                                         <i className="fa-solid fa-circle-xmark" style={{color: "#93131a"}}></i>
                                     </div>
+                                } else if (showableColumnNames.current[showable] === "file_path") {
+                                    return <div className="col" key={"a" + (showableColumnNames.current[showable]) + "b"}>
+                                        <img src={item[showableColumnNames.current[showable]]}
+                                             alt={item[showableColumnNames.current[showable]]}
+                                             style={{width: "50px", height: "50px"}}/>
+                                    </div>
                                 }
 
                                 return <div className="col"

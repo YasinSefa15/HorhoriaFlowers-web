@@ -102,22 +102,22 @@ function Sidebar() {
                 </div>
 
                 <div
-                    id="Depo"
+                    id="Ürünler"
                     className="sidebar-item"
                     onMouseEnter={(e) => {
-                        hoveredItem.current = "Depo";
-                        handleMouseEnter("Depo");
+                        hoveredItem.current = "Ürünler";
+                        handleMouseEnter("Ürünler");
                     }}
                     onMouseLeave={(e) => {
-                        handleMouseLeave("Depo");
+                        handleMouseLeave("Ürünler");
                     }}
                     onClick={() => {
-                        handleItemClick("Depo");
-                        navigate("/admin/stock");
+                        handleItemClick("Ürünler");
+                        navigate("/admin/products");
                     }}>
-                    <div className={`list-item d-flex align-items-center ${activeItem === "Depo" ? "selected" : ""}`}>
+                    <div className={`list-item d-flex align-items-center ${activeItem === "Ürünler" ? "selected" : ""}`}>
                         <i className="fas fa-cube me-md-2"></i>
-                        <span className="d-none d-md-block">Depo</span>
+                        <span className="d-none d-md-block">Ürünler</span>
                     </div>
 
                 </div>

@@ -11,6 +11,13 @@ const api_helper = {
             "read": "admin/categories",
             "create": "admin/categories",
             "mapped": "admin/categories/mapped",
+        },
+        "products": {
+            "read": "admin/products",
+            "sized-mapped": "admin/products/sized-mapped",
+        },
+        "orders": {
+            "read": "admin/orders",
         }
     },
     'auth': {
@@ -55,12 +62,11 @@ const api_helper = {
             "create": "user/addresses",
             "update": "user/addresses/",
             "delete": "user/addresses/",
+        },
+        "orders": {
+            "read": "orders",
+            "create": "orders",
         }
-    },
-    "order": {
-        "index": "orders",
-        //"view": "orders/", //id
-        "create": "orders",
     },
     "coupon": {
         "view": "coupons/", //code

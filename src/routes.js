@@ -28,9 +28,9 @@ import AdminProducts from "./modules/admin/pages/AdminProducts";
 import AdminCategories from "./modules/admin/pages/AdminCategories";
 import AdminOrders from "./modules/admin/pages/AdminOrders";
 import AdminStatistics from "./modules/admin/pages/AdminStatistics";
-import AdminStock from "./modules/admin/pages/AdminStock";
 import AdminUsers from "./modules/admin/pages/AdminUsers";
 import AdminProfile from "./modules/admin/pages/AdminProfile";
+import ProductCreate from "./modules/admin/pages/product/ProductCreate";
 
 const routes = [
     {
@@ -63,10 +63,6 @@ const routes = [
     {
         path: '/order',
         element: <OrderIndex></OrderIndex>
-    },
-    {
-        path: '/order/:slug',
-        element: <SuccessOrder></SuccessOrder>
     },
     {
         path: '/profile',
@@ -128,23 +124,33 @@ const routes = [
             },
             {
                 path: 'products',
-                element: <AdminProducts></AdminProducts>,
+                children: [
+                    {
+                        index: true,
+                        element: <AdminProducts></AdminProducts>
+                    },
+                    {
+                        path: 'edit/:id',
+                        element: <ProductEdit></ProductEdit>
+                    },
+                    {
+                        path: 'create',
+                        element: <ProductCreate></ProductCreate>
+                    }
+                ]
             },
+
             {
                 path: 'categories',
                 element: <AdminCategories></AdminCategories>
             },
             {
                 path: 'orders',
-                element: <AdminOrders></AdminOrders>
+                element: <AdminOrders></AdminOrders>,
             },
             {
                 path: 'statistics',
                 element: <AdminStatistics></AdminStatistics>
-            },
-            {
-                path: 'stock',
-                element: <AdminStock></AdminStock>
             },
             {
                 path: 'users',
@@ -153,6 +159,24 @@ const routes = [
             {
                 path: 'profile',
                 element: <AdminProfile></AdminProfile>
+            }
+        ]
+    },
+    {
+        path: 'admin1/products',
+        element: <AdminLayout></AdminLayout>,
+        children: [
+            {
+                index: true,
+                element: <AdminProducts></AdminProducts>
+            },
+            {
+                path: 'edit/:id',
+                element: <ProductEdit></ProductEdit>
+            },
+            {
+                path: 'create',
+                element: <ProductCreate></ProductCreate>
             }
         ]
     },

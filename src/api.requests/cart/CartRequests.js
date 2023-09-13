@@ -73,7 +73,7 @@ const deleteLoggedInUserProduct = async ({product_id, secret, size_id}) => {
 
         })
         .catch(error => {
-            console.log("silme hata " , error);
+            console.log("silme hata ", error);
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.statusText,
@@ -112,8 +112,18 @@ const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
 }
 
 
-export default function addCartInDetail({title, id, quantity, secret, size_id, product, size_value}) {
-    let storageProducts = JSON.parse(localStorage.getItem("cartProducts"));
+export default async function addCartInDetail({
+                                                  title,
+                                                  id,
+                                                  quantity,
+                                                  secret,
+                                                  size_id,
+                                                  product,
+                                                  size_value,
+                                                  cartProducts,
+                                                  setCartProducts
+                                              }) {
+    let storageProducts = await JSON.parse(localStorage.getItem("cartProducts"));
 
     //const oldQuantity = storageProducts.find((product) => (product.id || product.product_id) === id)?.quantity
 
@@ -133,7 +143,7 @@ export default function addCartInDetail({title, id, quantity, secret, size_id, p
     }
 
     console.log("data", data)
-    axios.post((api_helper.api_url + api_helper.carts.create), data, {
+    await axios.post((api_helper.api_url + api_helper.carts.create), data, {
             headers: {
                 'Authorization': `Bearer ${secret}`,
                 'Content-Type': 'application/json',
@@ -150,7 +160,8 @@ export default function addCartInDetail({title, id, quantity, secret, size_id, p
                     }
                     return product
                 })
-                await localStorage.setItem("cartProducts", JSON.stringify(storageProducts))
+                await setCartProducts(storageProducts)
+                //await localStorage.setItem("cartProducts", JSON.stringify(storageProducts))
             } else {
                 let storageProduct = product
                 storageProduct.quantity = newQuantityValue;
@@ -158,7 +169,7 @@ export default function addCartInDetail({title, id, quantity, secret, size_id, p
                 storageProduct.image = storageProduct.images.find((img) => img.order === 0);
                 storageProduct.size_value = size_value;
                 storageProducts.push(storageProduct)
-                await localStorage.setItem("cartProducts", JSON.stringify(storageProducts))
+                await setCartProducts(storageProducts)
             }
             HTTPNotificationHelper({
                 httpStatus: res.status,

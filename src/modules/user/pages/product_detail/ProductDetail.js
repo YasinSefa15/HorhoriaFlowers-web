@@ -18,7 +18,7 @@ export default function ProductDetail() {
     const [loading, setLoading] = useState(false)
     const [mainImage, setMainImage] = useState(null)// useState(product.images[0].file_path)
     const [quantity, setQuantity] = useState(1)
-    const {secret, cartProducts} = useAuth();
+    const {secret, cartProducts, setCartProducts} = useAuth();
     const [selectedSizeID, setSelectedSizeID] = useState(null)
     const [selectedSizeValue, setSelectedSizeValue] = useState(null)
     const navigate = useNavigate();
@@ -44,10 +44,13 @@ export default function ProductDetail() {
     const handleAddCart = async ({title, id, quantity, size_id, size_value}) => {
         if (secret) {
             //if product already in the cart, get old quantity field
-            addCartInDetail({title, id, quantity, secret, size_id, product, size_value})
+            await addCartInDetail({
+                title, id, quantity, secret, size_id,
+                product, size_value, cartProducts, setCartProducts
+            })
 
         } else {
-            addVisitorProductToCart({id, quantity, title, product, size_id, size_value})
+            await addVisitorProductToCart({id, quantity, title, product, size_id, size_value})
         }
     }
 
@@ -254,8 +257,8 @@ export default function ProductDetail() {
                                                     width: "100%",
                                                     height: "50px",
                                                 }}
-                                                onClick={() => {
-                                                    handleAddCart({
+                                                onClick={async () => {
+                                                    await handleAddCart({
                                                         title: product.title,
                                                         id: product.id,
                                                         quantity,

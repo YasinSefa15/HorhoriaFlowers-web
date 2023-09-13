@@ -11,6 +11,7 @@ export const AuthProvider = ({children}) => {
     const [secret, setSecret] = useState(JSON.parse(localStorage.getItem('secret')) || null);
     const [cartProducts, setCartProducts] = useState(localStorage.getItem('cartProducts') || null)
 
+    //todo yetkisiz işlem ise çıkıp yap
     useEffect(() => {
         const isAdmin = async () => {
             await getIsAdmin({secret: secret, setIsAdmin: setIsAdmin})
@@ -38,11 +39,13 @@ export const AuthProvider = ({children}) => {
             await localStorage.removeItem("secret")
             await localStorage.removeItem("cartProducts")
             await localStorage.setItem("visitorCartProducts", localStorage.getItem("visitorCartProducts") ?? JSON.stringify([]))
+            await setIsAdmin(false)
         }
 
         const setLocalStorage = async () => {
             await localStorage.setItem("user", JSON.stringify(user))
             await localStorage.setItem("secret", JSON.stringify(secret))
+            await getIsAdmin({secret: secret, setIsAdmin: setIsAdmin})
         }
 
         const handleLogout = async () => {
@@ -64,7 +67,8 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const setCartProducts = async () => {
-            if ((secret !== null && cartProducts !== null) || Array.isArray(localStorage.getItem('cartProducts'))) {
+            if ((secret !== null && cartProducts !== null) || Array.isArray(JSON.parse(localStorage.getItem('cartProducts')))) {
+                console.log("setCartProducts", cartProducts)
                 await localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                 //await localStorage.setItem("cartProducts", JSON.stringify([]))
             }
@@ -74,13 +78,13 @@ export const AuthProvider = ({children}) => {
     }, [cartProducts])
 
     const handleLogin = async (data) => {
-        setUser({
-            id: data.id,
-            first_name: data.first_name,
-            last_name: data.last_name,
+        await setUser({
+            id: data.data.id,
+            first_name: data.data.first_name,
+            last_name: data.data.last_name,
         })
 
-        setSecret(data.token)
+        await setSecret(data.token)
     }
 
     const data = {

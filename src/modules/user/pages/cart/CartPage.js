@@ -105,7 +105,7 @@ export default function CartPage() {
         if (calculatedSubTotal > 300) {
             setCargoPrice(0)
         } else {
-            localCargo = 38.99
+            localCargo = 37.99
             setCargoPrice(37.99)
         }
         setTotal(calculatedSubTotal + localCargo - discount)

@@ -311,7 +311,7 @@ async function deleteProfileAddresses({selectedAddressId, addresses, setAddresse
 
 async function getProfileOrders({setOrders, setLoaded, secret}) {
     try {
-        axios.get(api_helper.api_url + api_helper.order.index,
+        axios.get(api_helper.api_url + api_helper.user.orders.read,
             {
                 headers: {
                     "Authorization": "Bearer " + secret,

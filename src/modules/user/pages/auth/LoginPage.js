@@ -29,12 +29,10 @@ export default function LoginPage() {
 
         try {
             const response = await axios.post(api_helper.api_url + api_helper.auth.login, formData);
-            console.log(response.data.data)
             if (response.status === 200) {
-                const data = response.data.data
-                handleLogin(data)
+                await handleLogin(response.data)
 
-                setSecret(response.data.token)
+                //setSecret(response.data.token)
 
                 navigate("/")
 
