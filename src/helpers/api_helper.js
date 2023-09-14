@@ -15,6 +15,7 @@ const api_helper = {
         "products": {
             "read": "admin/products",
             "sized-mapped": "admin/products/sized-mapped",
+            "create": "admin/products",
         },
         "orders": {
             "read": "admin/orders",

@@ -10,6 +10,7 @@ import {
 import CustomButton from "../../user/components/CustomButton";
 import AdminCreateModal from "../components/modals/AdminCreateModal";
 import LoadingScreen from "../../user/components/LoadingScreen";
+import AdminUpdateModal from "../components/modals/AdminUpdateModal";
 
 export default function AdminCategories() {
     const tableState = useTableState({
@@ -42,6 +43,7 @@ export default function AdminCategories() {
             {field: "title", name: "Başlık", checked: true},
             {field: "slug", name: "Slug", checked: true},
             {field: "parent_name", name: "Üst Kategori", checked: true},
+            {field: "products_count", name: "Ürün Sayısı", checked: true},
             {field: "created_at", name: "Oluşturulma Tarihi", checked: true},
             {field: "actions", name: "İşlemler", checked: true},
         ])
@@ -105,6 +107,31 @@ export default function AdminCategories() {
                     },
                 ]}
             />
+
+            <AdminUpdateModal
+                showUpdateModal={tableState.showUpdateModal}
+                setShowUpdateModal={tableState.setShowUpdateModal}
+                handleUpdateData={(event) => {
+                    alert("Eklenecek")
+                }}
+                title={"Kategori Güncelle"}
+                clickedData={tableState.clickedData}
+                fields={[
+                    {field: "title", name: "Başlık", required: true, type: "text"},
+                    {
+                        field: "parent_id",
+                        name: "Üst Kategori",
+                        required: false,
+                        type: "select",
+                        options: [
+                            {value: tableState.clickedData?.parent_id, text: tableState.clickedData?.parent_name},
+                            ...categoriesMapped.map((item) => {
+                                return {value: item.id, text: item.title}
+                            })
+                        ]
+                    },
+                ]}
+            ></AdminUpdateModal>
         </>
     )
 }

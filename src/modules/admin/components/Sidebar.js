@@ -115,7 +115,8 @@ function Sidebar() {
                         handleItemClick("Ürünler");
                         navigate("/admin/products");
                     }}>
-                    <div className={`list-item d-flex align-items-center ${activeItem === "Ürünler" ? "selected" : ""}`}>
+                    <div
+                        className={`list-item d-flex align-items-center ${activeItem === "Ürünler" ? "selected" : ""}`}>
                         <i className="fas fa-cube me-md-2"></i>
                         <span className="d-none d-md-block">Ürünler</span>
                     </div>
@@ -140,27 +141,6 @@ function Sidebar() {
                         className={`list-item d-flex align-items-center ${activeItem === "İstatistikler" ? "selected" : ""}`}>
                         <i className="fa-solid fa-chart-line me-md-2"></i>
                         <span className="d-none d-md-block">İstatistikler</span>
-                    </div>
-                </div>
-
-                <div
-                    id="Profilim"
-                    className="sidebar-item"
-                    onMouseEnter={(e) => {
-                        hoveredItem.current = "Profilim";
-                        handleMouseEnter("Profilim");
-                    }}
-                    onMouseLeave={(e) => {
-                        handleMouseLeave("Profilim");
-                    }}
-                    onClick={() => {
-                        handleItemClick("Profilim");
-                        navigate("/admin/profile");
-                    }}>
-                    <div
-                        className={`list-item d-flex align-items-center ${activeItem === "Profilim" ? "selected" : ""}`}>
-                        <i className="fa-solid fa-user me-md-2"></i>
-                        <span className="d-none d-md-block">Profilim</span>
                     </div>
                 </div>
 

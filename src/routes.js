@@ -22,14 +22,12 @@ import ProfileUserCoupons from "./modules/user/components/profile/ProfileUserCou
 import ProductSearch from "./modules/user/pages/product_search/ProductSearch";
 import CategoryProducts from "./modules/user/pages/category_products/CategoryProducts";
 import OrderIndex from "./modules/user/pages/order/OrderIndex";
-import SuccessOrder from "./modules/user/pages/order/SuccessOrder";
 import AdminHomePage from "./modules/admin/pages/AdminHomePage";
 import AdminProducts from "./modules/admin/pages/AdminProducts";
 import AdminCategories from "./modules/admin/pages/AdminCategories";
 import AdminOrders from "./modules/admin/pages/AdminOrders";
 import AdminStatistics from "./modules/admin/pages/AdminStatistics";
 import AdminUsers from "./modules/admin/pages/AdminUsers";
-import AdminProfile from "./modules/admin/pages/AdminProfile";
 import ProductCreate from "./modules/admin/pages/product/ProductCreate";
 
 const routes = [
@@ -156,10 +154,6 @@ const routes = [
                 path: 'users',
                 element: <AdminUsers></AdminUsers>
             },
-            {
-                path: 'profile',
-                element: <AdminProfile></AdminProfile>
-            }
         ]
     },
     {

@@ -52,7 +52,8 @@ async function getProductDetail({
                                     setLoading,
                                     setMainImage,
                                     setSelectedSizeID,
-                                    setSelectedSizeValue
+                                    setSelectedSizeValue,
+                                    setSelectedSize
                                 }) {
     try {
         axios.get(api_helper.api_url + api_helper.product.view + slug, {})
@@ -62,6 +63,7 @@ async function getProductDetail({
                 await setLoading(true)
                 await setSelectedSizeID(res.data.data.sizes[0].id)
                 await setSelectedSizeValue(res.data.data.sizes[0].value)
+                await setSelectedSize(res.data.data.sizes[0])
             })
             .catch(error => {
                 console.log("error");

@@ -1,21 +1,7 @@
-import {LineChart, Line, CartesianGrid, XAxis, YAxis} from 'recharts';
+import RegisteredUserChart from "../components/Charts/RegisteredUserChart";
 
 export default function AdminHomePage() {
-    const data = [
-        {name: 'Page A', uv: 200, pv: 2400, amt: 2400},
-        {name: 'Page A', uv: 150, pv: 2400, amt: 2400},
-        {name: 'Page A', uv: 220, pv: 2400, amt: 2400},
-        {name: 'Page A', uv: 170, pv: 2400, amt: 2400}
-    ];
 
-    const renderLineChart = (
-        <LineChart width={600} height={300} data={data}>
-            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-            <CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="name" />
-            <YAxis />
-        </LineChart>
-    );
 
     return (
         <div className="container-fluid">
@@ -29,8 +15,11 @@ export default function AdminHomePage() {
                     <p>stokta olmayan ürün sayısı</p>
                 </div>
             </div>
-            <div>
-                {renderLineChart}
+
+            <div className="row">
+                <RegisteredUserChart/>
+                <RegisteredUserChart/>
+                <RegisteredUserChart/>
             </div>
         </div>
     );

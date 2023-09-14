@@ -21,23 +21,6 @@ const getAdminProducts = async ({setData, secret, setTotalPages, setCurrentPage,
         })
 }
 
-const getAdminProductsSizedMapped = async ({}) => {
-    console.log("SORGU GİTTİ")
-    await axios.get(api_helper.api_url + api_helper.admin.products.read, {
-        params: requestParams,
-        headers: {
-            "Authorization": "Bearer " + secret,
-        }
-    })
-        .then(async response => {
-            await setData(response.data.data)
-            await setTotalPages(response.data.meta.last_page)
-            await setCurrentPage(response.data.meta.current_page)
-        })
-        .catch(error => {
-            console.log(error.messages)
-        })
-}
 
 const getAdminCategoriesMapped = async ({setCategoriesMapped, secret}) => {
     await axios.get(api_helper.api_url + api_helper.admin.categories.mapped, {
@@ -47,45 +30,36 @@ const getAdminCategoriesMapped = async ({setCategoriesMapped, secret}) => {
     })
         .then(async response => {
             await setCategoriesMapped(response.data.data)
+            console.log("resll", response.data.data)
         })
         .catch(error => {
             console.log(error.messages)
+            console.log("HATA")
         })
 }
 
-const createAdminCategory = async ({data, secret}) => {
-    let formData = {
-        title: data.title,
-    };
-
-    if (data.parent_id) {
-        formData.parent_id = parseInt(data.parent_id);
-    }
-
-    await axios.post(api_helper.api_url + api_helper.admin.categories.create, formData,
+const createAdminProduct = async ({data, secret, setErrors}) => {
+    await axios.post(api_helper.api_url + api_helper.admin.products.create, data,
         {
             headers: {
                 "Authorization": "Bearer " + secret,
+                "content-type": "multipart/form-data",
             }
         })
         .then(async response => {
             HTTPNotificationHelper({
-                title: "Kategori Eklendi",
+                title: "Ürün Oluşturuldu",
                 httpStatus: response.status,
             })
+            setErrors([])
         })
         .catch(error => {
-            HTTPNotificationHelper({
-                httpStatus: error.response.status,
-                title: error.response.data.message,
-            })
-            console.log(error)
+            setErrors(error.response.data.errors)
         })
 }
 
 export {
     getAdminProducts,
-    getAdminProductsSizedMapped,
-    createAdminCategory,
+    createAdminProduct,
     getAdminCategoriesMapped
 }

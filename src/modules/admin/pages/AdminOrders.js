@@ -7,12 +7,11 @@ export default function AdminOrders() {
     const tableState = useTableState({
         loadDataQueryWithParams: getAdminOrders,
         passedOrderOptions: [
-            {name: "Başlık (A-Z)", orderName: "title", orderDirection: "ASC"},
-            {name: "Başlık (Z-A)", orderName: "title", orderDirection: "DESC"},
-            {name: "Eski Fiyat (0-9)", orderName: "old_price", orderDirection: "ASC"},
-            {name: "Eski Fiyat (9-0)", orderName: "old_price", orderDirection: "DESC"},
-            {name: "Yeni Fiyat (9-0)", orderName: "new_price", orderDirection: "ASC"},
-            {name: "Yeni Fiyat (9-0)", orderName: "new_price", orderDirection: "DESC"},
+            {name: "Sipariş Durumu? (A-Z)", orderName: "order_code", orderDirection: "ASC"},
+            {name: "Sipariş Durumu? (A-Z)", orderName: "order_code", orderDirection: "ASC"},
+            {name: "Sipariş Kodu (Z-A)", orderName: "order_code", orderDirection: "DESC"},
+            {name: "Fiyat (0-9)", orderName: "price", orderDirection: "ASC"},
+            {name: "Fiyat (9-0)", orderName: "price", orderDirection: "DESC"},
             {name: "En yeni oluşturulanlar", orderName: "created_at", orderDirection: "DESC"},
             {name: "En eski oluşturulanlar", orderName: "created_at", orderDirection: "ASC"},
             {name: "En yeni güncellenenler", orderName: "updated_at", orderDirection: "DESC"},
@@ -22,25 +21,28 @@ export default function AdminOrders() {
 
     useEffect(() => {
         tableState.setTableColumns([
-            {field: "file_path", name: "İçerik", checked: true},
-            {field: "title", name: "Başlık", checked: true},
-            {field: "slug", name: "Slug", checked: true},
-            {field: "category_name", name: "Kategori", checked: true},
-            {field: "old_price", name: "Eski Fiyat", checked: true},
-            {field: "new_price", name: "Yeni Fiyat", checked: true},
-            {field: "total_quantity", name: "Toplam Stok", checked: true},
-            {field: "created_at", name: "Kayıt Tarihi", checked: true},
+            {field: "order_code", name: "Sipariş Kodu", checked: true},
+            {field: "user_name", name: "Kullanıcı Adı", checked: true},
+            {field: "price", name: "Fiyat", checked: true},
+            {field: "phone", name: "Telefon", checked: true},
+            {field: "status", name: "Sipariş Durumu", checked: true},
+            {field: "ordered_items_count", name: "Ürün Adeti", checked: true},
+            {field: "created_at", name: "Veriliş Tarihi", checked: true},
             {field: "actions", name: "İşlemler", checked: true},
         ])
     }, []);
 
     return (
         <>
-            <h1>Orders</h1>
 
-            <TableComponent
-            tableState={tableState}
-            ></TableComponent>
+            <div className="d-flex align-items-center justify-content-between" style={{
+                padding: "0 25px",
+                marginTop: "25px",
+            }}>
+                <h1>Siparişler</h1>
+            </div>
+
+            <TableComponent tableState={tableState}/>
         </>
     )
 }

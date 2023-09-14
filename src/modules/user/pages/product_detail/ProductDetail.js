@@ -20,6 +20,7 @@ export default function ProductDetail() {
     const [quantity, setQuantity] = useState(1)
     const {secret, cartProducts, setCartProducts} = useAuth();
     const [selectedSizeID, setSelectedSizeID] = useState(null)
+    const [selectedSize, setSelectedSize] = useState(null)
     const [selectedSizeValue, setSelectedSizeValue] = useState(null)
     const navigate = useNavigate();
     //console.log(location.state)
@@ -31,6 +32,7 @@ export default function ProductDetail() {
                 setProduct: setProduct,
                 setLoading,
                 setMainImage,
+                setSelectedSize,
                 setSelectedSizeID,
                 setSelectedSizeValue
             })
@@ -57,6 +59,8 @@ export default function ProductDetail() {
     const handleSizeChange = (event) => {
         console.log("event.target.id", event.target.value)
         const [id, value] = event.target.value.split("?=")
+        const x = product.sizes.find(size => size.id === parseInt(id))
+        setSelectedSize(x)
         setSelectedSizeID(id)
         setSelectedSizeValue(value)
     };
@@ -248,30 +252,35 @@ export default function ProductDetail() {
                                             </div>
                                         </div>
 
-                                        <div
-                                            className={"col-md-5"}
-                                        >
+                                        <div className={"col-md-5"}>
                                             <CustomButton
                                                 text={"Sepete Ekle"}
                                                 style={{
                                                     width: "100%",
                                                     height: "50px",
+                                                    cursor: selectedSize.quantity > 0 ? "pointer" : "not-allowed"
                                                 }}
                                                 onClick={async () => {
-                                                    await handleAddCart({
-                                                        title: product.title,
-                                                        id: product.id,
-                                                        quantity,
-                                                        size_id: parseInt(selectedSizeID),
-                                                        size_value: selectedSizeValue
-                                                    })
+                                                    if (selectedSize.quantity) {
+                                                        await handleAddCart({
+                                                            title: product.title,
+                                                            id: product.id,
+                                                            quantity,
+                                                            size_id: parseInt(selectedSizeID),
+                                                            size_value: selectedSizeValue
+                                                        })
+                                                    }
                                                 }}
                                             ></CustomButton>
                                         </div>
                                     </div>
 
-
                                 </div>
+
+                                {selectedSize.quantity === 0 &&
+                                    <div className="text-center mt-3">
+                                        <span className="text-danger">Bu beden stoklarımızda tükenmiştir.</span>
+                                    </div>}
 
                                 <br></br>
 
