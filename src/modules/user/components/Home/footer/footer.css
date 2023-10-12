@@ -1,5 +1,5 @@
 .footer {
-    background: #4a4e69;
+    background: #494949;
     color: white;
     padding: 2rem 0;
 }
@@ -15,13 +15,13 @@
 .footer-icons i {
     padding: 0.4rem 0.5rem;
     background: #d5d5d5;
-    color: brown;
+    color: #494949;
     margin: 0 0.5rem;
     border-radius: 50%;
 }
 
 .footer-icons i:hover {
-    background: brown;
+    background: #d2d1d1;
     color: white;
 }
 

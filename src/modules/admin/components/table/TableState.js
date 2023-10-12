@@ -7,6 +7,9 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [isActionViewSet, setIsActionViewSet] = useState(false);
+    const [isActionUpdateSet, setIsActionUpdateSet] = useState(false);
+    const [isActionDeleteSet, setIsActionDeleteSet] = useState(false);
     const [clickedData, setClickedData] = useState(null);
     const [showViewModal, setShowViewModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +22,9 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
     const {secret} = useAuth();
 
     useEffect(() => {
+        if (requestParams.page === undefined) {
+            return;
+        }
         console.log("tableState.requestParams", requestParams)
         const load = async () => {
             await loadDataQueryWithParams({
@@ -57,7 +63,7 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
     }
 
     const handleSearchChange = ({searchText}) => {
-        console.log("handleSearchChange", searchText)
+        //console.log("handleSearchChange", searchText)
         setRequestedPage(1)
         if (searchText === "") {
             setSearch("")
@@ -85,6 +91,12 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
         setShowUpdateModal,
         showDeleteModal,
         setShowDeleteModal,
+        isActionDeleteSet,
+        isActionViewSet,
+        isActionUpdateSet,
+        setIsActionViewSet,
+        setIsActionUpdateSet,
+        setIsActionDeleteSet,
         clickedData,
         setClickedData,
         showViewModal,

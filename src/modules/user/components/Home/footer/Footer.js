@@ -26,12 +26,12 @@ export default function Footer() {
                         </div>
                         <div className="col-md-6 col-lg-3 col-12">
                             <div className="quick-links ft-2">
-                                <h5 className="title">Quick Links</h5>
+                                <h5 className="title">Bağlantılar</h5>
                                 <ul>
-                                    <li><NavLink to="/about" className="link">About</NavLink></li>
-                                    <li><NavLink to="/contact" className="link">Contact</NavLink></li>
-                                    <li><NavLink to="/terms" className="link">Terms</NavLink></li>
-                                    <li><NavLink to="/privacy" className="link">Privacy</NavLink></li>
+                                    <li><NavLink to="/about" className="link">Hakkımızda</NavLink></li>
+                                    <li><NavLink to="/contact" className="link">İletişim</NavLink></li>
+                                    <li><NavLink to="/terms" className="link">Şartlar ve Koşullar</NavLink></li>
+                                    <li><NavLink to="/privacy" className="link">Gizlilik</NavLink></li>
                                 </ul>
                             </div>
                         </div>
@@ -39,7 +39,7 @@ export default function Footer() {
 
                         <div className="col-md-6 col-lg-4 col-12">
                             <div className="contact-info ft-3">
-                                <h5 className="title">Contact Info</h5>
+                                <h5 className="title">İletişim</h5>
                                 <p><i className="fas fa-envelope"></i> horhoria@gmail.com</p>
                                 <p><i className="fa-solid fa-paper-plane"></i> Fethiye/Türkiye</p>
                             </div>

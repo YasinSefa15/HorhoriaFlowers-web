@@ -1,13 +1,6 @@
 import {Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 
-export default function RegisteredUserChart() {
-    const data = [
-        {date: 200, xx: 2400, amt: 2400},
-        {date: 150, xx: 2400, amt: 2400},
-        {date: 220, xx: 2400, amt: 2400},
-        {date: 170, xx: 2400, amt: 2400}
-    ];
-
+export default function RegisteredUserChart({data}) {
     return (
         <>
             <div className="col col-sm-4">
@@ -18,7 +11,7 @@ export default function RegisteredUserChart() {
 
                         <select>
                             <option>
-                                2021
+                                Bu Hafta
                             </option>
                             <option>
                                 2020
@@ -39,11 +32,11 @@ export default function RegisteredUserChart() {
                                         <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
                                     </linearGradient>
                                 </defs>
-                                <XAxis dataKey="date"/>
+                                <XAxis dataKey="day"/>
                                 <YAxis/>
                                 <CartesianGrid strokeDasharray="3 3"/>
                                 <Tooltip/>
-                                <Area type="monotone" dataKey="date" stroke="#8884d8" fillOpacity={1}
+                                <Area type="monotone" dataKey="count" stroke="#8884d8" fillOpacity={1}
                                       fill="url(#colorUv)"/>
                             </AreaChart>
                         </ResponsiveContainer>

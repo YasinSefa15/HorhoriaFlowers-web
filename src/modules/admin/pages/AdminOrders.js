@@ -8,7 +8,8 @@ export default function AdminOrders() {
         loadDataQueryWithParams: getAdminOrders,
         passedOrderOptions: [
             {name: "Sipariş Durumu? (A-Z)", orderName: "order_code", orderDirection: "ASC"},
-            {name: "Sipariş Durumu? (A-Z)", orderName: "order_code", orderDirection: "ASC"},
+            {name: "Sipariş Durumu? (Z-A)", orderName: "order_code", orderDirection: "ASC"},
+            {name: "Sipariş Kodu (A-Z)", orderName: "order_code", orderDirection: "ASC"},
             {name: "Sipariş Kodu (Z-A)", orderName: "order_code", orderDirection: "DESC"},
             {name: "Fiyat (0-9)", orderName: "price", orderDirection: "ASC"},
             {name: "Fiyat (9-0)", orderName: "price", orderDirection: "DESC"},

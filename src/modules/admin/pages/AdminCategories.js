@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import useTableState from "../components/table/TableState";
 import {useAuth} from "../../../context/AuthContext";
 import {
-    createAdminCategory,
+    createAdminCategory, deleteAdminCategory,
     getAdminCategories,
     getAdminCategoriesMapped
 } from "../../../api.requests/admin/AdminCategoryRequests";
@@ -11,6 +11,7 @@ import CustomButton from "../../user/components/CustomButton";
 import AdminCreateModal from "../components/modals/AdminCreateModal";
 import LoadingScreen from "../../user/components/LoadingScreen";
 import AdminUpdateModal from "../components/modals/AdminUpdateModal";
+import AdminDeleteModal from "../components/modals/AdminDeleteModal";
 
 export default function AdminCategories() {
     const tableState = useTableState({
@@ -48,6 +49,9 @@ export default function AdminCategories() {
             {field: "actions", name: "İşlemler", checked: true},
         ])
 
+        tableState.setIsActionUpdateSet(true)
+        tableState.setIsActionDeleteSet(true)
+
         const load = async () => {
             await getAdminCategoriesMapped({setCategoriesMapped, secret})
         }
@@ -57,6 +61,20 @@ export default function AdminCategories() {
         setIsLoaded(true)
     }, []);
 
+
+    const handleDeleteData = () => {
+        const deleteCategory = async () => {
+            await deleteAdminCategory({
+                secret,
+                data: tableState.data,
+                setData: tableState.setData,
+                category: tableState.clickedData
+            });
+            setIsLoaded(true)
+        }
+        deleteCategory().then(r => {
+        })
+    }
 
     if (!isLoaded) {
         return <LoadingScreen/>
@@ -132,6 +150,15 @@ export default function AdminCategories() {
                     },
                 ]}
             ></AdminUpdateModal>
+
+
+            <AdminDeleteModal
+                showModal={tableState.showDeleteModal}
+                setShowModal={tableState.setShowDeleteModal}
+                handleDeleteData={handleDeleteData}
+                title="Kategoriyi Sil"
+                message={tableState.clickedData?.title + " isimli kategoriyi silmek istediğinize emin misiniz?\nKategoriye bağlı alt kategoriler ve ürünlerde silinecektir.Bu işlem geri alınamaz!"}
+            />
         </>
     )
 }

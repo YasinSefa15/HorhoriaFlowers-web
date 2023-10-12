@@ -4,7 +4,6 @@ import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 
 
 const getAdminCategories = async ({setData, secret, setTotalPages, setCurrentPage, requestParams}) => {
-    console.log("SORGU GİTTİ")
     await axios.get(api_helper.api_url + api_helper.admin.categories.read, {
         params: requestParams,
         headers: {
@@ -12,14 +11,12 @@ const getAdminCategories = async ({setData, secret, setTotalPages, setCurrentPag
         }
     })
         .then(async response => {
-            console.log(response.data)
             await setData(response.data.data)
             await setTotalPages(response.data.meta.last_page)
             await setCurrentPage(response.data.meta.current_page)
         })
         .catch(error => {
-            console.log(requestParams)
-            console.log(error)
+            console.log(error.messages)
         })
 }
 
@@ -63,6 +60,32 @@ const createAdminCategory = async ({data, secret}) => {
                 httpStatus: error.response.status,
                 title: error.response.data.message,
             })
+            console.log(error.messages)
+        })
+}
+
+const deleteAdminCategory = async ({data, setData, category, secret}) => {
+
+    await axios.delete((api_helper.api_url + api_helper.admin.categories.delete).replace(":category_id", category.id),
+        {
+            headers: {
+                "Authorization": "Bearer " + secret,
+            }
+        })
+        .then(async response => {
+            if (response.status === 200) {
+                HTTPNotificationHelper({
+                    title: "Kategori Silindi",
+                    httpStatus: response.status,
+                })
+                await setData(data.filter((item) => item.id !== category.id))
+            }
+        })
+        .catch(error => {
+            HTTPNotificationHelper({
+                httpStatus: error.response.status,
+                title: error.response.data.message,
+            })
             console.log(error)
         })
 }
@@ -70,5 +93,6 @@ const createAdminCategory = async ({data, secret}) => {
 export {
     getAdminCategories,
     createAdminCategory,
-    getAdminCategoriesMapped
+    getAdminCategoriesMapped,
+    deleteAdminCategory,
 }

@@ -4,7 +4,6 @@ import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 
 
 const getAdminOrders = async ({setData, secret, setTotalPages, setCurrentPage, requestParams}) => {
-    console.log("getAdminOrders")
     await axios.get(api_helper.api_url + api_helper.admin.orders.read, {
         params: requestParams,
         headers: {
@@ -12,7 +11,7 @@ const getAdminOrders = async ({setData, secret, setTotalPages, setCurrentPage, r
         }
     })
         .then(async response => {
-            console.log("getAdminOrders response", response.data.data)
+            //console.log("getAdminOrders response", response.data.data)
             await setData(response.data.data)
             await setTotalPages(response.data.meta.last_page)
             await setCurrentPage(response.data.meta.current_page)

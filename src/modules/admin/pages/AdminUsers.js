@@ -46,9 +46,6 @@ export default function AdminUsers() {
         post().then(r => {
         })
     };
-    useEffect(() => {
-        console.log("use effect", tableState.clickedData)
-    }, [tableState.clickedData]);
 
     const handleUpdateData = ({newData}) => {
         const put = async () => {

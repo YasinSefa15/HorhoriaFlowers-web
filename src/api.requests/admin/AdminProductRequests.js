@@ -4,7 +4,6 @@ import HTTPNotificationHelper from "../../helpers/HTTPNotificationHelper";
 
 
 const getAdminProducts = async ({setData, secret, setTotalPages, setCurrentPage, requestParams}) => {
-    console.log("SORGU GİTTİ")
     await axios.get(api_helper.api_url + api_helper.admin.products.read, {
         params: requestParams,
         headers: {

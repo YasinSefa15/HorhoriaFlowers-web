@@ -1,6 +1,18 @@
 import RegisteredUserChart from "../components/Charts/RegisteredUserChart";
+import {useAuth} from "../../../context/AuthContext";
+import {useEffect, useState} from "react";
+import {getAdminStatistics} from "../../../api.requests/admin/AdminStatisticsRequests";
 
 export default function AdminHomePage() {
+    const {secret} = useAuth()
+    const [userStatistics, setUserStatistics] = useState([])
+
+    useEffect(() => {
+        getAdminStatistics({
+            setUserStatistics,
+            secret
+        })
+    }, [])
 
 
     return (
@@ -17,9 +29,8 @@ export default function AdminHomePage() {
             </div>
 
             <div className="row">
-                <RegisteredUserChart/>
-                <RegisteredUserChart/>
-                <RegisteredUserChart/>
+                <RegisteredUserChart data={userStatistics}/>
+                <RegisteredUserChart data={userStatistics}/>
             </div>
         </div>
     );

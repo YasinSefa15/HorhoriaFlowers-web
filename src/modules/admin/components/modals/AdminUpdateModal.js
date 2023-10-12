@@ -38,7 +38,7 @@ export default function AdminUpdateModal({
 
     useEffect(() => {
         setNewData(clickedData)
-        console.log("modal use effect  clicked data", clickedData)
+        //console.log("modal use effect  clicked data", clickedData)
     }, [clickedData]);
 
     const parseField = (field, index) => {

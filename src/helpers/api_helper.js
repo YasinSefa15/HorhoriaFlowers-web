@@ -11,6 +11,7 @@ const api_helper = {
             "read": "admin/categories",
             "create": "admin/categories",
             "mapped": "admin/categories/mapped",
+            "delete": "admin/categories/:category_id"
         },
         "products": {
             "read": "admin/products",
@@ -19,6 +20,9 @@ const api_helper = {
         },
         "orders": {
             "read": "admin/orders",
+        },
+        "statistics": {
+            "read": "admin/statistics",
         }
     },
     'auth': {

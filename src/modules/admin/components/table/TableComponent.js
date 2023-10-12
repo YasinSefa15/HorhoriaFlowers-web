@@ -66,15 +66,14 @@ export default function TableComponent({
                             }}
                         >
                             {Object.keys(showableColumnNames.current).map((showable) => {
-
                                 if (showableColumnNames.current[showable] === "actions") {
                                     return <div className="col col-sm-1"
                                                 key={"a" + (showableColumnNames.current[showable]) + "b"}>
                                         <div>
                                             <SmallTableButton
-                                                viewAction={tableState.setShowViewModal}
-                                                updateAction={tableState.setShowUpdateModal}
-                                                deleteAction={tableState.setShowDeleteModal}
+                                                viewAction={tableState.isActionViewSet && tableState.setShowViewModal}
+                                                updateAction={tableState.isActionUpdateSet && tableState.setShowUpdateModal}
+                                                deleteAction={tableState.isActionDeleteSet && tableState.setShowDeleteModal}
                                             />
                                         </div>
                                     </div>;
