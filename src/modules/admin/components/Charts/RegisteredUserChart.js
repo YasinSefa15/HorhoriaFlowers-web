@@ -3,11 +3,11 @@ import {Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, To
 export default function RegisteredUserChart({data}) {
     return (
         <>
-            <div className="col col-sm-4">
+            <div className="col col-sm-6">
                 <div className="row">
                     <div className="col d-flex justify-content-between">
 
-                        <h4>Kayıt Olan Kullanıcılar</h4>
+                        <h5>Kayıt Olan Kullanıcılar</h5>
 
                         <select>
                             <option>

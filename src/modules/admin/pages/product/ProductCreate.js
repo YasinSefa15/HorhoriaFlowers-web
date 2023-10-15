@@ -139,7 +139,7 @@ export default function ProductCreate() {
                         <div className="">İndirim Oranı</div>
                         <div className="">
                             <input type="number" className="form-control" id="name"
-                                   value={((userForm.old_price - userForm.new_price) / userForm.old_price) * 100 || 0}
+                                   value={(((userForm.old_price - userForm.new_price) / userForm.old_price) * 100).toFixed(2) || 0}
                                    onChange={(e) => {
                                        const percent = e.target.value
                                        setUserForm({

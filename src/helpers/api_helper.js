@@ -11,12 +11,15 @@ const api_helper = {
             "read": "admin/categories",
             "create": "admin/categories",
             "mapped": "admin/categories/mapped",
-            "delete": "admin/categories/:category_id"
+            "delete": "admin/categories/:category_id",
         },
         "products": {
             "read": "admin/products",
             "sized-mapped": "admin/products/sized-mapped",
             "create": "admin/products",
+            "update": "admin/products/:product_id",
+            "delete": "admin/products/:product_id",
+            "view": "admin/products/:product_id",
         },
         "orders": {
             "read": "admin/orders",

@@ -7,7 +7,6 @@ import LoginPage from "./modules/user/pages/auth/LoginPage";
 import Page404 from "./modules/user/pages/error/Page404";
 import ProductDetail from "./modules/user/pages/product_detail/ProductDetail";
 import AdminLayout from "./modules/admin/pages/AdminLayout";
-import ProductAdmin from "./modules/admin/pages/product/ProductAdmin";
 import AdminRoute from "./modules/user/configs/AdminRoute";
 import CartPage from "./modules/user/pages/cart/CartPage";
 import ProductEdit from "./modules/admin/pages/product/ProductEdit";

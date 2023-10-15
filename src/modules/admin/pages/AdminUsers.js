@@ -35,6 +35,10 @@ export default function AdminUsers() {
             {field: "created_at", name: "Kayıt Tarihi", checked: true},
             {field: "actions", name: "İşlemler", checked: true},
         ])
+
+        tableState.setIsActionUpdateSet(true)
+        tableState.setIsActionDeleteSet(true)
+
         setIsLoaded(true)
     }, []);
 

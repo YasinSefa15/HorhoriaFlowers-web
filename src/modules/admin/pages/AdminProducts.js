@@ -1,12 +1,18 @@
 import useTableState from "../components/table/TableState";
-import {updateAdminUser} from "../../../api.requests/admin/AdminUserRequests";
 import {useEffect, useState} from "react";
 import {useAuth} from "../../../context/AuthContext";
 import LoadingScreen from "../../user/components/LoadingScreen";
 import CustomButton from "../../user/components/CustomButton";
 import TableComponent from "../components/table/TableComponent";
-import {getAdminProducts} from "../../../api.requests/admin/AdminProductRequests";
+import {
+    deleteAdminProduct, getAdminCategoriesMapped, getAdminProductDetail,
+    getAdminProducts,
+    updateAdminProduct
+} from "../../../api.requests/admin/AdminProductRequests";
 import {useNavigate} from "react-router-dom";
+import AdminDeleteModal from "../components/modals/AdminDeleteModal";
+import AdminProductUpdateModal from "./product/AdminProductUpdateModal";
+import Loading from "react-loading";
 
 export default function AdminProducts() {
     const tableState = useTableState({
@@ -26,6 +32,10 @@ export default function AdminProducts() {
     });
     const [isLoaded, setIsLoaded] = useState(false);
     const navigate = useNavigate()
+    const [categoriesMapped, setCategoriesMapped] = useState([]);
+    const [detailData, setDetailData] = useState({
+        isLoaded: false,
+    })
     const {secret} = useAuth();
 
 
@@ -42,6 +52,13 @@ export default function AdminProducts() {
             {field: "actions", name: "İşlemler", checked: true},
         ])
 
+        getAdminCategoriesMapped({setCategoriesMapped, secret}).then(r => {
+        })
+
+        tableState.setIsActionDeleteSet(true)
+        tableState.setIsActionUpdateSet(true)
+        //tableState.setIsActionViewSet(true)
+
         setIsLoaded(true)
     }, []);
 
@@ -54,16 +71,48 @@ export default function AdminProducts() {
         }
     }, [tableState.showCreateModal])
 
+    useEffect(() => {
+        if (tableState.showUpdateModal === true) {
+            console.log("UPDATE DATA : ", tableState.clickedData)
+            const loadDetail = async () => {
+                await getAdminProductDetail({product_id: tableState.clickedData?.id, setData: setDetailData, secret})
+                //await setUpdateData({isLoaded: true})
+            }
+            loadDetail().then(r => {
+            })
+        } else if (detailData.isLoaded === true) {
+            setDetailData({isLoaded: false})
+        }
+    }, [tableState.showUpdateModal]);
 
-    const handleUpdateData = ({newData}) => {
+
+    const handleUpdateData = ({newData, setValidationErrors}) => {
         const put = async () => {
             console.log("FORM DATA : ", newData)
-            await updateAdminUser({
-                secret, data: newData, pageData: tableState.data,
-                setPageData: tableState.setData
+            //todo:henüz herhangi bir istek yollanmadı. gönderilecek veri yapısı hazır değil
+            await updateAdminProduct({
+                secret,
+                data: newData,
+                pageData: tableState.data,
+                setPageData: tableState.setData,
+                setValidationErrors
             });
         }
         put().then(r => {
+        })
+    }
+
+    const handleDeleteData = () => {
+        const deleteProduct = async () => {
+            await deleteAdminProduct({
+                secret,
+                data: tableState.data,
+                setData: tableState.setData,
+                product: tableState.clickedData
+            });
+            setIsLoaded(true)
+        }
+        deleteProduct().then(r => {
         })
     }
 
@@ -92,6 +141,24 @@ export default function AdminProducts() {
             </div>
 
             <TableComponent tableState={tableState}/>
+
+            <AdminDeleteModal
+                showModal={tableState.showDeleteModal}
+                setShowModal={tableState.setShowDeleteModal}
+                handleDeleteData={handleDeleteData}
+                title={"Ürün Sil"}
+                message={tableState.clickedData?.title + " ürününü silmek istediğinize emin misiniz?" +
+                    "\nBu işlem geri alınamaz."}
+            />
+
+            <AdminProductUpdateModal
+                showUpdateModal={tableState.showUpdateModal}
+                setShowUpdateModal={tableState.setShowUpdateModal}
+                handleUpdateData={handleUpdateData}
+                clickedData={tableState.clickedData}
+                categoriesMapped={categoriesMapped}
+                detailData={detailData}
+            />
         </>
     )
 }

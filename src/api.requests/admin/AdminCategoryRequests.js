@@ -65,7 +65,6 @@ const createAdminCategory = async ({data, secret}) => {
 }
 
 const deleteAdminCategory = async ({data, setData, category, secret}) => {
-
     await axios.delete((api_helper.api_url + api_helper.admin.categories.delete).replace(":category_id", category.id),
         {
             headers: {
