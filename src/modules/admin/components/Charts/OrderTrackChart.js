@@ -1,18 +1,20 @@
-import {Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import React, {useState} from "react";
 import {useAuth} from "../../../../context/AuthContext";
 import parseDateRange from "../../../../helpers/parseDateRange";
-import {getAdminUsersStatistics} from "../../../../api.requests/admin/AdminStatisticsRequests";
+import {
+    getAdminOrderTrackStatistics,
+} from "../../../../api.requests/admin/AdminStatisticsRequests";
 
-export default function RegisteredUserChart({data}) {
-    const [userStatistics, setUserStatistics] = useState(data)
+export default function OrderTrackChart({data}) {
+    const [orderTrackStatistics, setOrderTrackStatistics] = useState(data)
     const {secret} = useAuth()
 
     const handleDateTimeChangeForUser = (e) => {
         const [startDate, endDate] = parseDateRange({name: e.target.value})
         const fetchSalesStatistics = async () => {
-            await getAdminUsersStatistics({
-                setUserStatistics,
+            await getAdminOrderTrackStatistics({
+                setOrderTrackStatistics,
                 secret,
                 requestParams: {
                     startDate,
@@ -29,7 +31,7 @@ export default function RegisteredUserChart({data}) {
                 <div className="row">
                     <div className="col d-flex justify-content-between">
 
-                        <h5>Kayıt Olan Kullanıcılar</h5>
+                        <h5>Gelen Sipariş Takip</h5>
 
                         <select onChange={
                             (e) => {
@@ -53,7 +55,7 @@ export default function RegisteredUserChart({data}) {
                 <div className="row">
                     <div className="col">
                         <ResponsiveContainer width="100%" height={200}>
-                            <AreaChart data={userStatistics}
+                            <AreaChart data={orderTrackStatistics}
                                        margin={{top: 10, right: 30, left: 0, bottom: 0}}>
                                 <defs>
                                     <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">

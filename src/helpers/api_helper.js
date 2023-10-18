@@ -26,6 +26,9 @@ const api_helper = {
         },
         "statistics": {
             "read": "admin/statistics",
+            "sales": "admin/statistics/sales",
+            "users": "admin/statistics/users",
+            "orders": "admin/statistics/orders",
         }
     },
     'auth': {

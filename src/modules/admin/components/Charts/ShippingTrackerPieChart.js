@@ -55,7 +55,7 @@ const renderActiveShape = (props) => {
     );
 };
 
-export default function ShippingTrackerPieChart() {
+export default function ShippingTrackerPieChart({data}) {
     const [activeIndex, setActiveIndex] = useState(0);
 
     return (
