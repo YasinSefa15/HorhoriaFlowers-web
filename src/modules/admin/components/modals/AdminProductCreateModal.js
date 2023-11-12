@@ -1,13 +1,13 @@
 import {Modal} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
-import CustomButton from "../../../user/components/CustomButton";
-import FormFieldError from "../../../global/components/FormFieldError";
 import LoadingScreen from "../../../user/components/LoadingScreen";
-import ProductImagesFieldComp from "../../components/ProductImagesFieldComp";
+import FormFieldError from "../../../global/components/FormFieldError";
+import CustomButton from "../../../user/components/CustomButton";
+import ProductImagesFieldComp from "../ProductImagesFieldComp";
+import React, {useState} from "react";
 
-export default function AdminProductUpdateModal({
-                                                    showUpdateModal,
-                                                    setShowUpdateModal,
+export default function AdminProductCreateModal({
+                                                    showModal,
+                                                    setShowModal,
                                                     handleUpdateData,
                                                     clickedData,
                                                     categoriesMapped,
@@ -17,97 +17,28 @@ export default function AdminProductUpdateModal({
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [validationErrors, setValidationErrors] = useState({});
 
-
-    const parseUpdatedImages = (images) => {
-        console.log("images : ", images)
-        console.log("selected : ", selectedFiles)
-        let updatedImages = [];
-        images.forEach((image, index) => {
-            if (image.id) {
-
-                /*if (image.order !== selectedFiles.find((file) => file.id === image.id).order) {
-                    updatedImages.push({
-                        id: image.id,
-                        order: index,
-                    })
-                }*/
-            } else {
-                console.log("image : ", image)
-                updatedImages.push({
-                    order: index,
-                })
-            }
-        })
-        return ;
-        return updatedImages;
-    }
-
-    const handleOnClick = async ({event, data}) => {
-        event.preventDefault();
-        console.log("parsedImages " ,parseUpdatedImages(data.images))
-        //handleUpdateData({newData: data, setValidationErrors})
-    }
-
-    const handleFileChange = (event) => {
-        const files = Array.from(event.target.files);
-        //each file in files add order property
-        const notDeletedFilesLength = selectedFiles.filter((file) => file.is_deleted !== true).length;
-        files.forEach((file, index) => {
-            console.log("index ", index)
-            file.order = notDeletedFilesLength + index;
-        });
-
-        setSelectedFiles([...selectedFiles, ...files]);
-    };
-
-    useEffect(() => {
-        setNewData(clickedData)
-    }, [clickedData]);
-
-    useEffect(() => {
-        const localForm = [];
-
-        selectedFiles.forEach((file, index) => {
-            localForm.push(file);
-        });
-
-        setNewData({...newData, new_images: localForm});
-    }, [selectedFiles]);
-
-    useEffect(() => {
-        if (detailData.isLoaded) {
-            setNewData({
-                ...newData,
-                sizes: detailData?.sizes || [],
-                images: detailData?.images || [],
-                description: detailData?.description || '',
-            })
-            setSelectedFiles(detailData?.images || [])
-        }
-    }, [detailData.isLoaded]);
-
     return (
         <>
-            <Modal show={showUpdateModal} onHide={() => {
-                setShowUpdateModal(false);
+            <Modal show={showModal} onHide={() => {
+                setShowModal(false);
                 setValidationErrors({})
             }}
                    className={"modal-lg"}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Ürün Güncelle</Modal.Title>
+                    <Modal.Title>Ürün Oluştur</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {!detailData.isLoaded ? (<LoadingScreen></LoadingScreen>) :
-                        <div className="container">
-                            {/*Buraya form gelecek*/}
+                    {/* todo isloaded??*/}
+                    {!detailData?.isLoaded ? (<LoadingScreen></LoadingScreen>) :
+                        <div className="form-group">
                             <div className="row">
                                 <div className="col">
                                     <div className="col-sm-3">Ürün Adı</div>
                                     <div className="">
                                         <input type="text"
                                                className={"form-control " + (validationErrors.title ? "is-invalid" : "")}
-                                               id="name" value={newData?.title || ''}
+                                               id="name" value={newData.title || ''}
                                                onChange={(e) => {
                                                    setNewData({...newData, title: e.target.value})
                                                }}
@@ -127,9 +58,7 @@ export default function AdminProductUpdateModal({
                                         >
                                             <option value={-1}>Kategori Seç</option>
                                             {categoriesMapped.map((category, index) => (
-                                                <option value={category.id}
-                                                        selected={category.id === newData?.category_id}
-                                                >{category.title}</option>
+                                                <option value={category.id}>{category.title}</option>
                                             ))}
                                         </select>
                                         <FormFieldError errorMessage={validationErrors.category_id}/>
@@ -137,7 +66,7 @@ export default function AdminProductUpdateModal({
                                 </div>
                             </div>
 
-                            <br/>
+                            <br></br>
 
                             <div className="row">
                                 <div className="col">
@@ -145,7 +74,7 @@ export default function AdminProductUpdateModal({
                                     <div className="">
                                         <input type="text"
                                                className={"form-control " + (validationErrors.old_price ? "is-invalid" : "")}
-                                               id="name" value={newData?.old_price || ''}
+                                               id="name" value={newData.old_price || ''}
                                                onChange={(e) => {
                                                    setNewData({...newData, old_price: e.target.value})
                                                }}
@@ -158,7 +87,7 @@ export default function AdminProductUpdateModal({
                                     <div className="">
                                         <input type="text"
                                                className={"form-control " + (validationErrors.new_price ? "is-invalid" : "")}
-                                               id="name" value={newData?.new_price || ''}
+                                               id="name" value={newData.new_price || ''}
                                                onChange={(e) => {
                                                    setNewData({...newData, new_price: e.target.value})
                                                }}
@@ -170,8 +99,8 @@ export default function AdminProductUpdateModal({
                                 <div className="col">
                                     <div className="">İndirim Oranı</div>
                                     <div className="">
-                                        <input type="number" className="form-control" id="discount_product"
-                                               value={(((newData?.old_price - newData?.new_price) / newData?.old_price) * 100).toFixed(2) || 0}
+                                        <input type="number" className="form-control" id="name"
+                                               value={(((newData.old_price - newData.new_price) / newData.old_price) * 100).toFixed(2) || 0}
                                                onChange={(e) => {
                                                    const percent = e.target.value
                                                    setNewData({
@@ -184,7 +113,7 @@ export default function AdminProductUpdateModal({
                                 </div>
                             </div>
 
-                            <br/>
+                            <br></br>
 
                             <div className="row">
                                 <div className="col">
@@ -192,7 +121,7 @@ export default function AdminProductUpdateModal({
                                     <div className="">
                             <textarea className={"form-control " + (validationErrors.description ? "is-invalid" : "")}
                                       id="name"
-                                      value={newData?.description || ''}
+                                      value={newData.description || ''}
                                       onChange={(e) => {
                                           setNewData({...newData, description: e.target.value})
                                       }}
@@ -202,7 +131,7 @@ export default function AdminProductUpdateModal({
                                 </div>
                             </div>
 
-                            <br/>
+                            <br></br>
 
                             <div
                                 className={"row " + (validationErrors.sizes ? "border p-1 rounded border-danger" : "")}>
@@ -213,7 +142,7 @@ export default function AdminProductUpdateModal({
                                             text={"Beden Ekle"}
                                             style={{width: "10%"}}
                                             onClick={() => {
-                                                let sizesForm = newData?.sizes || []
+                                                let sizesForm = newData.sizes || []
                                                 sizesForm.push({
                                                     value: "",
                                                     quantity: 0
@@ -223,14 +152,14 @@ export default function AdminProductUpdateModal({
                                         />
                                     </div>
                                     <div className="bg-body-secondary p-3">
-                                        {newData?.sizes && newData?.sizes.map((size, index) => (
+                                        {newData.sizes && newData.sizes.map((size, index) => (
                                             <>
                                                 <div className="prod-sizes-list d-flex justify-content-between">
                                                     <div>
                                                         <input type="text" className="form-control w-50"
                                                                value={size.value}
                                                                onChange={(e) => {
-                                                                   let sizesForm = newData?.sizes || []
+                                                                   let sizesForm = newData.sizes || []
                                                                    sizesForm[index].value = e.target.value
                                                                    setNewData({...newData, sizes: sizesForm})
                                                                }}
@@ -244,7 +173,7 @@ export default function AdminProductUpdateModal({
                                                             <input type="text" className="form-control w-25 me-2"
                                                                    value={size.quantity}
                                                                    onChange={(e) => {
-                                                                       let sizesForm = newData?.sizes || []
+                                                                       let sizesForm = newData.sizes || []
                                                                        sizesForm[index].quantity = e.target.value
                                                                        setNewData({...newData, sizes: sizesForm})
                                                                    }}
@@ -259,12 +188,12 @@ export default function AdminProductUpdateModal({
                                                         text="Çıkart"
                                                         style={{width: "min-content", padding: "0 8px"}}
                                                         onClick={() => {
-                                                            let sizesForm = newData?.sizes || []
+                                                            let sizesForm = newData.sizes || []
                                                             sizesForm.splice(index, 1)
                                                             setNewData({...newData, sizes: sizesForm})
                                                         }}></CustomButton>
                                                 </div>
-                                                {index !== newData?.sizes.length - 1 && (
+                                                {index !== newData.sizes.length - 1 && (
                                                     <hr></hr>
                                                 )}
                                             </>
@@ -274,29 +203,14 @@ export default function AdminProductUpdateModal({
                                 </div>
                             </div>
 
-                            <br/>
+                            <br></br>
 
                             <div className="row">
-                                <div className="col">
-                                    <div className="col-sm-3">Ürün Görselleri</div>
-                                    <div className="">
-                                        <input
-                                            className={"form-control " + (validationErrors.images ? "is-invalid" : "")}
-                                            type="file"
-                                            multiple
-                                            onChange={handleFileChange}/>
-                                        <FormFieldError errorMessage={validationErrors.images}/>
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <ProductImagesFieldComp
-                                        selectedFiles={selectedFiles}
-                                        setSelectedFiles={setSelectedFiles}
-                                    ></ProductImagesFieldComp>
-                                </div>
+                                <ProductImagesFieldComp
+                                    selectedFiles={selectedFiles}
+                                    setSelectedFiles={setSelectedFiles}
+                                ></ProductImagesFieldComp>
                             </div>
-
                         </div>
                     }
 
@@ -305,7 +219,7 @@ export default function AdminProductUpdateModal({
                     <CustomButton
                         text="Kapat"
                         onClick={() => {
-                            setShowUpdateModal(false);
+                            setShowModal(false);
                             setValidationErrors({})
                         }}
                     />
@@ -313,11 +227,11 @@ export default function AdminProductUpdateModal({
                         text="Kaydet"
                         status="success"
                         onClick={async (event) => {
-                            await handleOnClick({event, data: newData});
+                            //await handleOnClick({event, data: newData});
                         }}
                     />
                 </Modal.Footer>
             </Modal>
         </>
-    );
+    )
 }

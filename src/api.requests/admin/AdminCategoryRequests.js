@@ -89,9 +89,35 @@ const deleteAdminCategory = async ({data, setData, category, secret}) => {
         })
 }
 
+const updateAdminCategory = async ({data, newData, setData, slug, secret}) => {
+    await axios.put((api_helper.api_url + api_helper.admin.categories.update).replace(":slug", slug),
+        newData,
+        {
+            headers: {
+                "Authorization": "Bearer " + secret,
+            }
+        })
+        .then(async response => {
+            if (response.status === 200) {
+                HTTPNotificationHelper({
+                    title: "Kategori Güncellendi",
+                    httpStatus: response.status,
+                })
+            }
+        })
+        .catch(error => {
+            HTTPNotificationHelper({
+                httpStatus: error.response.status,
+                title: error.response.data.message,
+            })
+            console.log(error)
+        })
+}
+
 export {
     getAdminCategories,
     createAdminCategory,
     getAdminCategoriesMapped,
     deleteAdminCategory,
+    updateAdminCategory
 }

@@ -11,12 +11,13 @@ const getAdminProducts = async ({setData, secret, setTotalPages, setCurrentPage,
         }
     })
         .then(async response => {
+            console.log("res", response.data.data)
             await setData(response.data.data)
             await setTotalPages(response.data.meta.last_page)
             await setCurrentPage(response.data.meta.current_page)
         })
         .catch(error => {
-            console.log(error.messages)
+            console.log(error)
         })
 }
 
@@ -84,6 +85,8 @@ const deleteAdminProduct = async ({data, setData, product, secret}) => {
 
 
 const updateAdminProduct = async ({product_id, data, secret, pageData, setPageData, setValidationErrors}) => {
+
+    return;
     await axios.put((api_helper.api_url + api_helper.admin.products.update).replace(":product_id", product_id), {
             first_name: data.first_name,
             last_name: data.last_name,

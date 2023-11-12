@@ -12,6 +12,7 @@ const api_helper = {
             "create": "admin/categories",
             "mapped": "admin/categories/mapped",
             "delete": "admin/categories/:category_id",
+            "update": "admin/categories/:slug",
         },
         "products": {
             "read": "admin/products",
@@ -23,6 +24,8 @@ const api_helper = {
         },
         "orders": {
             "read": "admin/orders",
+            "view": "admin/orders/:order_code",
+            "update": "admin/orders/:order_code",
         },
         "statistics": {
             "read": "admin/statistics",

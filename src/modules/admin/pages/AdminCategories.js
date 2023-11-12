@@ -5,7 +5,7 @@ import {useAuth} from "../../../context/AuthContext";
 import {
     createAdminCategory, deleteAdminCategory,
     getAdminCategories,
-    getAdminCategoriesMapped
+    getAdminCategoriesMapped, updateAdminCategory
 } from "../../../api.requests/admin/AdminCategoryRequests";
 import CustomButton from "../../user/components/CustomButton";
 import AdminCreateModal from "../components/modals/AdminCreateModal";
@@ -38,11 +38,24 @@ export default function AdminCategories() {
         })
     };
 
+    const handleUpdateData = ({newData}) => {
+        const update = async () => {
+            await updateAdminCategory({
+                secret,
+                data: newData,
+                setData: tableState.setData,
+                newData,
+                slug: tableState.clickedData.slug
+            });
+            setIsLoaded(true)
+        }
+        update().then(r => {
+        })
+    }
 
     useEffect(() => {
         tableState.setTableColumns([
             {field: "title", name: "Başlık", checked: true},
-            {field: "slug", name: "Slug", checked: true},
             {field: "parent_name", name: "Üst Kategori", checked: true},
             {field: "products_count", name: "Ürün Sayısı", checked: true},
             {field: "created_at", name: "Oluşturulma Tarihi", checked: true},
@@ -129,9 +142,7 @@ export default function AdminCategories() {
             <AdminUpdateModal
                 showUpdateModal={tableState.showUpdateModal}
                 setShowUpdateModal={tableState.setShowUpdateModal}
-                handleUpdateData={(event) => {
-                    alert("Eklenecek")
-                }}
+                handleUpdateData={handleUpdateData}
                 title={"Kategori Güncelle"}
                 clickedData={tableState.clickedData}
                 fields={[

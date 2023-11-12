@@ -13,6 +13,7 @@ import {useNavigate} from "react-router-dom";
 import AdminDeleteModal from "../components/modals/AdminDeleteModal";
 import AdminProductUpdateModal from "./product/AdminProductUpdateModal";
 import Loading from "react-loading";
+import AdminProductCreateModal from "../components/modals/AdminProductCreateModal";
 
 export default function AdminProducts() {
     const tableState = useTableState({
@@ -43,7 +44,6 @@ export default function AdminProducts() {
         tableState.setTableColumns([
             {field: "file_path", name: "İçerik", checked: true},
             {field: "title", name: "Başlık", checked: true},
-            {field: "slug", name: "Slug", checked: true},
             {field: "category_name", name: "Kategori", checked: true},
             {field: "old_price", name: "Eski Fiyat", checked: true},
             {field: "new_price", name: "Yeni Fiyat", checked: true},
@@ -64,16 +64,16 @@ export default function AdminProducts() {
 
     useEffect(() => {
         if (tableState.showCreateModal === true) {
-            navigate("/admin/products/create")
+            //navigate("/admin/products/create")
         }
         return () => {
-            tableState.setShowCreateModal(false)
+            //tableState.setShowCreateModal(false)
         }
     }, [tableState.showCreateModal])
 
     useEffect(() => {
         if (tableState.showUpdateModal === true) {
-            console.log("UPDATE DATA : ", tableState.clickedData)
+            console.log("show specific DATA : ", tableState.clickedData)
             const loadDetail = async () => {
                 await getAdminProductDetail({product_id: tableState.clickedData?.id, setData: setDetailData, secret})
                 //await setUpdateData({isLoaded: true})
@@ -141,6 +141,13 @@ export default function AdminProducts() {
             </div>
 
             <TableComponent tableState={tableState}/>
+
+            <AdminProductCreateModal
+                showModal={tableState.showCreateModal}
+                setShowModal={tableState.setShowCreateModal}
+                categoriesMapped={categoriesMapped}
+                clickedData={tableState.clickedData}
+            />
 
             <AdminDeleteModal
                 showModal={tableState.showDeleteModal}
