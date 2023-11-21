@@ -38,23 +38,33 @@ const getAdminCategoriesMapped = async ({setCategoriesMapped, secret}) => {
         })
 }
 
-const createAdminProduct = async ({data, secret, setErrors}) => {
-    await axios.post(api_helper.api_url + api_helper.admin.products.create, data,
+const createAdminProduct = async ({newData, secret, setValidationErrors}) => {
+    await axios.post(api_helper.api_url + api_helper.admin.products.create, newData,
         {
             headers: {
                 "Authorization": "Bearer " + secret,
-                "content-type": "multipart/form-data",
+                "Content-Type": "multipart/form-data"
             }
         })
         .then(async response => {
+            if (response.status === 201) {
+                setValidationErrors([])
+            }
             HTTPNotificationHelper({
-                title: "Ürün Oluşturuldu",
+                title: response.data.message,
                 httpStatus: response.status,
             })
-            setErrors([])
         })
         .catch(error => {
-            setErrors(error.response.data.errors)
+            if (error.response.status === 422) {
+                setValidationErrors(error.response.data.errors)
+            }
+            HTTPNotificationHelper({
+                title: error.response.data.message,
+                httpStatus: error.response.status,
+            })
+
+            console.log(error.response)
         })
 }
 
@@ -84,18 +94,12 @@ const deleteAdminProduct = async ({data, setData, product, secret}) => {
 }
 
 
-const updateAdminProduct = async ({product_id, data, secret, pageData, setPageData, setValidationErrors}) => {
-
+const updateAdminProduct = async ({secret, newData, setValidationErrors}) => {
+//todo implementing
+    console.log("newData", newData.images)
     return;
-    await axios.put((api_helper.api_url + api_helper.admin.products.update).replace(":product_id", product_id), {
-            first_name: data.first_name,
-            last_name: data.last_name,
-            phone: data.phone,
-            email: data.email,
-            password: data.password,
-            password_confirmation: data.password_confirmation,
-            is_admin: data.is_admin,
-        },
+    await axios.put((api_helper.api_url + api_helper.admin.products.update).replace(":product_id", newData.id),
+        newData,
         {
             headers: {
                 "Authorization": "Bearer " + secret,
@@ -103,14 +107,11 @@ const updateAdminProduct = async ({product_id, data, secret, pageData, setPageDa
         })
         .then(async response => {
             if (response.status === 200) {
-                await setPageData(pageData.map((item) => item.id === data.id ? data : item))
-
                 HTTPNotificationHelper({
                     httpStatus: response.status,
                     title: response.data.message
                 })
-
-                console.log(response.data)
+                setValidationErrors([])
             }
         })
         .catch(error => {
@@ -122,7 +123,7 @@ const updateAdminProduct = async ({product_id, data, secret, pageData, setPageDa
                 httpStatus: error.response.status,
                 title: error.response.data.message,
             })
-            console.log(error.message)
+            console.log(error)
         })
 }
 

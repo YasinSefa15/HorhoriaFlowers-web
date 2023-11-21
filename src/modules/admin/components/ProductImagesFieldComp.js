@@ -16,6 +16,11 @@ export default function ProductImagesFieldComp({selectedFiles, setSelectedFiles}
             return file;
         })
 
+        if (!clickedData.id) {
+            setSelectedFiles(localForm.filter(file => file.is_deleted === undefined));
+            return;
+        }
+
         setSelectedFiles(localForm);
     }
 
@@ -25,24 +30,12 @@ export default function ProductImagesFieldComp({selectedFiles, setSelectedFiles}
         let clickedData = selectedFiles.find(file => file.order === fileOrder && file.is_deleted === undefined);
         let replaceData = selectedFiles.find(file => file.order === fileOrder + direction && file.is_deleted === undefined);
 
+        //update the order property
         localForm = localForm.map(file => {
             if (file.order === fileOrder && file.is_deleted === undefined) {
-                //if replace data is File
-                if (replaceData.id === undefined) {
-                    const copyOfReplaceData = new File([replaceData], replaceData.name, {type: replaceData.type});
-                    copyOfReplaceData.order = fileOrder;
-                    return copyOfReplaceData;
-                } else { //if replace data is object
-                    return {...replaceData, order: fileOrder}
-                }
+                return {...replaceData, order: fileOrder}
             } else if (file.order === fileOrder + direction && file.is_deleted === undefined) {
-                if (clickedData.id === undefined) {
-                    const copyOfClickedData = new File([clickedData], clickedData.name, {type: clickedData.type});
-                    copyOfClickedData.order = fileOrder + direction;
-                    return copyOfClickedData;
-                } else {
-                    return {...clickedData, order: fileOrder + direction}
-                }
+                return {...clickedData, order: fileOrder + direction}
             }
             return file;
         })
@@ -60,15 +53,16 @@ export default function ProductImagesFieldComp({selectedFiles, setSelectedFiles}
                 <div className="row">
                     Seçilen Dosyalar:
                     <div className="row">
-                        {selectedFiles.map((file) => {
-                            if (file.is_deleted === true) {
+                        {selectedFiles.map((selectedFile,index) => {
+                            console.log("selectedFile", selectedFile)
+                            if (selectedFile.is_deleted === true) {
                                 return null;
                             }
                             return (
                                 <div style={{position: 'relative', width: 'min-content'}}>
                                     {/* İleri ve Geri İkonları */}
                                     <i className="fa-solid fa-trash"
-                                       onClick={() => handleImageRemove(file.order)}
+                                       onClick={() => handleImageRemove(selectedFile.order)}
                                        style={{
                                            position: 'absolute',
                                            color: '#b43c3c',
@@ -82,13 +76,13 @@ export default function ProductImagesFieldComp({selectedFiles, setSelectedFiles}
                                        }}
                                     ></i>
 
-                                    {file.order > 0 && (
+                                    {selectedFile.order > 0 && (
                                         <i className="fa-solid fa-arrow-left"
-                                           onClick={() => handleImageOrder(file.order, -1)}
+                                           onClick={() => handleImageOrder(selectedFile.order, -1)}
                                            style={{
                                                position: 'absolute',
                                                top: 0,
-                                               right: file.order < nonDeletedFilesLength - 1 ? '30px' : 0,
+                                               right: selectedFile.order < nonDeletedFilesLength - 1 ? '30px' : 0,
                                                width: '30px',
                                                height: '30px',
                                                zIndex: 1,
@@ -97,9 +91,9 @@ export default function ProductImagesFieldComp({selectedFiles, setSelectedFiles}
                                            }}
                                         ></i>
                                     )}
-                                    {file.order < nonDeletedFilesLength - 1 && (
+                                    {selectedFile.order < nonDeletedFilesLength - 1 && (
                                         <i className="fa-solid fa-arrow-right"
-                                           onClick={() => handleImageOrder(file.order, +1)}
+                                           onClick={() => handleImageOrder(selectedFile.order, +1)}
                                            style={{
                                                position: 'absolute',
                                                top: 0,
@@ -114,12 +108,12 @@ export default function ProductImagesFieldComp({selectedFiles, setSelectedFiles}
 
                                     <img
                                         className="default-img mb-2 mt-4"
-                                        src={file.file_path ?? URL.createObjectURL((file))}
-                                        alt={file.name}
+                                        src={selectedFile.file_path ?? URL.createObjectURL((selectedFile.file))}
+                                        alt={(index + 1) + ". resim"}
                                         style={{
                                             width: "165px",
                                             height: "248px",
-                                            border: file.order === 0 ? '2px solid #000' : 'none',
+                                            border: selectedFile.order === 0 ? '2px solid #000' : 'none',
                                         }}
                                     />
                                 </div>

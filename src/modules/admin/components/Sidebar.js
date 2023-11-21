@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import "./Sidebar.css"; // Eğer bir CSS dosyanız varsa, onu burada içe aktarın.
 import {useNavigate} from "react-router-dom";
 import {Modal} from "react-bootstrap";
@@ -11,6 +11,26 @@ function Sidebar() {
     const [activeItem, setActiveItem] = useState("Ana Sayfa");
     const navigate = useNavigate();
     const hoveredItem = useRef(null);
+
+    const mapping = {
+        "Ana Sayfa": "/admin",
+        "Siparişler": "/admin/orders",
+        "Müşteri": "/admin/users",
+        "Ürünler": "/admin/products",
+        "İstatistikler": "/admin/statistics",
+        "Kategoriler": "/admin/categories",
+        "Çıkış Yap": "/admin/logout"
+    }
+
+    useEffect(() => {
+        // sayfa yenilendiğinde hangi sayfada olduğumuzu belirlemek için kullanıyoruz.
+        const path = window.location.pathname;
+        const item = path.split("/")[2];
+        if (item) {
+            const key = Object.keys(mapping).find(key => mapping[key] === path);
+            setActiveItem(key);
+        }
+    }, []);
 
     const handleMouseEnter = (item) => {
         if (hoveredItem.current) {
@@ -49,7 +69,7 @@ function Sidebar() {
                     }}
                     onClick={() => {
                         handleItemClick("Ana Sayfa");
-                        navigate("/admin");
+                        navigate(mapping["Ana Sayfa"]);
                     }}>
 
                     <div
@@ -71,7 +91,7 @@ function Sidebar() {
                     }}
                     onClick={() => {
                         handleItemClick("Siparişler");
-                        navigate("/admin/orders");
+                        navigate(mapping["Siparişler"]);
                     }}>
                     <div
                         className={`list-item d-flex align-items-center ${activeItem === "Siparişler" ? "selected" : ""}`}>
@@ -92,7 +112,7 @@ function Sidebar() {
                     }}
                     onClick={() => {
                         handleItemClick("Müşteri");
-                        navigate("/admin/users");
+                        navigate(mapping["Müşteri"]);
                     }}>
                     <div
                         className={`list-item d-flex align-items-center ${activeItem === "Müşteri" ? "selected" : ""}`}>
@@ -113,7 +133,7 @@ function Sidebar() {
                     }}
                     onClick={() => {
                         handleItemClick("Ürünler");
-                        navigate("/admin/products");
+                        navigate(mapping["Ürünler"]);
                     }}>
                     <div
                         className={`list-item d-flex align-items-center ${activeItem === "Ürünler" ? "selected" : ""}`}>
@@ -135,7 +155,7 @@ function Sidebar() {
                     }}
                     onClick={() => {
                         handleItemClick("İstatistikler");
-                        navigate("/admin/statistics");
+                        navigate(mapping["İstatistikler"]);
                     }}>
                     <div
                         className={`list-item d-flex align-items-center ${activeItem === "İstatistikler" ? "selected" : ""}`}>
@@ -156,7 +176,7 @@ function Sidebar() {
                     }}
                     onClick={() => {
                         handleItemClick("Kategoriler");
-                        navigate("/admin/categories");
+                        navigate(mapping["Kategoriler"]);
                     }}>
                     <div
                         className={`list-item d-flex align-items-center ${activeItem === "Kategoriler" ? "selected" : ""}`}>

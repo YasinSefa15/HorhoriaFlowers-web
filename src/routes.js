@@ -9,7 +9,6 @@ import ProductDetail from "./modules/user/pages/product_detail/ProductDetail";
 import AdminLayout from "./modules/admin/pages/AdminLayout";
 import AdminRoute from "./modules/user/configs/AdminRoute";
 import CartPage from "./modules/user/pages/cart/CartPage";
-import ProductEdit from "./modules/admin/pages/product/ProductEdit";
 import RegisterPage from "./modules/user/pages/auth/RegisterPage";
 import ProfileOrders from "./modules/user/components/profile/ProfileOrders";
 import ProfileAddresses from "./modules/user/components/profile/ProfileAddresses";
@@ -27,7 +26,6 @@ import AdminCategories from "./modules/admin/pages/AdminCategories";
 import AdminOrders from "./modules/admin/pages/AdminOrders";
 import AdminStatistics from "./modules/admin/pages/AdminStatistics";
 import AdminUsers from "./modules/admin/pages/AdminUsers";
-import ProductCreate from "./modules/admin/pages/product/ProductCreate";
 
 const routes = [
     {
@@ -126,14 +124,7 @@ const routes = [
                         index: true,
                         element: <AdminProducts></AdminProducts>
                     },
-                    {
-                        path: 'edit/:id',
-                        element: <ProductEdit></ProductEdit>
-                    },
-                    {
-                        path: 'create',
-                        element: <ProductCreate></ProductCreate>
-                    }
+
                 ]
             },
 
@@ -153,24 +144,6 @@ const routes = [
                 path: 'users',
                 element: <AdminUsers></AdminUsers>
             },
-        ]
-    },
-    {
-        path: 'admin1/products',
-        element: <AdminLayout></AdminLayout>,
-        children: [
-            {
-                index: true,
-                element: <AdminProducts></AdminProducts>
-            },
-            {
-                path: 'edit/:id',
-                element: <ProductEdit></ProductEdit>
-            },
-            {
-                path: 'create',
-                element: <ProductCreate></ProductCreate>
-            }
         ]
     },
     {

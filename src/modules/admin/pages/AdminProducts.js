@@ -5,14 +5,13 @@ import LoadingScreen from "../../user/components/LoadingScreen";
 import CustomButton from "../../user/components/CustomButton";
 import TableComponent from "../components/table/TableComponent";
 import {
+    createAdminProduct,
     deleteAdminProduct, getAdminCategoriesMapped, getAdminProductDetail,
     getAdminProducts,
     updateAdminProduct
 } from "../../../api.requests/admin/AdminProductRequests";
-import {useNavigate} from "react-router-dom";
 import AdminDeleteModal from "../components/modals/AdminDeleteModal";
 import AdminProductUpdateModal from "./product/AdminProductUpdateModal";
-import Loading from "react-loading";
 import AdminProductCreateModal from "../components/modals/AdminProductCreateModal";
 
 export default function AdminProducts() {
@@ -32,7 +31,6 @@ export default function AdminProducts() {
         ]
     });
     const [isLoaded, setIsLoaded] = useState(false);
-    const navigate = useNavigate()
     const [categoriesMapped, setCategoriesMapped] = useState([]);
     const [detailData, setDetailData] = useState({
         isLoaded: false,
@@ -62,21 +60,11 @@ export default function AdminProducts() {
         setIsLoaded(true)
     }, []);
 
-    useEffect(() => {
-        if (tableState.showCreateModal === true) {
-            //navigate("/admin/products/create")
-        }
-        return () => {
-            //tableState.setShowCreateModal(false)
-        }
-    }, [tableState.showCreateModal])
 
     useEffect(() => {
         if (tableState.showUpdateModal === true) {
-            console.log("show specific DATA : ", tableState.clickedData)
             const loadDetail = async () => {
                 await getAdminProductDetail({product_id: tableState.clickedData?.id, setData: setDetailData, secret})
-                //await setUpdateData({isLoaded: true})
             }
             loadDetail().then(r => {
             })
@@ -85,16 +73,24 @@ export default function AdminProducts() {
         }
     }, [tableState.showUpdateModal]);
 
+    const handleCreateData = ({newData, setValidationErrors}) => {
+        const post = async () => {
+            await createAdminProduct({
+                secret,
+                newData,
+                setValidationErrors
+            });
+        }
+        post().then(r => {
+        })
+    }
+
 
     const handleUpdateData = ({newData, setValidationErrors}) => {
         const put = async () => {
-            console.log("FORM DATA : ", newData)
-            //todo:henüz herhangi bir istek yollanmadı. gönderilecek veri yapısı hazır değil
             await updateAdminProduct({
                 secret,
-                data: newData,
-                pageData: tableState.data,
-                setPageData: tableState.setData,
+                newData,
                 setValidationErrors
             });
         }
@@ -147,6 +143,7 @@ export default function AdminProducts() {
                 setShowModal={tableState.setShowCreateModal}
                 categoriesMapped={categoriesMapped}
                 clickedData={tableState.clickedData}
+                handleCreateData={handleCreateData}
             />
 
             <AdminDeleteModal

@@ -4,6 +4,8 @@ import CustomButton from "../../../user/components/CustomButton";
 import FormFieldError from "../../../global/components/FormFieldError";
 import LoadingScreen from "../../../user/components/LoadingScreen";
 import ProductImagesFieldComp from "../../components/ProductImagesFieldComp";
+import AdminProductSizesComp from "../../components/AdminProductSizesComp";
+import AdminMultipleImageUpload from "../../components/AdminMultipleImageUpload";
 
 export default function AdminProductUpdateModal({
                                                     showUpdateModal,
@@ -18,50 +20,76 @@ export default function AdminProductUpdateModal({
     const [validationErrors, setValidationErrors] = useState({});
 
 
-    const parseUpdatedImages = (images) => {
-        console.log("images : ", images)
-        console.log("selected : ", selectedFiles)
+    //functions returns changed images like, new images, deleted images, order changed images
+    const parseUpdatedImages = (data) => {
+        const newImages = data.new_images;
         let updatedImages = [];
-        images.forEach((image, index) => {
-            if (image.id) {
+        let uploadedFiles = [];
+        let deletedImages = [];
 
-                /*if (image.order !== selectedFiles.find((file) => file.id === image.id).order) {
-                    updatedImages.push({
-                        id: image.id,
-                        order: index,
-                    })
-                }*/
-            } else {
-                console.log("image : ", image)
-                updatedImages.push({
-                    order: index,
-                })
+        newImages.forEach((image, index) => {
+            //files in the database
+            if (image.id !== undefined) {
+                //if order is changed and is_deleted is undefined
+                if (image.order !== data.images.find((file) => file.id === image.id).order && image.is_deleted === undefined) {
+                    updatedImages.push(image)
+                } else if (image.is_deleted === true) {
+                    //if file is deleted
+                    deletedImages.push(image)
+                }
+            } else if (image.is_deleted === undefined) { //id is undefined and is_deleted is undefined
+                //file in format of {order: 0, file: File}
+                //uploaded files are the files that are not in the database
+                uploadedFiles.push(image)
             }
         })
-        return ;
-        return updatedImages;
+        return {
+            new_images: uploadedFiles,
+            updated_images: updatedImages,
+            deleted_images: deletedImages
+        };
+    }
+
+    const parseUpdatedSizes = (data) => {
+        const groupSizes = data.sizes //group sizes are the sizes that are already in the database
+        const newSizes = data.new_sizes; //new sizes are the sizes that are added by the user
+        let updatedSizes = [];
+        let deletedSizes = [];
+        let addedSizes = [];
+
+        newSizes.forEach((size, index) => {
+            if (size.id !== undefined) {
+                if (size.is_deleted === true) {
+                    deletedSizes.push(size)
+                } else if (size.is_deleted === undefined) {
+                    const groundSize = groupSizes.find((groupSize) => groupSize.id === size.id)
+                    if (size.value !== groundSize.value || size.quantity !== groundSize.quantity) {
+                        updatedSizes.push(size)
+                    }
+                }
+            } else if (size.is_deleted === undefined) {
+                addedSizes.push(size)
+            }
+        })
+
+        return {
+            new_sizes: addedSizes,
+            updated_sizes: updatedSizes,
+            deleted_sizes: deletedSizes
+        }
     }
 
     const handleOnClick = async ({event, data}) => {
         event.preventDefault();
-        console.log("parsedImages " ,parseUpdatedImages(data.images))
-        //handleUpdateData({newData: data, setValidationErrors})
+        const images = parseUpdatedImages(data);
+        const sizes = parseUpdatedSizes(data);
+
+        handleUpdateData({newData: {...newData, images, sizes}, setValidationErrors})
     }
 
-    const handleFileChange = (event) => {
-        const files = Array.from(event.target.files);
-        //each file in files add order property
-        const notDeletedFilesLength = selectedFiles.filter((file) => file.is_deleted !== true).length;
-        files.forEach((file, index) => {
-            console.log("index ", index)
-            file.order = notDeletedFilesLength + index;
-        });
-
-        setSelectedFiles([...selectedFiles, ...files]);
-    };
 
     useEffect(() => {
-        setNewData(clickedData)
+        setNewData({...clickedData})
     }, [clickedData]);
 
     useEffect(() => {
@@ -78,13 +106,27 @@ export default function AdminProductUpdateModal({
         if (detailData.isLoaded) {
             setNewData({
                 ...newData,
-                sizes: detailData?.sizes || [],
                 images: detailData?.images || [],
+                sizes: detailData?.sizes ? [...detailData?.sizes.map((size) => {
+                    return {...size}
+                })] : [],
+                new_sizes: detailData?.sizes ? [...detailData?.sizes] : [],
                 description: detailData?.description || '',
             })
             setSelectedFiles(detailData?.images || [])
         }
     }, [detailData.isLoaded]);
+
+    useEffect(() => {
+        if (Object.keys(newData).length === 0 || newData === clickedData) {
+            return;
+        }
+
+        if (Object.keys(validationErrors).length === 0) {
+            setShowUpdateModal(false);
+            setNewData({});
+        }
+    }, [validationErrors])
 
     return (
         <>
@@ -100,7 +142,6 @@ export default function AdminProductUpdateModal({
                 <Modal.Body>
                     {!detailData.isLoaded ? (<LoadingScreen></LoadingScreen>) :
                         <div className="container">
-                            {/*Buraya form gelecek*/}
                             <div className="row">
                                 <div className="col">
                                     <div className="col-sm-3">Ürün Adı</div>
@@ -204,98 +245,19 @@ export default function AdminProductUpdateModal({
 
                             <br/>
 
-                            <div
-                                className={"row " + (validationErrors.sizes ? "border p-1 rounded border-danger" : "")}>
-                                <div className="col">
-                                    <div className="d-flex justify-content-between mb-2">
-                                        Bedenler
-                                        <CustomButton
-                                            text={"Beden Ekle"}
-                                            style={{width: "10%"}}
-                                            onClick={() => {
-                                                let sizesForm = newData?.sizes || []
-                                                sizesForm.push({
-                                                    value: "",
-                                                    quantity: 0
-                                                })
-                                                setNewData({...newData, sizes: sizesForm})
-                                            }}
-                                        />
-                                    </div>
-                                    <div className="bg-body-secondary p-3">
-                                        {newData?.sizes && newData?.sizes.map((size, index) => (
-                                            <>
-                                                <div className="prod-sizes-list d-flex justify-content-between">
-                                                    <div>
-                                                        <input type="text" className="form-control w-50"
-                                                               value={size.value}
-                                                               onChange={(e) => {
-                                                                   let sizesForm = newData?.sizes || []
-                                                                   sizesForm[index].value = e.target.value
-                                                                   setNewData({...newData, sizes: sizesForm})
-                                                               }}
-                                                        />
-                                                        <FormFieldError
-                                                            errorMessage={validationErrors["sizes." + index + ".value"]}/>
-                                                    </div>
-
-                                                    <div>
-                                                        <div className="d-flex align-items-center">
-                                                            <input type="text" className="form-control w-25 me-2"
-                                                                   value={size.quantity}
-                                                                   onChange={(e) => {
-                                                                       let sizesForm = newData?.sizes || []
-                                                                       sizesForm[index].quantity = e.target.value
-                                                                       setNewData({...newData, sizes: sizesForm})
-                                                                   }}
-                                                            />
-                                                            Adet
-                                                        </div>
-                                                        <FormFieldError
-                                                            errorMessage={validationErrors["sizes." + index + ".quantity"]}/>
-                                                    </div>
-
-                                                    <CustomButton
-                                                        text="Çıkart"
-                                                        style={{width: "min-content", padding: "0 8px"}}
-                                                        onClick={() => {
-                                                            let sizesForm = newData?.sizes || []
-                                                            sizesForm.splice(index, 1)
-                                                            setNewData({...newData, sizes: sizesForm})
-                                                        }}></CustomButton>
-                                                </div>
-                                                {index !== newData?.sizes.length - 1 && (
-                                                    <hr></hr>
-                                                )}
-                                            </>
-                                        ))}
-                                    </div>
-                                    <FormFieldError errorMessage={validationErrors.sizes}/>
-                                </div>
-                            </div>
+                            <AdminProductSizesComp
+                                validationErrors={validationErrors}
+                                newData={newData}
+                                setNewData={setNewData}
+                            />
 
                             <br/>
 
-                            <div className="row">
-                                <div className="col">
-                                    <div className="col-sm-3">Ürün Görselleri</div>
-                                    <div className="">
-                                        <input
-                                            className={"form-control " + (validationErrors.images ? "is-invalid" : "")}
-                                            type="file"
-                                            multiple
-                                            onChange={handleFileChange}/>
-                                        <FormFieldError errorMessage={validationErrors.images}/>
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <ProductImagesFieldComp
-                                        selectedFiles={selectedFiles}
-                                        setSelectedFiles={setSelectedFiles}
-                                    ></ProductImagesFieldComp>
-                                </div>
-                            </div>
+                            <AdminMultipleImageUpload
+                                validationErrors={validationErrors}
+                                selectedFiles={selectedFiles}
+                                setSelectedFiles={setSelectedFiles}
+                            />
 
                         </div>
                     }
