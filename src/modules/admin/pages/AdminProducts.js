@@ -11,7 +11,7 @@ import {
     updateAdminProduct
 } from "../../../api.requests/admin/AdminProductRequests";
 import AdminDeleteModal from "../components/modals/AdminDeleteModal";
-import AdminProductUpdateModal from "./product/AdminProductUpdateModal";
+import AdminProductUpdateModal from "../components/modals/AdminProductUpdateModal";
 import AdminProductCreateModal from "../components/modals/AdminProductCreateModal";
 
 export default function AdminProducts() {

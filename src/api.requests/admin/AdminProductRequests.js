@@ -95,14 +95,12 @@ const deleteAdminProduct = async ({data, setData, product, secret}) => {
 
 
 const updateAdminProduct = async ({secret, newData, setValidationErrors}) => {
-//todo implementing
-    console.log("newData", newData.images)
-    return;
-    await axios.put((api_helper.api_url + api_helper.admin.products.update).replace(":product_id", newData.id),
+    await axios.post((api_helper.api_url + api_helper.admin.products.update).replace(":product_id", newData.id),
         newData,
         {
             headers: {
                 "Authorization": "Bearer " + secret,
+                "Content-Type": "multipart/form-data"
             }
         })
         .then(async response => {

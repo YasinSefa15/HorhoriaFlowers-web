@@ -54,7 +54,6 @@ export default function ProductImagesFieldComp({selectedFiles, setSelectedFiles}
                     Seçilen Dosyalar:
                     <div className="row">
                         {selectedFiles.map((selectedFile,index) => {
-                            console.log("selectedFile", selectedFile)
                             if (selectedFile.is_deleted === true) {
                                 return null;
                             }

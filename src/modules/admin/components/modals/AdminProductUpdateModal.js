@@ -3,9 +3,8 @@ import React, {useEffect, useState} from "react";
 import CustomButton from "../../../user/components/CustomButton";
 import FormFieldError from "../../../global/components/FormFieldError";
 import LoadingScreen from "../../../user/components/LoadingScreen";
-import ProductImagesFieldComp from "../../components/ProductImagesFieldComp";
-import AdminProductSizesComp from "../../components/AdminProductSizesComp";
-import AdminMultipleImageUpload from "../../components/AdminMultipleImageUpload";
+import AdminProductSizesComp from "../AdminProductSizesComp";
+import AdminMultipleImageUpload from "../AdminMultipleImageUpload";
 
 export default function AdminProductUpdateModal({
                                                     showUpdateModal,
@@ -124,7 +123,7 @@ export default function AdminProductUpdateModal({
 
         if (Object.keys(validationErrors).length === 0) {
             setShowUpdateModal(false);
-            setNewData({});
+            //setNewData({});
         }
     }, [validationErrors])
 
