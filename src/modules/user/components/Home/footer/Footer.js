@@ -1,5 +1,6 @@
 import {NavLink} from "react-router-dom";
 import "./footer.css";
+import ShopierSvg from "../../../../../assests/shopier_logo_1.svg";
 
 export default function Footer() {
     return (
@@ -18,9 +19,37 @@ export default function Footer() {
                             </p>
 
                             <div className="footer-icons">
-                                <i className="fa-brands fa-facebook"></i>
-                                <i className="fa-brands fa-twitter"></i>
-                                <i className="fa-brands fa-instagram"></i>
+                                <i className="fa-brands fa-facebook"
+                                   style={{cursor: "pointer"}}
+                                   onClick={() => {
+                                       window.open("https://www.facebook.com/horhoria", "_blank")
+                                   }}
+                                />
+                                <i className="fa-brands fa-twitter"
+                                   style={{cursor: "pointer"}}
+                                   onClick={() => {
+                                       window.open("https://www.facebook.com/horhoria", "_blank")
+                                   }}
+                                />
+                                <i className="fa-brands fa-instagram"
+                                   style={{cursor: "pointer"}}
+                                   onClick={() => {
+                                       window.open("https://www.facebook.com/horhoria", "_blank")
+                                   }}
+                                />
+                                <img
+                                    style={{
+                                        width: "114px",
+                                        backgroundColor: "#d5d5d5",
+                                        borderRadius: "8%",
+                                        padding: "1px",
+                                        cursor: "pointer"
+                                    }}
+                                    src={ShopierSvg} alt="sda"
+                                    onClick={() => {
+                                        window.open("https://www.facebook.com/horhoria", "_blank")
+                                    }}
+                                />
                             </div>
 
                         </div>
@@ -28,10 +57,10 @@ export default function Footer() {
                             <div className="quick-links ft-2">
                                 <h5 className="title">Bağlantılar</h5>
                                 <ul>
-                                    <li><NavLink to="/about" className="link">Hakkımızda</NavLink></li>
-                                    <li><NavLink to="/contact" className="link">İletişim</NavLink></li>
-                                    <li><NavLink to="/terms" className="link">Şartlar ve Koşullar</NavLink></li>
-                                    <li><NavLink to="/privacy" className="link">Gizlilik</NavLink></li>
+                                    <li><NavLink to="/about-us" className="link">Hakkımızda</NavLink></li>
+
+                                    {/*<li><NavLink to="/terms" className="link">Şartlar ve Koşullar</NavLink></li>
+                                    <li><NavLink to="/privacy" className="link">Gizlilik</NavLink></li>*/}
                                 </ul>
                             </div>
                         </div>
@@ -39,7 +68,7 @@ export default function Footer() {
 
                         <div className="col-md-6 col-lg-4 col-12">
                             <div className="contact-info ft-3">
-                                <h5 className="title">İletişim</h5>
+                                <h5 className="title">İletişim Kanalları</h5>
                                 <p><i className="fas fa-envelope"></i> horhoria@gmail.com</p>
                                 <p><i className="fa-solid fa-paper-plane"></i> Fethiye/Türkiye</p>
                             </div>

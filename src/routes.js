@@ -26,6 +26,7 @@ import AdminCategories from "./modules/admin/pages/AdminCategories";
 import AdminOrders from "./modules/admin/pages/AdminOrders";
 import AdminStatistics from "./modules/admin/pages/AdminStatistics";
 import AdminUsers from "./modules/admin/pages/AdminUsers";
+import AboutUs from "./modules/user/pages/home/AboutUs";
 
 const routes = [
     {
@@ -35,6 +36,10 @@ const routes = [
             {
                 index: true,
                 element: <HomePage></HomePage>
+            },
+            {
+                path: '/about-us',
+                element: <AboutUs></AboutUs>
             },
             {
                 path: '/categories/:slug',
@@ -53,7 +58,6 @@ const routes = [
     {
         path: '/cart',
         element: <CartPage></CartPage>
-
     },
     {
         path: '/order',

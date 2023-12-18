@@ -63,7 +63,8 @@ export default function AdminProductUpdateModal({
                 } else if (size.is_deleted === undefined) {
                     const groundSize = groupSizes.find((groupSize) => groupSize.id === size.id)
                     if (size.value !== groundSize.value || size.quantity !== groundSize.quantity) {
-                        updatedSizes.push(size)
+                        //giving old_quantity and quantity values to the updated sizes
+                        updatedSizes.push({...size, old_value: groundSize.value, old_quantity: groundSize.quantity})
                     }
                 }
             } else if (size.is_deleted === undefined) {

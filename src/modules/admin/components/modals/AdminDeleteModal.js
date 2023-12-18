@@ -32,8 +32,13 @@ export default function AdminDeleteModal({
                         </div>
                         <br></br>
                         <div className="row">
-                            <div className="col d-flex justify-content-center text-center">
-                                <h4>{message}</h4>
+                            <div className=" justify-content-center text-center">
+                                {message.split('\n').map((line, index) => {
+                                    if (index === 0) {
+                                        return <h5 key={index}>{line}</h5>
+                                    }
+                                    return <p key={index}>{line}</p>
+                                })}
                             </div>
                         </div>
                         <br></br>

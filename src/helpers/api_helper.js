@@ -6,6 +6,7 @@ const api_helper = {
             "read": "admin/users",
             "create": "admin/users",
             "update": "admin/users/", //:id
+            "delete": "admin/users/:user_id",
         },
         "categories": {
             "read": "admin/categories",

@@ -2,11 +2,17 @@ import TableComponent from "../components/table/TableComponent";
 import useTableState from "../components/table/TableState";
 import {useEffect, useState} from "react";
 import LoadingScreen from "../../user/components/LoadingScreen";
-import {createAdminUser, getAdminUsers, updateAdminUser} from "../../../api.requests/admin/AdminUserRequests";
+import {
+    createAdminUser,
+    deleteAdminUser,
+    getAdminUsers,
+    updateAdminUser
+} from "../../../api.requests/admin/AdminUserRequests";
 import {useAuth} from "../../../context/AuthContext";
 import CustomButton from "../../user/components/CustomButton";
 import AdminCreateModal from "../components/modals/AdminCreateModal";
 import AdminUpdateModal from "../components/modals/AdminUpdateModal";
+import AdminDeleteModal from "../components/modals/AdminDeleteModal";
 
 export default function AdminUsers() {
     const tableState = useTableState({
@@ -53,9 +59,21 @@ export default function AdminUsers() {
 
     const handleUpdateData = ({newData}) => {
         const put = async () => {
-            console.log("FORM DATA : ", newData)
             await updateAdminUser({
                 secret, data: newData, pageData: tableState.data,
+                setPageData: tableState.setData
+            });
+        }
+        put().then(r => {
+        })
+    }
+
+    const handleDeleteData = () => {
+        const put = async () => {
+            await deleteAdminUser({
+                secret,
+                userId: tableState.clickedData.id,
+                pageData: tableState.data,
                 setPageData: tableState.setData
             });
         }
@@ -120,6 +138,16 @@ export default function AdminUsers() {
                     {field: "password", name: "Şifre", required: false, type: "password"},
                     {field: "password_confirmation", name: "Şifre Tekrar", required: false, type: "password"},
                 ]}
+            />
+
+            <AdminDeleteModal
+                showModal={tableState.showDeleteModal}
+                setShowModal={tableState.setShowDeleteModal}
+                handleDeleteData={handleDeleteData}
+                title="Kullanıcıyı Sil"
+                message={tableState.clickedData?.full_name + " isimli kullanıcıyı silmek istediğinize emin misiniz?" +
+                    "\nKullanıcıya ait tüm bilgiler silinecektir." +
+                    "\nBu işlem geri alınamaz!"}
             />
         </>
     )

@@ -95,6 +95,7 @@ const deleteAdminProduct = async ({data, setData, product, secret}) => {
 
 
 const updateAdminProduct = async ({secret, newData, setValidationErrors}) => {
+    console.log("newData", newData)
     await axios.post((api_helper.api_url + api_helper.admin.products.update).replace(":product_id", newData.id),
         newData,
         {
@@ -119,9 +120,9 @@ const updateAdminProduct = async ({secret, newData, setValidationErrors}) => {
 
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
-                title: error.response.data.message,
+                //title: error.response.data.message,
             })
-            console.log(error)
+            console.log(error.response.data)
         })
 }
 

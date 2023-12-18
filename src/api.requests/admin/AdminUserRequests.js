@@ -74,8 +74,32 @@ const updateAdminUser = async ({data, secret, pageData, setPageData}) => {
         })
 }
 
+const deleteAdminUser = async ({userId, secret, pageData, setPageData}) => {
+    await axios.delete(api_helper.api_url + api_helper.admin.users.delete.replace(":user_id", userId),
+        {
+            headers: {
+                "Authorization": "Bearer " + secret,
+            }
+        })
+        .then(async response => {
+            await setPageData(pageData.filter((user) => user.id !== userId))
+            HTTPNotificationHelper({
+                httpStatus: response.status,
+                title: response.data.message
+            })
+        })
+        .catch(error => {
+            HTTPNotificationHelper({
+                httpStatus: error.response.status,
+                title: error.response.data.message,
+            })
+            console.log(error.message)
+        })
+}
+
 export {
     getAdminUsers,
     createAdminUser,
     updateAdminUser,
+    deleteAdminUser
 }
