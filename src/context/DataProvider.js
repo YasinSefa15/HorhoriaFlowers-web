@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {getCategoriesList} from "../api.requests/Home";
+import {getCategoriesList} from "../requests/Home";
 
 const Context = createContext();
 

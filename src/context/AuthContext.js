@@ -1,7 +1,8 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {readLoggedInUserCart} from "../api.requests/cart/CartRequests";
-import {syncVisitorCartProductsToLoggedInUserCartProducts} from "../api.requests/cart/VisitorRequests";
-import getIsAdmin from "../api.requests/UnclassifiedRequests";
+import {readLoggedInUserCart} from "../requests/cart/CartRequests";
+import {syncVisitorCartProductsToLoggedInUserCartProducts} from "../requests/cart/VisitorRequests";
+import getIsAdmin from "../requests/UnclassifiedRequests";
+import {useNavigate} from "react-router-dom";
 
 const Context = createContext();
 
@@ -10,8 +11,9 @@ export const AuthProvider = ({children}) => {
     const [isAdmin, setIsAdmin] = useState(false)
     const [secret, setSecret] = useState(JSON.parse(localStorage.getItem('secret')) || null);
     const [cartProducts, setCartProducts] = useState(localStorage.getItem('cartProducts') || null)
+    const navigate = useNavigate();
 
-    //todo yetkisiz işlem ise çıkıp yap
+
     useEffect(() => {
         const isAdmin = async () => {
             await getIsAdmin({secret: secret, setIsAdmin: setIsAdmin})
@@ -51,7 +53,7 @@ export const AuthProvider = ({children}) => {
         const handleLogout = async () => {
             if (user === null || secret === null) {
                 await removeLocalStorage();
-                //await navigate("/");
+                //navigate and reload
                 return;
             }
             await setLocalStorage();

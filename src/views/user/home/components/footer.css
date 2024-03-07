@@ -1,0 +1,56 @@
+.footer {
+    color: white;
+    padding: 2rem 0;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 0.5rem 0;
+}
+
+
+.footer-icons i {
+    padding: 0.4rem 0.5rem;
+    background: #d5d5d5;
+    color: #494949;
+    margin: 0 0.5rem;
+    border-radius: 50%;
+}
+
+.footer-icons i:hover {
+    background: #d2d1d1;
+    color: white;
+}
+
+
+.ft-1 p {
+    padding: 1rem 2rem 1rem 0;
+}
+
+.ft-2 ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.ft-2 ul li {
+    padding: 0.34rem 0;
+    font-weight: 500;
+}
+
+.ft-2 ul .link {
+    text-decoration: none;
+    padding: 1rem 0;
+    color: white;
+}
+
+.ft-3 p{
+    padding: 0.3rem 0;
+    font-weight: 500;
+    font-size: 1.106rem;
+}
+
+.ft-3 i{
+    padding-right: 0.5rem;
+}
