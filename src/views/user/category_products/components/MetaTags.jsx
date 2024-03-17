@@ -5,7 +5,7 @@ export default function MetaTags({title}) {
     return (
         <>
             <Helmet>
-                <title>{title} Kategorisi - Hooria E-Ticaret</title>
+                <title>{title} Kategorisi - Horhoria Flowers</title>
                 <meta
                     name="description"
                     content={`Hooria e-ticaret platformunda ${title} kategorisindeki en yeni ürünleri keşfedin. Geniş ürün yelpazemizle ihtiyacınız olan her şey burada!`}

@@ -17,11 +17,9 @@ export default function Footer() {
                         <div className="col-md-6 col-lg-5 col-12 ft-1">
                             <h3 className="title"><NavLink className="navbar-brand" to="/">Horhoria</NavLink></h3>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec laoreet odio lobortis
-                                ipsum pretium, et scelerisque justo condimentum. Aliquam sollicitudin et neque eu
-                                vestibulum. Fusce efficitur eu tellus vel bibendum. Ut aliquam tortor sed augue
-                                tristique, tristique hendrerit mauris facilisis. Lorem ipsum dolor sit amet, consectetur
-                                adipiscing elit. Cras lobortis,
+                                Siz değerli müşterilerimize en iyi hizmeti sunabilmek adına el örgüsü çiçeklerimizi el
+                                emeği ile tasarlıyoruz. Doğanın eşsiz güzelliklerini sizinle buluşturmak ve özel
+                                anlarınızı kalıcı kılmak için buradayız. Bizi tercih ettiğiniz için teşekkür ederiz.
                             </p>
 
                             <div className="footer-icons">

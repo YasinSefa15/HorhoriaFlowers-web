@@ -48,7 +48,7 @@ export default function EmailChangeOrVerify() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Email Değiştir/Onayla</title>
+                <title>Horhoria Flowers - Email Değiştir/Onayla</title>
                 <meta name="description"
                       content="Hooria e-ticaret platformunda email adresinizi değiştirin ve yeni email adresinizi onaylayın. Hesabınızın güvenliğini ve iletişim bilgilerinizi güncelleyin."/>
             </Helmet>

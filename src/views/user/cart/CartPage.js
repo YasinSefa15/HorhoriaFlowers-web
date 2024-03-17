@@ -177,7 +177,7 @@ export default function CartPage() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Sepetim</title>
+                <title>Horhoria Flowers - Sepetim</title>
                 <meta
                     name="description"
                     content="Hooria e-ticaret platformunda sepetinizi görüntüleyin, ürünleri düzenleyin ve alışverişinizi tamamlayın. İhtiyacınız olan ürünleri sepetinizde bulabilir ve hızlı alışveriş deneyimi yaşayabilirsiniz."
@@ -198,11 +198,13 @@ export default function CartPage() {
                 <div className={"total-price"}>
                     {((() => {
                         if (products.length === 0) {
-                            return <h2>Cart is empty</h2>
+                            return <div className="alert alert-warning" role="alert">
+                                Sepetinizde herhangi bir ürün bulunmamaktadır.
+                            </div>
                         }
                         return <>
                             <div className="container">
-                                <div className="row d-flex justify-content-around">
+                            <div className="row d-flex justify-content-around">
                                     <div className="col col-sm-4">
                                         <CartCoupon
                                             appliedCoupons={appliedCoupons}

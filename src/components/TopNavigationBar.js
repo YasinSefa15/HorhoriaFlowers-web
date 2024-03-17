@@ -4,6 +4,7 @@ import {useAuth} from "../context/AuthContext";
 import CategoriesDropdown from "../views/user/home/components/CategoriesDropdown";
 import CustomButton from "./CustomButton";
 import "./TopNavigationBar.css";
+import headImage from "./../assests/Head.png";
 
 
 export default function TopNavigationBar() {
@@ -33,7 +34,12 @@ export default function TopNavigationBar() {
                             to="/"
                             className="navbar-brand fw-bold"
                         >
-                            Horhoria
+                            <img alt="Horhoria"
+                                 src={headImage ?? ""}
+                                 style={{
+                                     width: "120px",
+                                 }}
+                            ></img>
                         </NavLink>
                     </div>
 

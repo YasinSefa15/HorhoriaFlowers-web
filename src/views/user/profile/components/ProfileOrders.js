@@ -24,7 +24,7 @@ export default function ProfileOrders() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Siparişlerim</title>
+                <title>Horhoria Flowers - Siparişlerim</title>
                 <meta name="description"
                       content="Hooria e-ticaret platformunda verdiğiniz siparişleri görüntüleyin, takip edin ve geçmiş siparişlerinizi kontrol edin. Sipariş durumlarınızı ve ayrıntılarınızı inceleyin."/>
             </Helmet>

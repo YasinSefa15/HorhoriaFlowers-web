@@ -53,7 +53,7 @@ export default function RegisterPage() {
             flexDirection: "column"
         }}>
             <Helmet>
-                <title>Hooria E-Ticaret - Kayıt Ol</title>
+                <title>Horhoria Flowers - Kayıt Ol</title>
                 <meta
                     name="description"
                     content="Hooria e-ticaret platformunda kayıt olun. Hesap oluşturarak indirimlerden yararlanın, hızlı alışveriş deneyimi yaşayın ve geniş ürün yelpazemizle ihtiyacınız olan her şeyi keşfedin!"

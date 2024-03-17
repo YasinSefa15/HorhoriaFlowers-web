@@ -27,7 +27,7 @@ export default function OrderPlaced({orderCode}) {
     return (
         <>
             <Helmet>
-                <title>Siparişiniz Alındı - Hooria E-Ticaret</title>
+                <title>Siparişiniz Alındı - Horhoria Flowers</title>
                 <meta name="description"
                       content={`Sipariş kodu: ${orderCode}. Hooria e-ticaret platformunda siparişiniz başarıyla alınmıştır.`}/>
             </Helmet>

@@ -5,8 +5,7 @@ import AdminMultipleImageUpload from "../../../../components/admin/AdminMultiple
 import FormFieldError from "../../../../utils/FormFieldError";
 import CustomButton from "../../../../components/CustomButton";
 import LoadingScreen from "../../../../components/LoadingScreen";
-
-//todo görsel güncelleme doğru değil gibi
+import uuidGenerator from "../../../../utils/uuidGenerator";
 
 export default function AdminProductUpdateModal({
                                                     showUpdateModal,
@@ -167,10 +166,12 @@ export default function AdminProductUpdateModal({
                                             onChange={(e) => {
                                                 setNewData({...newData, category_id: e.target.value})
                                             }}
+                                            value={newData?.category_id || -1}
                                         >
                                             <option value={-1}>Kategori Seç</option>
                                             {categoriesMapped.map((category, index) => (
                                                 <option value={category.id}
+                                                        key={uuidGenerator()}
                                                         selected={category.id === newData?.category_id}
                                                 >{category.title}</option>
                                             ))}

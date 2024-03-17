@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import AdminMultipleImageUpload from "../../../../components/admin/AdminMultipleImageUpload";
 import FormFieldError from "../../../../utils/FormFieldError";
 import CustomButton from "../../../../components/CustomButton";
+import uuidGenerator from "../../../../utils/uuidGenerator";
 
 export default function AdminProductCreateModal({
                                                     showModal,
@@ -74,7 +75,7 @@ export default function AdminProductCreateModal({
                                     >
                                         <option value={-1}>Kategori Seç</option>
                                         {categoriesMapped.map((category, index) => (
-                                            <option value={category.id}>{category.title}</option>
+                                            <option key={uuidGenerator()} value={category.id}>{category.title}</option>
                                         ))}
                                     </select>
                                     <FormFieldError errorMessage={validationErrors.category_id}/>

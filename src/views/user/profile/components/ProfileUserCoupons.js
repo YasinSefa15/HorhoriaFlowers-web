@@ -21,7 +21,7 @@ export default function ProfileUserCoupons() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Kuponlarım</title>
+                <title>Horhoria Flowers - Kuponlarım</title>
                 <meta name="description" content="Hooria e-ticaret platformunda sahip olduğunuz ve kullanabileceğiniz kuponları görüntüleyin. İndirimlerden yararlanarak alışveriş yapın ve avantajlı fiyatlarla ürünler satın alın." />
             </Helmet>
 

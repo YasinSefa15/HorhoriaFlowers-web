@@ -68,7 +68,7 @@ export default function ProfileAddresses() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Adreslerim</title>
+                <title>Horhoria Flowers - Adreslerim</title>
                 <meta name="description"
                       content="Hooria e-ticaret platformunda kayıtlı adreslerinizi görüntüleyin, düzenleyin ve yönetin. Adreslerinizi güncelleyin ve farklı teslimat adresleri ekleyin."/>
             </Helmet>

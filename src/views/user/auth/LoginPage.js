@@ -65,7 +65,7 @@ export default function LoginPage() {
             flexDirection: "column"
         }}>
             <Helmet>
-                <title>Hooria E-Ticaret - Giriş Yap</title>
+                <title>Horhoria Flowers - Giriş Yap</title>
                 <meta
                     name="description"
                     content="Hooria e-ticaret platformuna giriş yapın. Hesabınıza erişim sağlayın, indirimlerden yararlanın ve hızlı alışveriş deneyimi yaşayın. Geniş ürün yelpazemizle ihtiyacınız olan her şey burada!"

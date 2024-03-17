@@ -54,7 +54,7 @@ export default function OrderWizard({total}) {
     return (
         <>
             <Helmet>
-                <title>Sipariş Ver - Hooria E-Ticaret</title>
+                <title>Sipariş Ver - Horhoria Flowers</title>
                 <meta name="description"
                       content="Hooria e-ticaret platformunda ürün siparişi verin. Dilediğiniz ürünleri seçin ve siparişinizi tamamlayın."/>
             </Helmet>

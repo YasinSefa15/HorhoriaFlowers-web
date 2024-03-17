@@ -40,7 +40,7 @@ export default function ChangePassword() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Şifre Değiştir</title>
+                <title>Horhoria Flowers - Şifre Değiştir</title>
                 <meta name="description"
                       content="Hooria e-ticaret platformunda şifrenizi güvenli bir şekilde değiştirin. Hesabınızın güvenliğini artırın ve yeni şifrenizi belirleyin."/>
             </Helmet>

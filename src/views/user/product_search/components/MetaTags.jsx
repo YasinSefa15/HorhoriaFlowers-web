@@ -3,7 +3,7 @@ import React from "react";
 
 export default function MetaTags({title}) {
     return <Helmet>
-        <title>{`${title} - Hooria E-Ticaret - Ürün Arama Sonuçları`}</title>
+        <title>{`${title} - Horhoria Flowers - Ürün Arama Sonuçları`}</title>
         <meta
             name="description"
             content={`Hooria e-ticaret platformunda aradığınız "${title}" ürününü bulun.

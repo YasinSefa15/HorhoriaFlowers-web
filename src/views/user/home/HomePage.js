@@ -9,6 +9,8 @@ import {useAuth} from "../../../context/AuthContext";
 import {addCartIfNotExists, readLoggedInUserCart} from "../../../requests/cart/CartRequests";
 import ProductCart from "../../../components/user/product_cart/ProductCart";
 import uuidGenerator from "../../../utils/uuidGenerator";
+import HomeImage1 from "../../../assests/HomeImage1.png";
+import HomeImage2 from "../../../assests/HomeImage2.png";
 
 
 export default function HomePage() {
@@ -96,7 +98,7 @@ export default function HomePage() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - En Yeni Ürünleri Keşfedin!</title>
+                <title>Horhoria Flowers - En Yeni Ürünleri Keşfedin!</title>
                 <meta
                     name="description"
                     content="Hooria e-ticaret platformunda en yeni ürünleri keşfedin, indirimlerden yararlanın ve hızlı alışveriş deneyimi yaşayın. Geniş ürün yelpazemizle ihtiyacınız olan her şey burada!"
@@ -107,30 +109,32 @@ export default function HomePage() {
             {/* Carousel */}
             <Carousel>
                 <Carousel.Item>
-                    <img
-                        className="d-block"
-                        style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover"
-                        }}
-                        src="https://via.placeholder.com/1920x500"
-                        alt="Slide 1"
-                    />
+                    <div className="d-flex justify-content-center">
+                        <img
+                            className="d-block"
+                            style={{
+                                maxWidth: "100%",
+                                maxHeight: "480px",
+                                objectFit: "fit"
+                            }}
+                            src={HomeImage1 ?? ""}
+                            alt="Ana Sayfa Resmi 1"
+                        />
+                    </div>
                 </Carousel.Item>
                 <Carousel.Item>
-                    <img
-                        className="d-block w-100"
-                        src="https://via.placeholder.com/1920x500"
-                        alt="Slide 2"
-                    />
-                </Carousel.Item>
-                <Carousel.Item>
-                    <img
-                        className="d-block w-100"
-                        src="https://via.placeholder.com/1920x500"
-                        alt="Slide 3"
-                    />
+                    <div className="d-flex justify-content-center">
+                        <img
+                            className="d-block"
+                            style={{
+                                maxWidth: "100%",
+                                maxHeight: "480px",
+                                objectFit: "fit"
+                            }}
+                            src={HomeImage2 ?? ""}
+                            alt="Ana Sayfa Resmi 2"
+                        />
+                    </div>
                 </Carousel.Item>
             </Carousel>
 

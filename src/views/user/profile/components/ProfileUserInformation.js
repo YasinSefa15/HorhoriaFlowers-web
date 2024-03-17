@@ -40,7 +40,7 @@ export default function ProfileUserInformation() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Profilim</title>
+                <title>Horhoria Flowers - Profilim</title>
                 <meta
                     name="description"
                     content="Hooria e-ticaret platformunda profilinizi görüntüleyin, bilgilerinizi düzenleyin ve alışveriş deneyiminizi yönetin. Profilinizdeki bilgileri güncelleyebilir, sipariş geçmişinizi inceleyebilir ve hesap ayarlarınızı düzenleyebilirsiniz."

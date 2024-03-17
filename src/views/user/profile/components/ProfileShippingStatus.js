@@ -4,7 +4,7 @@ export default function ProfileShippingStatus() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Kargom Nerede</title>
+                <title>Horhoria Flowers - Kargom Nerede</title>
                 <meta name="description" content="Hooria e-ticaret platformunda siparişinizin durumunu ve kargonuzun nerede olduğunu öğrenin. Siparişinizin teslimat aşamasını takip edin ve kargonuzun güzergahını görüntüleyin." />
             </Helmet>
 

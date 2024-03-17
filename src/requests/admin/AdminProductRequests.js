@@ -11,7 +11,6 @@ const getAdminProducts = async ({setData, secret, setTotalPages, setCurrentPage,
         }
     })
         .then(async response => {
-            console.log("res", response.data.data)
             await setData(response.data.data)
             await setTotalPages(response.data.meta.last_page)
             await setCurrentPage(response.data.meta.current_page)
@@ -30,7 +29,6 @@ const getAdminCategoriesMapped = async ({setCategoriesMapped, secret}) => {
     })
         .then(async response => {
             await setCategoriesMapped(response.data.data)
-            console.log("resll", response.data.data)
         })
         .catch(error => {
             console.log(error.messages)
@@ -96,6 +94,7 @@ const deleteAdminProduct = async ({data, setData, product, secret}) => {
 
 const updateAdminProduct = async ({secret, newData, setValidationErrors}) => {
     console.log("newData", newData)
+    //return;
     await axios.post((api_helper.api_url + api_helper.admin.products.update).replace(":product_id", newData.id),
         newData,
         {
@@ -119,10 +118,9 @@ const updateAdminProduct = async ({secret, newData, setValidationErrors}) => {
             }
 
             HTTPNotificationHelper({
-                httpStatus: error.response.status,
+                httpStatus: error.response?.status ?? 500,
                 //title: error.response.data.message,
             })
-            console.log(error.response.data)
         })
 }
 
@@ -139,6 +137,7 @@ async function getAdminProductDetail({
         })
             .then(async res => {
                 await setData({...res.data.data, isLoaded: true})
+                console.log("product detail", res.data.data)
             })
             .catch(async error => {
                 await setData({isLoaded: false})

@@ -37,7 +37,7 @@ export default function Page404() {
     return (
         <>
             <Helmet>
-                <title>Hooria E-Ticaret - Sayfa Bulunamadı</title>
+                <title>Horhoria Flowers - Sayfa Bulunamadı</title>
                 <meta
                     name="description"
                     content="Üzgünüz, aradığınız sayfa maalesef bulunamadı. Hooria e-ticaret platformunda en yeni ürünleri keşfedin, indirimlerden yararlanın ve hızlı alışveriş deneyimi yaşayın. Geniş ürün yelpazemizle ihtiyacınız olan her şey burada!"
