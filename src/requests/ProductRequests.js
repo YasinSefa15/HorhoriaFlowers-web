@@ -12,9 +12,9 @@ async function getSearchedProducts({
             params: params
         })
             .then(res => {
-                console.log("ÜRÜNLER ÇEKİLDİ")
-                console.log("sent params", params)
-                console.log("adet ", res.data.data.length)
+                //console.log("ÜRÜNLER ÇEKİLDİ")
+                //console.log("sent params", params)
+                //console.log("adet ", res.data.data.length)
                 console.log(res.data)
                 let result = [];
                 setTotalPage(res.data.meta.last_page)

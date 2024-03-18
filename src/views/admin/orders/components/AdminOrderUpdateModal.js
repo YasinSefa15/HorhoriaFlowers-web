@@ -342,8 +342,7 @@ export default function AdminOrderUpdateModal({
                                         cursor: "pointer",
                                     }}
                                          onClick={(e) => {
-                                             //todo url
-                                             window.open('http://localhost:3000/products/' + item.slug, '_blank');
+                                             window.open('https://horhoriaflowers.com/products/' + item.slug, '_blank');
                                          }}
                                     >
                                         <img src={item.file_path}

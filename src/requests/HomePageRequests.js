@@ -5,6 +5,7 @@ export default async function getDiscountedProducts({setDiscountedProducts, setN
     console.log(api_helper.api_url + api_helper.home)
     await axios.get(api_helper.api_url + api_helper.home)
         .then((response) => {
+            console.log("404")
             console.log(response.data.data.discounted_products)
             setDiscountedProducts(response.data.data.discounted_products)
             setNewProducts(response.data.data.new_products)

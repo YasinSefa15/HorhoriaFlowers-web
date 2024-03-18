@@ -46,7 +46,7 @@ export default function CategoriesDropdown({categories}) {
                     Kategoriler
                 </a>
                 <ul className={`dropdown-menu p-2 ${isDropdownOpen ? " show" : ""}`}>
-                    {categoriesList.map((category) => renderCategories(category))}
+                    {categoriesList?.map((category) => renderCategories(category))}
                 </ul>
             </div>
         </>
