@@ -39,7 +39,14 @@ export default function ProfileAddresses() {
 
     const handleAddressCreate = async () => {
         const post = async () => {
-            await createProfileAddresses({addressForm, addresses, setAddresses, setLoaded, secret})
+            await createProfileAddresses({
+                addressForm,
+                addresses,
+                setAddresses,
+                setLoaded,
+                secret,
+                setValidationErrors
+            })
                 .then(() => {
                 })
         }

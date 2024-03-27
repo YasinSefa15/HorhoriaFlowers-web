@@ -33,14 +33,16 @@ export default function CustomPagination({currentPage, pageCount, changeCurrentP
                         <li
                             className={"page-item " + (pageCount === currentPage ? "disabled" : "")}
                             style={{
-                                cursor: "pointer"
+                                cursor: "pointer",
                             }}
                             onClick={() => {
                                 changeCurrentPage(1)
                             }}
                         >
                             <span className="page-link"
+                                  style={{
 
+                                  }}
                             >İleri</span>
                         </li>
                     </ul>

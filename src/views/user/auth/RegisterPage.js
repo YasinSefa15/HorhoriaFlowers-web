@@ -21,7 +21,7 @@ export default function RegisterPage() {
     })
 
     const handleSubmit = async () => {
-
+console.log(newData)
         try {
             const response = await axios.post(api_helper.api_url + api_helper.auth.register, newData);
 

@@ -52,6 +52,7 @@ export default function LoginPage() {
                     httpStatus: error.response.status,
                     title: error.response.data.message
                 })
+                console.log(error.response)
             }
         }
     };

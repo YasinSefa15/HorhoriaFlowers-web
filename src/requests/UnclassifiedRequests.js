@@ -3,7 +3,7 @@ import {api_helper} from "../utils/api_helper";
 
 const getIsAdmin = async ({secret, setIsAdmin}) => {
     if (!secret) return setIsAdmin(false)
-    await axios.get(api_helper.api_url + api_helper.user.is_admin, {
+    return await axios.get(api_helper.api_url + api_helper.user.is_admin, {
         headers: {
             "Authorization": "Bearer " + secret,
         }
@@ -13,7 +13,7 @@ const getIsAdmin = async ({secret, setIsAdmin}) => {
             //console.log(response.data)
         })
         .catch(error => {
-            //console.log(error)
+            return 401
         })
 }
 

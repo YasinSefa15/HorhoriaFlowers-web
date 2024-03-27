@@ -4,6 +4,7 @@ import React from "react";
 import CustomButton from "../../../../components/CustomButton";
 import 'react-phone-input-2/lib/style.css'
 import FormFieldError from "../../../../utils/FormFieldError";
+import {isInputInvalid} from "../../../../utils/StyleUtility";
 
 export default function RegisterForm({
                                          newData,
@@ -60,9 +61,9 @@ export default function RegisterForm({
                     <PhoneInput
                         country={'tr'}
                         onlyCountries={['tr']}
-                        placeholder={'123 456 78 90'}
-                        disableCountryCode={true}
-                        //inputStyle={isInvalidStyle(!!validationErrors['phone'])}
+                        placeholder={'+90 512 345 67 89'}
+                        countryCodeEditable={false}
+                        inputStyle={isInputInvalid(!!validationErrors['phone'])}
                         inputClass={'w-100'}
                         value={newData.phone}
                         onChange={phone => setNewData({...newData, phone: phone})}

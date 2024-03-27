@@ -36,10 +36,9 @@ export default function UpdateModal({
     const handleOnClick = () => {
         if (JSON.stringify(originalData.current) !== JSON.stringify(newData)) {
             const form = {}
-            const parent_id = newData.parent_id === "Üst Kategori Seçiniz" ? null : newData.parent_id;
-            if (parent_id) form.parent_id = parent_id;
-            const title = newData.title !== originalData.current.title ? newData.title : null;
-            if (title) form.title = title;
+            form.parent_id = newData.parent_id === "Üst Kategori Seçiniz" ? null : newData.parent_id;
+            form.title = newData.title;
+
             handleSubmit({newData: form, setValidationErrors})
         } else {
             handleClose()

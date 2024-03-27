@@ -24,7 +24,6 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
         if (requestParams.page === undefined) {
             return;
         }
-        console.log("tableState.requestParams", requestParams)
         const load = async () => {
             await loadDataQueryWithParams({
                 setData: setData,
@@ -62,7 +61,6 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
     }
 
     const handleSearchChange = ({searchText}) => {
-        //console.log("handleSearchChange", searchText)
         setRequestedPage(1)
         if (searchText === "") {
             setSearch("")
@@ -75,7 +73,6 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
 
     const handleFilterChange = ({value}) => {
         //value has orderName and orderDirection
-        console.log("handleFilterChange", value)
         setRequestedPage(1)
         setRequestParams({...requestParams, orderName: value.orderName, orderDirection: value.orderDirection, page: 1,})
     }

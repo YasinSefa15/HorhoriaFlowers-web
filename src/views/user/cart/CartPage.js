@@ -148,6 +148,7 @@ export default function CartPage() {
     }
 
     const deleteProduct = (product_id, size_id) => {
+        console.log("SİLME İSTEĞİ")
         setProducts(products.filter((product, index) => {
             if ((product.product_id || product.id) === product_id && product.size_id === size_id) {
                 if (secret === null) {
@@ -161,11 +162,12 @@ export default function CartPage() {
                     return false;
                 }
                 deleteLoggedInUserProduct({product_id: product_id, secret, size_id}).then(r => {
+                    //localStorage.setItem("cartProducts", JSON.stringify(a));
                 })
                 //localden
                 setCartProducts(products.filter((product, index) => {
-                    //return !(((product.id || product.product_id) === product_id) && product.size_id === size_id);
-                    return true
+                    return !( ( (product.id || product.product_id) === product_id) && product.size_id === size_id);
+                    //return true
                 }))
                 //setUpdated(!updated)
                 return false;
@@ -204,7 +206,7 @@ export default function CartPage() {
                         }
                         return <>
                             <div className="container">
-                            <div className="row d-flex justify-content-around">
+                                <div className="row d-flex justify-content-around">
                                     <div className="col col-sm-4">
                                         <CartCoupon
                                             appliedCoupons={appliedCoupons}

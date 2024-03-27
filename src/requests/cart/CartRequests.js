@@ -43,7 +43,6 @@ const updateLoggedInUserCart = ({product_id, quantity, secret, size_id}) => {
 
         })
         .catch(error => {
-            console.log(error);
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.statusText,
@@ -65,7 +64,6 @@ const deleteLoggedInUserProduct = async ({product_id, secret, size_id}) => {
         }
     )
         .then(res => {
-            console.log("delete", res.data)
             HTTPNotificationHelper({
                 httpStatus: res.status,
                 title: "Ürün sepetten silindi",
@@ -73,7 +71,6 @@ const deleteLoggedInUserProduct = async ({product_id, secret, size_id}) => {
 
         })
         .catch(error => {
-            console.log("silme hata ", error);
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.statusText,
@@ -103,7 +100,6 @@ const createLoggedInUserProduct = ({product_title, product_id, secret}) => {
             })
         })
         .catch(error => {
-            console.log(error);
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message
@@ -131,10 +127,8 @@ export default async function addCartInDetail({
         return (product.id || product.product_id) === id && product.size_id === size_id
     })?.quantity
 
-    console.log("old quantity ", oldQuantity)
 
     const newQuantityValue = (oldQuantity ?? 0) + quantity
-    console.log("new quantity ", newQuantityValue)
 
     const data = {
         product_id: id,
@@ -142,7 +136,6 @@ export default async function addCartInDetail({
         size_id: size_id
     }
 
-    console.log("data", data)
     await axios.post((api_helper.api_url + api_helper.carts.create), data, {
             headers: {
                 'Authorization': `Bearer ${secret}`,
@@ -178,7 +171,6 @@ export default async function addCartInDetail({
             })
         })
         .catch(error => {
-            console.log(error);
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message
@@ -202,9 +194,7 @@ async function getCouponDiscount({
                 }
             })
             .then(async (response) => {
-                console.log("x.", discount, discount + parseFloat(response.data.data))
                 await setDiscount(discount + parseFloat(response.data.data))
-                console.log("y.z", discount)
                 await setLoaded(true);
                 await setAppliedCoupons([...appliedCoupons, {
                     coupon: coupon,
@@ -216,14 +206,12 @@ async function getCouponDiscount({
                 })
             })
             .catch((error) => {
-                console.log(error.response)
                 HTTPNotificationHelper({
                     httpStatus: error.response.status,
                     title: error.response.data.message,
                 })
             })
     } catch (error) {
-        console.log(error)
     }
 
 }
@@ -235,7 +223,6 @@ async function addCartIfNotExists({id, title, secret, size_id}) {
     })
 
 
-    console.log(oldQuantity)
     if (oldQuantity) {
         HTTPNotificationHelper({
             title: "Ürün zaten sepetinizde",
@@ -266,7 +253,6 @@ async function addCartIfNotExists({id, title, secret, size_id}) {
             })
         })
         .catch(error => {
-            console.log(error);
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message

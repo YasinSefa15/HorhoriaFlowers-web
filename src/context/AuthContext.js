@@ -16,7 +16,15 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const isAdmin = async () => {
-            await getIsAdmin({secret: secret, setIsAdmin: setIsAdmin})
+            const x = await getIsAdmin({secret: secret, setIsAdmin: setIsAdmin})
+            if(x === 401){
+                await localStorage.removeItem("user")
+                await localStorage.removeItem("secret")
+                await localStorage.removeItem("cartProducts")
+                await localStorage.setItem("visitorCartProducts", localStorage.getItem("visitorCartProducts") ?? JSON.stringify([]))
+                await setIsAdmin(false)
+                navigate("/login")
+            }
         }
         isAdmin().then(r => {
 

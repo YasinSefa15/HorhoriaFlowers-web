@@ -10,7 +10,6 @@ import {
 } from "../../../requests/admin/AdminUserRequests";
 import {useAuth} from "../../../context/AuthContext";
 import CustomButton from "../../../components/CustomButton";
-import AdminUpdateModal from "../../../components/admin/modals/AdminUpdateModal";
 import AdminDeleteModal from "../../../components/admin/modals/AdminDeleteModal";
 import CreateUserModal from "./modals/CreateUserModal";
 import UpdateUserModal from "./modals/UpdateUserModal";

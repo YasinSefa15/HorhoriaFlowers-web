@@ -1,25 +1,36 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useAuth} from "../../../../context/AuthContext";
 import {
     getProfileOrders
 } from "../../../../requests/profile/ProfileRequests";
 import {Helmet} from "react-helmet";
 import LoadingScreen from "../../../../components/LoadingScreen";
+import uuidGenerator from "../../../../utils/uuidGenerator";
+import CustomPagination from "../../../../components/user/pagination/CustomPagination";
 
 export default function ProfileOrders() {
     const [orders, setOrders] = useState([]);
     const [loaded, setLoaded] = React.useState(false);
     const {secret} = useAuth();
+    const [pagination, setPagination] = useState({
+        currentPage: 1,
+        pageCount: 1
+    });
 
     React.useEffect(() => {
-        const fetchOrders = async () => {
-            await getProfileOrders({setOrders, setLoaded, secret})
-        }
-
-        fetchOrders().then(() => {
+        fetchOrders({
+            page: 1
+        }).then(() => {
         })
     }, [])
 
+    const fetchOrders = async ({page}) => {
+        await getProfileOrders({
+            setOrders, setLoaded,
+            secret, page,
+            setPagination
+        })
+    }
 
     return (
         <>
@@ -37,6 +48,7 @@ export default function ProfileOrders() {
                 orders.map((order, index) => {
                     return (
                         <div
+                            key={uuidGenerator()}
                             className="order-track"
                         >
                             <div
@@ -102,6 +114,7 @@ export default function ProfileOrders() {
                                 {order.ordered_products.map((item, index) => {
                                     return (
                                         <div
+                                            key={uuidGenerator()}
                                             className="order-track-item"
                                         >
                                             <div
@@ -131,6 +144,27 @@ export default function ProfileOrders() {
                         </div>
                     )
                 })}
+
+            <CustomPagination
+                pageCount={pagination.pageCount}
+                currentPage={pagination.currentPage}
+                changeCurrentPage={async (changeInPage) => {
+                    const parsedPage = parseInt(pagination.currentPage)
+
+                    if (changeInPage > 0) {
+                        if (parsedPage + changeInPage <= pagination.pageCount) {
+                            await fetchOrders({page: parsedPage + changeInPage})
+                        }
+
+                    } else if (changeInPage < 0) {
+                        if (parsedPage + changeInPage > 0) {
+                            await fetchOrders({page: parsedPage + changeInPage})
+                        }
+                    }
+
+
+                }}
+            />
         </>
     )
 }

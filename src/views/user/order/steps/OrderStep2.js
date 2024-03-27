@@ -3,7 +3,7 @@ import OrderProductsLists from "./OrdeProductsList";
 import {useAuth} from "../../../../context/AuthContext";
 import {getOrderSelectedAddressDetail} from "../../../../requests/OrderRequests";
 
-export default function OrderStep2({selectedAddressId, secret, total}) {
+export default function OrderStep2({selectedAddressId, secret, total, errorMessages}) {
     const [address, setAddress] = React.useState(null)
     const {cartProducts} = useAuth()
     const [productsTotal, setProductsTotal] = React.useState(0)
@@ -21,6 +21,16 @@ export default function OrderStep2({selectedAddressId, secret, total}) {
     return (
         <>
             <h2>Sipari Onayı</h2>
+
+
+            {errorMessages && errorMessages.map((error, index) => {
+                return (
+                    <div key={index} className="alert alert-danger" role="alert">
+                        {error}
+                    </div>
+                )
+            })}
+
 
             <div className="row">
                 <div className="col">

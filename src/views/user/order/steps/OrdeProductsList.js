@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import uuidGenerator from "../../../../utils/uuidGenerator";
 
 export default function OrderProductsLists({products, setProductsTotal}) {
     useEffect(() => {
@@ -13,7 +14,7 @@ export default function OrderProductsLists({products, setProductsTotal}) {
         <>
             <div className="row mt-4">
                 {products.map((product) => (
-                    <div className="col col-sm-2 d-flex flex-wrap">
+                    <div key={uuidGenerator()} className="col col-sm-2 d-flex flex-wrap">
                         <div className="">
                             <img
                                 src={product.image.file_path}

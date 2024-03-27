@@ -16,7 +16,6 @@ const getAdminProducts = async ({setData, secret, setTotalPages, setCurrentPage,
             await setCurrentPage(response.data.meta.current_page)
         })
         .catch(error => {
-            console.log(error)
         })
 }
 
@@ -31,8 +30,6 @@ const getAdminCategoriesMapped = async ({setCategoriesMapped, secret}) => {
             await setCategoriesMapped(response.data.data)
         })
         .catch(error => {
-            console.log(error.messages)
-            console.log("HATA")
         })
 }
 
@@ -54,6 +51,7 @@ const createAdminProduct = async ({newData, secret, setValidationErrors}) => {
             })
         })
         .catch(error => {
+            console.log(error.response.data.errors)
             if (error.response.status === 422) {
                 setValidationErrors(error.response.data.errors)
             }
@@ -62,7 +60,6 @@ const createAdminProduct = async ({newData, secret, setValidationErrors}) => {
                 httpStatus: error.response.status,
             })
 
-            console.log(error.response)
         })
 }
 
@@ -87,13 +84,11 @@ const deleteAdminProduct = async ({data, setData, product, secret}) => {
                 httpStatus: error.response.status,
                 title: error.response.data.message,
             })
-            console.log(error)
         })
 }
 
 
 const updateAdminProduct = async ({secret, newData, setValidationErrors}) => {
-    console.log("newData", newData)
     //return;
     await axios.post((api_helper.api_url + api_helper.admin.products.update).replace(":product_id", newData.id),
         newData,
@@ -137,14 +132,11 @@ async function getAdminProductDetail({
         })
             .then(async res => {
                 await setData({...res.data.data, isLoaded: true})
-                console.log("product detail", res.data.data)
             })
             .catch(async error => {
                 await setData({isLoaded: false})
-                console.log(error)
             })
     } catch (error) {
-        console.log(error)
     }
 }
 

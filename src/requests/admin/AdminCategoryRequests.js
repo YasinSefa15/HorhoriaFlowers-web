@@ -83,6 +83,7 @@ const deleteAdminCategory = async ({data, setData, category, secret}) => {
 }
 
 const updateAdminCategory = async ({newData, slug, secret, setValidationErrors}) => {
+    console.log(newData, slug)
     await axios.put((api_helper.api_url + api_helper.admin.categories.update).replace(":slug", slug),
         newData,
         {

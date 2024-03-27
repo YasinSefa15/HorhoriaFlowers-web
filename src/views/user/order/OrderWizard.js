@@ -1,17 +1,34 @@
 import OrderStep1 from "./steps/OrderStep1";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import OrderStep2 from "./steps/OrderStep2";
 import OrderPlaced from "./OrderPlaced";
 import {Helmet} from "react-helmet";
 import {useAuth} from "../../../context/AuthContext";
 import {giveOrder} from "../../../requests/OrderRequests";
 import CustomButton from "../../../components/CustomButton";
+import {useNavigate} from "react-router-dom";
 
 export default function OrderWizard({total}) {
     const [selectedAddressId, setSelectedAddressId] = useState(null);
-    const {secret} = useAuth()
+    const {secret, cartProducts} = useAuth()
     const [isOrdered, setIsOrdered] = useState(false)
     const [orderCode, setOrderCode] = useState(null)
+    const navigate = useNavigate()
+    const [errorMessages, setErrorMessages] = useState(null)
+
+    useEffect(() => {
+        let parsedCartProducts;
+
+        if (typeof cartProducts === "string") {
+            parsedCartProducts = JSON.parse(cartProducts)
+        }else{
+            parsedCartProducts = cartProducts
+        }
+
+        if (parsedCartProducts.length === 0) {
+            navigate("/cart")
+        }
+    }, []);
 
     const steps = [
         {
@@ -26,6 +43,7 @@ export default function OrderWizard({total}) {
                 selectedAddressId={selectedAddressId}
                 secret={secret}
                 total={total}
+                errorMessages={errorMessages}
             />
         },
     ]
@@ -34,11 +52,11 @@ export default function OrderWizard({total}) {
     const [currentStep, setCurrentStep] = useState(0)
 
     const handleOrder = () => {
-        console.log("handleOrder")
         const fetchAddresses = async () => {
             await giveOrder({
                 selectedAddressId, secret,
-                setIsOrdered, setOrderCode
+                setIsOrdered, setOrderCode,
+                setErrorMessages
             })
         }
 

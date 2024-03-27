@@ -12,7 +12,14 @@ export default function AdminProductCreateModal({
                                                     clickedData,
                                                     categoriesMapped,
                                                 }) {
-    const [newData, setNewData] = useState({...clickedData});
+    const [newData, setNewData] = useState({
+        ...clickedData, sizes: [
+            {
+                value: "Standart",
+                quantity: 0
+            }
+        ]
+    });
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [validationErrors, setValidationErrors] = useState({});
 
@@ -20,7 +27,6 @@ export default function AdminProductCreateModal({
         event.preventDefault();
         await handleCreateData({newData: {...newData, images: selectedFiles}, setValidationErrors});
     }
-
 
     useEffect(() => {
         if (Object.keys(newData).length === 0 || newData === clickedData) {
@@ -30,7 +36,14 @@ export default function AdminProductCreateModal({
         if (Object.keys(validationErrors).length === 0) {
             setShowModal(false);
             setSelectedFiles([])
-            setNewData({});
+            setNewData({
+                sizes: [
+                    {
+                        value: "Standart",
+                        quantity: 0
+                    }
+                ]
+            });
         }
     }, [validationErrors])
 
@@ -163,6 +176,7 @@ export default function AdminProductCreateModal({
                                         text={"Beden Ekle"}
                                         style={{width: "10%"}}
                                         onClick={() => {
+                                            console.log(newData.sizes)
                                             let sizesForm = newData.sizes || []
                                             sizesForm.push({
                                                 value: "",
@@ -174,7 +188,7 @@ export default function AdminProductCreateModal({
                                 </div>
                                 <div className="bg-body-secondary p-3">
                                     {newData.sizes && newData.sizes.map((size, index) => (
-                                        <>
+                                        <React.Fragment key={uuidGenerator()}>
                                             <div className="prod-sizes-list d-flex justify-content-between">
                                                 <div>
                                                     <input type="text" className="form-control w-50"
@@ -217,7 +231,7 @@ export default function AdminProductCreateModal({
                                             {index !== newData.sizes.length - 1 && (
                                                 <hr></hr>
                                             )}
-                                        </>
+                                        </React.Fragment>
                                     ))}
                                 </div>
                                 <FormFieldError errorMessage={validationErrors.sizes}/>

@@ -3,6 +3,7 @@ import CustomButton from "../../../../../components/CustomButton";
 import React, {useEffect} from "react";
 import FormFieldError from "../../../../../utils/FormFieldError";
 import PhoneInput from "react-phone-input-2";
+import {isInputInvalid} from "../../../../../utils/StyleUtility";
 
 export default function CreateAddressModal({
                                                showModal,
@@ -43,6 +44,7 @@ export default function CreateAddressModal({
                             <input type="text"
                                    className={"form-control " + (validationErrors.title ? "is-invalid" : "")}
                                    id="title"
+                                   placeholder="Ev, İş, Diğer"
                                    value={addressForm.title || ''}
                                    onChange={(e) => {
                                        setAddressForm({...addressForm, title: e.target.value})
@@ -55,6 +57,7 @@ export default function CreateAddressModal({
                             <div className="col">
                                 <label>Adınız</label>
                                 <input type="text"
+                                       placeholder="Adınız"
                                        className={"form-control " + (validationErrors.first_name ? "is-invalid" : "")}
                                        id="first_name"
                                        value={addressForm.first_name || ''}
@@ -67,6 +70,7 @@ export default function CreateAddressModal({
                             <div className="col">
                                 <label htmlFor="last_name">Soyadınız</label>
                                 <input type="text"
+                                        placeholder="Soyadınız"
                                        className={"form-control " + (validationErrors.last_name ? "is-invalid" : "")}
                                        id="last_name"
                                        value={addressForm.last_name || ''}
@@ -82,6 +86,7 @@ export default function CreateAddressModal({
                             <div className="col">
                                 <label htmlFor="city">Şehir</label>
                                 <input type="text"
+                                       placeholder="Afyon, Eskişehir..."
                                        className={"form-control " + (validationErrors.city ? "is-invalid" : "")}
                                        id="city"
                                        value={addressForm.city || ''}
@@ -94,6 +99,7 @@ export default function CreateAddressModal({
                             <div className="col">
                                 <label htmlFor="state">İlçe</label>
                                 <input type="text"
+                                       placeholder="Merkez, Odunpazarı..."
                                        className={"form-control " + (validationErrors.state ? "is-invalid" : "")}
                                        id="state"
                                        value={addressForm.state || ''}
@@ -111,9 +117,9 @@ export default function CreateAddressModal({
                             <PhoneInput
                                 country={'tr'}
                                 onlyCountries={['tr']}
-                                placeholder={'123 456 78 90'}
-                                disableCountryCode={true}
-                                //inputStyle={isInvalidStyle(!!validationErrors['phone'])}
+                                placeholder={'+90 512 345 67 89'}
+                                countryCodeEditable={false}
+                                inputStyle={isInputInvalid(!!validationErrors['phone'])}
                                 inputClass={'w-100'}
                                 value={addressForm.phone}
                                 onChange={phone => setAddressForm({...addressForm, phone: phone})}
@@ -126,6 +132,7 @@ export default function CreateAddressModal({
                         <div className="row">
                             <label htmlFor="col">Adres Detayı</label>
                             <textarea
+                                placeholder="Sokak bilgisi, apartman, kat, daire..."
                                 className={"form-control " + (validationErrors.description ? "is-invalid" : "")}
                                 id="description" value={addressForm.description || ''}
                                 onChange={(e) => {

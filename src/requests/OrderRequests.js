@@ -27,7 +27,7 @@ async function getOrderSelectedAddressDetail({selectedAddressId, setAddress, sec
     }
 }
 
-async function giveOrder({selectedAddressId, secret, setIsOrdered, setOrderCode}) {
+async function giveOrder({selectedAddressId, secret, setIsOrdered, setOrderCode,setErrorMessages}) {
     await axios.post(api_helper.api_url + api_helper.user.orders.create, {
             address_id: selectedAddressId
         },
@@ -39,12 +39,13 @@ async function giveOrder({selectedAddressId, secret, setIsOrdered, setOrderCode}
             }
         })
         .then(async (response) => {
-            console.log("response ", response.data.data)
             await setIsOrdered(true)
             await setOrderCode(response.data.data.order_code)
         })
         .catch((error) => {
-            console.log(error.response)
+            if (error.response.status === 400) {
+                setErrorMessages(error.response.data.errors)
+            }
             HTTPNotificationHelper({
                 httpStatus: error.response.status,
                 title: error.response.data.message,

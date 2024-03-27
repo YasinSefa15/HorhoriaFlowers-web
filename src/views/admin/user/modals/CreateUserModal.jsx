@@ -3,6 +3,7 @@ import {Modal} from "react-bootstrap";
 import CustomButton from "../../../../components/CustomButton";
 import FormFieldError from "../../../../utils/FormFieldError";
 import PhoneInput from "react-phone-input-2";
+import {isInputInvalid} from "../../../../utils/StyleUtility";
 
 export default function CreateUserModal({
                                             showModal,
@@ -70,9 +71,9 @@ export default function CreateUserModal({
                                 <PhoneInput
                                     country={'tr'}
                                     onlyCountries={['tr']}
-                                    placeholder={'123 456 78 90'}
-                                    disableCountryCode={true}
-                                    //inputStyle={isInvalidStyle(!!validationErrors['phone'])}
+                                    placeholder={'+90 512 345 67 89'}
+                                    countryCodeEditable={false}
+                                    inputStyle={isInputInvalid(!!validationErrors['phone'])}
                                     inputClass={'w-100'}
                                     value={newData.phone}
                                     onChange={phone => setNewData({...newData, phone: phone})}

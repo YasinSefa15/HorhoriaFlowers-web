@@ -174,7 +174,7 @@ export default function HomePage() {
                                         navigate("/products/" + item.slug, {state: {product: item}})
                                     }}
                                     addToCart={(event) => {
-                                        addToCart(event, item.id, item.title, secret, item.sizes[0].id, item.sizes[0].value)
+                                        addToCart(event, item.id, item.title, secret, item.sizes[0]?.id, item.sizes[0]?.value)
                                     }}
 
                                 ></ProductCart>
@@ -212,13 +212,13 @@ export default function HomePage() {
                         <Row>
                             {visibleItemsNew.map(item => (
                                 <ProductCart
-                                    key={item.id + item.slug + item.sizes[0].id}
+                                    key={item.id + item.slug + item.sizes[0]?.id}
                                     product={item}
                                     handleDivClick={() => {
                                         navigate("/products/" + item.slug, {state: {product: item}})
                                     }}
                                     addToCart={(event) => {
-                                        addToCart(event, item.id, item.title, secret, item.sizes[0].id, item.sizes[0].value)
+                                        addToCart(event, item.id, item.title, secret, item.sizes[0]?.id, item.sizes[0]?.value)
                                     }}
 
                                 ></ProductCart>

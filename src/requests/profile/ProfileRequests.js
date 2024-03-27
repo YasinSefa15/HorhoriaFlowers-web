@@ -39,8 +39,6 @@ async function updateProfileInfo({userForm, setLoaded, secret, setValidationErro
                 setValidationErrors({})
             })
             .catch((error) => {
-                console.log("asd")
-                console.log(error.response)
                 HTTPNotificationHelper({
                     httpStatus: error.response.status,
                     title: error.response.data.message,
@@ -233,7 +231,6 @@ async function createProfileAddresses({
                 }
             })
             .then(async (response) => {
-                console.log(response.data)
                 HTTPNotificationHelper({
                     httpStatus: response.status,
                     title: response.data.message,
@@ -243,7 +240,6 @@ async function createProfileAddresses({
                 setValidationErrors({})
             })
             .catch((error) => {
-                console.log(error.response)
                 HTTPNotificationHelper({
                     httpStatus: error.response.status,
                     title: error.response.data.message,
@@ -339,7 +335,7 @@ async function deleteProfileAddresses({selectedAddressId, addresses, setAddresse
     }
 }
 
-async function getProfileOrders({setOrders, setLoaded, secret}) {
+async function getProfileOrders({setOrders, setLoaded, secret, page, setPagination}) {
     try {
         await axios.get(api_helper.api_url + api_helper.user.orders.read,
             {
@@ -347,12 +343,18 @@ async function getProfileOrders({setOrders, setLoaded, secret}) {
                     "Authorization": "Bearer " + secret,
                     "Content-Type": "application/json",
                     "Accept": "application/json"
+                },
+                params: {
+                    page: page,
                 }
             })
             .then(async (response) => {
-                console.log(response.data.data[0])
                 await setOrders(response.data.data)
                 await setLoaded(true);
+                setPagination({
+                    currentPage: response.data.meta.current_page,
+                    pageCount: response.data.meta.last_page
+                })
             })
             .catch((error) => {
                 console.log(error.response)

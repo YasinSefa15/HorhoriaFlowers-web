@@ -49,6 +49,8 @@ export default function OrderPlaced({orderCode}) {
                             <br></br>
                             <p>Bizi tercih ettiğiniz için teşekkür ederiz. Siparişiniz başarıyla oluşturulmuştur.</p>
 
+                            <p>Bizimle <b>horhoriaflowers@gmail.com</b> üzerinden iletişime geçebilirsiniz.</p>
+
                             <p>Siparişinizin durumunu <NavLink to="/profile/orders">profilim</NavLink> sayfasından takip
                                 edebilirsiniz.</p>
 

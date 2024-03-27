@@ -6,6 +6,7 @@ import CustomButton from "../../../../components/CustomButton";
 import {Helmet} from "react-helmet";
 import PhoneInput from "react-phone-input-2";
 import FormFieldError from "../../../../utils/FormFieldError";
+import {isInputInvalid} from "../../../../utils/StyleUtility";
 
 export default function ProfileUserInformation() {
     const [userForm, setUserForm] = React.useState(null)
@@ -104,9 +105,9 @@ export default function ProfileUserInformation() {
                                 <PhoneInput
                                     country={'tr'}
                                     onlyCountries={['tr']}
-                                    placeholder={'123 456 78 90'}
-                                    disableCountryCode={true}
-                                    //inputStyle={isInvalidStyle(!!validationErrors['phone'])}
+                                    placeholder={'+90 512 345 67 89'}
+                                    countryCodeEditable={false}
+                                    inputStyle={isInputInvalid(!!validationErrors['phone'])}
                                     inputClass={'w-100'}
                                     value={userForm.phone}
                                     onChange={phone => setUserForm({...userForm, phone: phone})}
