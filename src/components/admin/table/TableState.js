@@ -9,6 +9,8 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
     const [isActionViewSet, setIsActionViewSet] = useState(false);
     const [isActionUpdateSet, setIsActionUpdateSet] = useState(false);
     const [isActionDeleteSet, setIsActionDeleteSet] = useState(false);
+    const [isClickable, setIsClickable] = useState(false);
+    const [isClickActionTriggered, setIsClickActionTriggered] = useState(false);
     const [clickedData, setClickedData] = useState(null);
     const [showViewModal, setShowViewModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
@@ -113,6 +115,10 @@ function useTableState({loadDataQueryWithParams, passedOrderOptions}) {
         tableColumns,
         setTableColumns,
         handleCheckboxChange,
+        isClickable,
+        setIsClickable,
+        isClickActionTriggered,
+        setIsClickActionTriggered
     };
 }
 

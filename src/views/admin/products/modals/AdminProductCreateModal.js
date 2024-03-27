@@ -47,6 +47,13 @@ export default function AdminProductCreateModal({
         }
     }, [validationErrors])
 
+    const calculateDiscount = (oldPrice, newPrice) => {
+        if (!oldPrice || !newPrice) {
+            return 0
+        }
+        return (((newData.old_price - newData.new_price) / newData.old_price) * 100).toFixed(2) || 0
+    }
+
     return (
         <>
             <Modal show={showModal} onHide={() => {
@@ -81,6 +88,7 @@ export default function AdminProductCreateModal({
                                 <div className="col-sm-3">Kategori</div>
                                 <div className="">
                                     <select
+                                        value={newData.category_id || -1}
                                         className={"form-control " + (validationErrors.category_id ? "is-invalid" : "")}
                                         onChange={(e) => {
                                             setNewData({...newData, category_id: e.target.value})
@@ -133,7 +141,7 @@ export default function AdminProductCreateModal({
                                 <div className="">
                                     <input type="number" className="form-control" id="name"
                                            placeholder="İndirim Oranı"
-                                           value={(((newData.old_price - newData.new_price) / newData.old_price) * 100).toFixed(2) || 0}
+                                           value={calculateDiscount(newData.old_price, newData.new_price)}
                                            onChange={(e) => {
                                                const percent = e.target.value
                                                setNewData({

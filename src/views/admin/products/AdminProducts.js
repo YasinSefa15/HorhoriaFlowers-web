@@ -37,6 +37,17 @@ export default function AdminProducts() {
     })
     const {secret} = useAuth();
 
+    const handleClickData = (data) => {
+        window.open("https://horhoriaflowers.com/products/" + data.slug, "_blank")
+    }
+
+    useEffect(() => {
+        if (tableState.isClickActionTriggered === true) {
+            handleClickData(tableState.clickedData)
+            tableState.setIsClickActionTriggered(false)
+        }
+    }, [tableState.isClickActionTriggered]);
+
 
     useEffect(() => {
         tableState.setTableColumns([
@@ -55,7 +66,7 @@ export default function AdminProducts() {
 
         tableState.setIsActionDeleteSet(true)
         tableState.setIsActionUpdateSet(true)
-        //tableState.setIsActionViewSet(true)
+        tableState.setIsClickable(true)
 
         setIsLoaded(true)
     }, []);

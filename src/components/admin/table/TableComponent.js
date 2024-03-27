@@ -50,7 +50,8 @@ export default function TableComponent({
                             }
                             return (
                                 <div className="col spec-table-header-title"
-                                     key={tableState.tableColumns[columnName].field}>
+                                     key={tableState.tableColumns[columnName].field}
+                                >
                                     {tableState.tableColumns[columnName].name}
                                 </div>
                             );
@@ -79,7 +80,10 @@ export default function TableComponent({
                                     </div>;
                                 }
                                 if (item[showableColumnNames.current[showable]] === true) {
-                                    return <div className="col" key={"a" + (showableColumnNames.current[showable]) + "b"}>
+                                    return <div
+                                        className="col"
+                                        key={"a" + (showableColumnNames.current[showable]) + "b"}
+                                    >
                                         <i className="fa-solid fa-circle-check" style={{color: "#14730f"}}></i>
                                     </div>
                                 } else if (item[showableColumnNames.current[showable]] === false) {
@@ -90,7 +94,15 @@ export default function TableComponent({
                                     return <div className="col" key={"a" + (showableColumnNames.current[showable]) + "b"}>
                                         <img src={item[showableColumnNames.current[showable]]}
                                              alt={item[showableColumnNames.current[showable]]}
-                                             style={{width: "50px", height: "50px"}}/>
+                                             style={{
+                                                 width: "50px",
+                                                 height: "50px",
+                                                 cursor: tableState.isClickable ? "pointer" : "default"
+                                             }}
+                                             onClick={() => {
+                                                 tableState.isClickable && tableState.setIsClickActionTriggered(true)
+                                             }}
+                                        />
                                     </div>
                                 }
 
@@ -99,8 +111,13 @@ export default function TableComponent({
                                                 overflow: "hidden",   // Metni sığdırmak için taşan kısmı gizle
                                                 textOverflow: "ellipsis",  // Taşan metni "..." ile göster
                                                 whiteSpace: "nowrap",  // Metni tek satırda tut
+                                                cursor: tableState.isClickable ? "pointer" : "default"
                                             }}
-                                            key={"a" + (showableColumnNames.current[showable]) + "b"}>{item[showableColumnNames.current[showable]]}
+                                            key={"a" + (showableColumnNames.current[showable]) + "b"}
+                                            onClick={() => {
+                                                tableState.isClickable && tableState.setIsClickActionTriggered(true)
+                                            }}
+                                >{item[showableColumnNames.current[showable]]}
                                 </div>;
                             })}
                         </div>;
