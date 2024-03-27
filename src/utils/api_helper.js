@@ -1,5 +1,5 @@
 const api_helper = {
-    'api_url': 'http://localhost:8000/api/', //local 'http://localhost:8000/api/' https://api.horhoriaflowers.com/api/
+    'api_url': 'https://api.horhoriaflowers.com/api/', //local 'http://localhost:8000/api/' https://api.horhoriaflowers.com/api/
     "home": "home",
     "admin": {
         "users": {
