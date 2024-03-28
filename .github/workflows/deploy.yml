@@ -23,14 +23,11 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build project
-      run: npm run build
+    - name: Configure SSH
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY1 }}
 
     - name: Deploy
-      uses: easingthemes/ssh-deploy@v2
-      with:
-        server_ip: ${{ secrets.SERVER_IP }}  # Sunucunuzun IP adresi
-        server_username: ${{ secrets.SERVER_USERNAME }}  # Sunucuya bağlanmak için kullanıcı adı
-        server_port: ${{ secrets.SERVER_PORT }}  # Sunucunuzun SSH portu, varsayılan olarak 22
-        local_folder: "build/"  # Dağıtılacak yerel klasör
-        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}  # SSH anahtarınız, action secrets'ta tanımlanmış olmalıdır
+      run: |
+        scp -r ./build horhoriaflowers@185.124.109.38:/htdocs/horhoriaflowers.com
