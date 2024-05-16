@@ -33,7 +33,7 @@ const getAdminCategoriesMapped = async ({setCategoriesMapped, secret}) => {
         })
 }
 
-const createAdminProduct = async ({newData, secret, setValidationErrors}) => {
+const createAdminProduct = async ({newData, secret, setValidationErrors,setIsCreateButtonClickable}) => {
     await axios.post(api_helper.api_url + api_helper.admin.products.create, newData,
         {
             headers: {
@@ -49,6 +49,7 @@ const createAdminProduct = async ({newData, secret, setValidationErrors}) => {
                 title: response.data.message,
                 httpStatus: response.status,
             })
+            setIsCreateButtonClickable(true)
         })
         .catch(error => {
             console.log(error.response.data.errors)
@@ -59,6 +60,7 @@ const createAdminProduct = async ({newData, secret, setValidationErrors}) => {
                 title: error.response.data.message,
                 httpStatus: error.response.status,
             })
+            setIsCreateButtonClickable(true)
 
         })
 }

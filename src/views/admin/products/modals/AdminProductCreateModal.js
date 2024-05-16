@@ -11,6 +11,7 @@ export default function AdminProductCreateModal({
                                                     handleCreateData,
                                                     clickedData,
                                                     categoriesMapped,
+                                                    isCreateButtonClickable
                                                 }) {
     const [newData, setNewData] = useState({
         ...clickedData, sizes: [
@@ -198,7 +199,9 @@ export default function AdminProductCreateModal({
                                     {newData.sizes && newData.sizes.map((size, index) => (
                                         <React.Fragment key={uuidGenerator()}>
                                             <div className="prod-sizes-list d-flex justify-content-between">
+
                                                 <div>
+                                                    Beden
                                                     <input type="text" className="form-control w-50"
                                                            value={size.value}
                                                            onChange={(e) => {
@@ -212,8 +215,9 @@ export default function AdminProductCreateModal({
                                                 </div>
 
                                                 <div>
+                                                    Adet
                                                     <div className="d-flex align-items-center">
-                                                        <input type="text" className="form-control w-25 me-2"
+                                                        <input type="text" className="form-control w-50 me-2"
                                                                value={size.quantity}
                                                                onChange={(e) => {
                                                                    let sizesForm = newData.sizes || []
@@ -221,7 +225,7 @@ export default function AdminProductCreateModal({
                                                                    setNewData({...newData, sizes: sizesForm})
                                                                }}
                                                         />
-                                                        Adet
+
                                                     </div>
                                                     <FormFieldError
                                                         errorMessage={validationErrors["sizes." + index + ".quantity"]}/>
@@ -270,7 +274,13 @@ export default function AdminProductCreateModal({
                     <CustomButton
                         text="Kaydet"
                         status="success"
+                        //non clickavle
+                        style={{ cursor: isCreateButtonClickable ? "pointer" : "not-allowed"}}
                         onClick={async (event) => {
+                            console.log(isCreateButtonClickable)
+                            if (!isCreateButtonClickable) {
+                                return;
+                            }
                             await handleOnClick({event, newData});
                         }}
                     />

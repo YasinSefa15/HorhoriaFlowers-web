@@ -36,6 +36,7 @@ export default function AdminProducts() {
         isLoaded: false,
     })
     const {secret} = useAuth();
+    const [isCreateButtonClickable, setIsCreateButtonClickable] = useState(true)
 
     const handleClickData = (data) => {
         window.open("https://horhoriaflowers.com/products/" + data.slug, "_blank")
@@ -85,11 +86,13 @@ export default function AdminProducts() {
     }, [tableState.showUpdateModal]);
 
     const handleCreateData = ({newData, setValidationErrors}) => {
-        const post = async () => {
+        setIsCreateButtonClickable(false)
+        let post = async () => {
             await createAdminProduct({
                 secret,
                 newData,
-                setValidationErrors
+                setValidationErrors,
+                setIsCreateButtonClickable
             });
         }
         post().then(r => {
@@ -155,6 +158,7 @@ export default function AdminProducts() {
                 categoriesMapped={categoriesMapped}
                 clickedData={tableState.clickedData}
                 handleCreateData={handleCreateData}
+                isCreateButtonClickable={isCreateButtonClickable}
             />
 
             <AdminDeleteModal
